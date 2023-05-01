@@ -1,3 +1,26 @@
+### This project is testing project of Alisher-Company for his classes
+ ----------------------------------------------------------------------
+
+### Explanation of usage
+- For using this project you need to install git on your computer
+- Then you need to clone the repository through HTTPS
+- Then you need to open the folder in your terminal
+- Then you need to use *git status* to see the status of the project
+- Then you need to use *git add .* to add all the changes into staging area
+- Then you need to use *git commit -m "your message"* to commit the changes
+- Then you need to use *git push* to push the changes into the repository
+- Then you need to use *git pull* to pull the changes from the repository
+ ----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
