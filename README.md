@@ -12,12 +12,12 @@
 - Then you need to use *git pull* to pull the changes from the repository
  ----------------------------------------------------------------------
 
+### INSTALL
+- git clone ....   =>  clones repository
+- cd ...           =>  change directory to that folder
+- npm install      =>  install all dependencies
 
-
-
-
-
-
+ ----------------------------------------------------------------------
 
 
 
