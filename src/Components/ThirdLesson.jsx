@@ -2,12 +2,14 @@
 // darkMode example
 // onClick={...} with try-catch 
 import { useState } from 'react';
+import './theme.css'
 
 function ThirdLesson(props) {
-    let [theme, setTheme] = useState('light')
+    let [theme, setTheme] = useState(false)
 
     function toggleTheme() {
-        theme === 'dark' ? setTheme("light") : setTheme("dark")
+        setTheme(!theme)
+        // theme === true ? setTheme(false) : setTheme(true)
         // try {
         //     throw new Error("Some error")
         //     theme === 'dark' ? setTheme("light") : setTheme("dark")
@@ -18,13 +20,13 @@ function ThirdLesson(props) {
         // }
     }
     return (
-        <>
+        <div className={theme ? "dark-mode" : "light-mode"}> 
             <h3>Third Lesson</h3>
             {theme}
             <button onClick={toggleTheme}>
                 Click me!
             </button>
-        </>
+        </div>
     )
 }
 
