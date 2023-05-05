@@ -1,25 +1,3 @@
-const TestComponent = (props) => {
-    let mevalar = props.fruits.map((fruit, index) => {
-        return (
-            <>
-                <tr key={index}>
-                    <td> {fruit.name}  </td>
-                    <td> {fruit.cost}  </td>
-                    <td> {fruit.color} </td>
-                </tr>
-            </>
-        )
-    })
-    return (
-        <div>
-            <table border={props.width} bordercolor={props.color}>
-                {mevalar}
-            </table>
-        </div>
-    )
-}
-
-
 function SecondLesson(props) {
     // props.люди   =>  people
     // let x = ['aaaa', 'bbbb', 'cccc']
@@ -44,8 +22,6 @@ function SecondLesson(props) {
             <h2>People</h2>
             {props.children}
             <ol>{odamlar}</ol>
-
-            <TestComponent fruits={props.fruits} width={'10'} color={'red'} />
         </>
     )
 }
