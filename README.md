@@ -1,93 +1,34 @@
 ### This project is testing project of Alisher-Company for his classes
- ----------------------------------------------------------------------
+
+---
 
 ### Explanation of usage
+
 - For using this project you need to install git on your computer
 - Then you need to clone the repository through HTTPS
 - Then you need to open the folder in your terminal
-- Then you need to use *git status* to see the status of the project
-- Then you need to use *git add .* to add all the changes into staging area
-- Then you need to use *git commit -m "your message"* to commit the changes
-- Then you need to use *git push* to push the changes into the repository
-- Then you need to use *git pull* to pull the changes from the repository
- ----------------------------------------------------------------------
+- Then you need to use _git status_ to see the status of the project
+- Then you need to use _git add ._ to add all the changes into staging area
+- Then you need to use _git commit -m "your message"_ to commit the changes
+- Then you need to use _git push_ to push the changes into the repository
+- ## Then you need to use _git pull_ to pull the changes from the repository
 
 ### INSTALL
-- git clone ....   =>  clones repository
-- cd ...           =>  change directory to that folder
-- npm install      =>  install all dependencies
 
- ----------------------------------------------------------------------
+- git clone .... => clones repository
+- cd ... => change directory to that folder
+- npm install => install all dependencies
+- npm start => start the project
 
+  ***
 
+### Installing routers
+1. **npm i react-router-dom@latest**
+> - installs the library
+2. **import { BrowserRouter } from 'react-router-dom'**  
+> - this should be located in the main JS / JSX file of the project
+3. **import { Routes, Route, Link, Outlet } from 'react-router-dom'**
+> - This helps to create routes and links
+> - Outlet should be after all links that we created for navigtion
+    
 
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
