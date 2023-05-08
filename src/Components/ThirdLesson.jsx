@@ -5,26 +5,19 @@ import { useState } from 'react';
 import './theme.css'
 
 function ThirdLesson(props) {
-    let [theme, setTheme] = useState(false)
+    let [lorem, setLorem] = useState(false)
 
-    function toggleTheme() {
-        setTheme(!theme)
-        // theme === true ? setTheme(false) : setTheme(true)
-        // try {
-        //     throw new Error("Some error")
-        //     theme === 'dark' ? setTheme("light") : setTheme("dark")
-        // } catch (error) {
-        //     console.error(error)
-        // } finally {
-        //     console.log("finally. This is the code that will always run")
-        // }
-    }
+    const showP = {display: "block"}
+    const hideP = {display: "none"}
+
     return (
-        <div className={theme ? "dark-mode" : "light-mode"}> 
-            <h3>Third Lesson</h3>
-            {theme}
-            <button onClick={toggleTheme}>
-                Click me!
+        <div> 
+            <p style={lorem ? showP : hideP}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, officiis. Quasi debitis vero eum libero voluptatem, quis nesciunt natus perspiciatis error praesentium tempore saepe quae quod id. Asperiores, ducimus exercitationem.</p>
+            <p style={lorem ? hideP : showP}>Далеко-далеко за словесными горами в стране гласных и согласных, живут рыбные тексты. Щеке домах безорфографичный если. Lorem, эта текста, предупредила запятой составитель даже необходимыми, переписывается инициал маленький мир дал. Несколько, щеке бросил.</p>
+
+            <button onClick={() => {setLorem(!lorem)}}>
+                <span style={lorem ? showP : hideP}>Lorem</span>
+                <span style={lorem ? hideP : showP}>Lorem RU</span>
             </button>
         </div>
     )
