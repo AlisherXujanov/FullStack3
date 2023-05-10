@@ -1,13 +1,13 @@
 import News from "../Components/News";
+import mainStyle from '../Assets/styles/home.css'
 
 function MainPage(props) {
     return (
-        <>
-            <h1>Main Page</h1>
-            <header>
+        <header style={mainStyle}>
+            <main>
                 <News />
-            </header>
-        </>
+            </main>
+        </header>
     )
 }
 

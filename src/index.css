@@ -4,10 +4,3 @@
   box-sizing: border-box;
   transition: 0.3s;
 }
-h1 {
-  font-size: 72px;
-  background: -webkit-linear-gradient(red, black, red);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}

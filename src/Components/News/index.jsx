@@ -2,7 +2,7 @@ import Cards from '../Cards.jsx'
 
 function News() {
     return (
-        <div>
+        <div className='news-section'>
             <h1><span>BattleStar</span> Новости</h1>
             
             <Cards />

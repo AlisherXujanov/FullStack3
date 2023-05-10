@@ -7,8 +7,8 @@ function Card({card}) {
                 <img src={card.img} width='100%' height='200' />
             </div>
             <div className="card-footer">
-                <h4>{card.title}</h4>
-                <p>{card.subtitle}</p>
+                <h4 className='card-title'>{card.title}</h4>
+                <p className='card-subtitle'>{card.subtitle}</p>
                 <div className="bottom">
                     <div className="left">
                         <img src={card.owner.img} width='15' height='15' />
