@@ -6,15 +6,16 @@
     background: url(../Assets/background.png) no-repeat;
     background-size: cover;
     background-position: center;
-}
-.news-section h1 {
-    padding: 200px 0 20px 0;
-    font-size: 3em;
-}
-.news-section h1 span {
-    color: #FAC704;
-}
 
+    h1 {
+        padding: 200px 0 20px 0;
+        font-size: 3em;
+
+        span {
+            color: #FAC704;
+        }
+    }
+}
 .cards {
     width: 80%;
     margin: 10px auto;

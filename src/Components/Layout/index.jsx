@@ -15,6 +15,12 @@ function Layout(props) {
                     <li>
                         <Link to="/404">404</Link>
                     </li>
+                    <li>
+                        <Link to="/Login">Login</Link>
+                    </li>
+                    <li>
+                        <Link to="/Register">Register</Link>
+                    </li>
                 </ul>
             </nav>
             <Outlet />

@@ -1,5 +1,6 @@
 import Card from './Card'
-import './style.css'
+import './style.scss'
+import { Button } from 'react-bootstrap';
 
 function Cards(props) {
     const cards = [
@@ -77,6 +78,9 @@ function Cards(props) {
                     <Card key={index} card={card} />
                 )
             })}
+            <Button variant="outline-primary">
+                Button as link
+            </Button>
         </div>
     );
 }
