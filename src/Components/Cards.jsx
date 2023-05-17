@@ -78,9 +78,6 @@ function Cards(props) {
                     <Card key={index} card={card} />
                 )
             })}
-            <Button variant="outline-primary">
-                Button as link
-            </Button>
         </div>
     );
 }
