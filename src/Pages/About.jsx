@@ -1,35 +1,68 @@
-import Test from "../Components/Test.jsx";
-import { useState, useEffect } from "react";
+// Prop drilling and using useContext
+import { useContext, createContext } from "react";
+const TextContext = createContext();
+
+// useContext => is used to pass data from parent to 
+//               child without prop drilling
+// RU: используется для передачи данных от родителя к
+//    ребенку без 'prop drilling'
+
+// We have to use createContext() to create context
+// and show that context is a variable in useContext()
+// EX: 
+// const TextContext = createContext();
+// let x = useContext(TextContext);
+
+
+function Test(props) {
+    return (
+        <>
+            <Test2 />
+        </>
+    );
+}
+
+function Test2(props) {
+    return (
+        <>
+            <Test3 />
+        </>
+    );
+}
+function Test3(props) {
+    return (
+        <>
+            <Test4 />
+        </>
+    );
+}
+function Test4(props) {
+    return (
+        <>
+            <Test5 />
+        </>
+    );
+}
+function Test5(props) {
+    const qwe = useContext(TextContext);
+    return (
+        <>
+            <h1>{ qwe.key }</h1>
+        </>
+    );
+}
+     
+
 
 function About(props) {
-    const [count, setCount] = useState(0);
-    const [str, setStr] = useState("Hello world");
-
-
-    // useEffect(callback, dependency)   =>   is used to update the component 
-    //                              every time when the dependency is changed
-    // RU: используется для обновления компонента каждый раз, когда изменяется зависимость
-
-    
-    const reqresUrl = "https://reqres.in/api/users?page=2"
-    useEffect(() => {
-        fetch(reqresUrl)
-            .then(response => response.json())
-            .then(info => console.log(info.data))
-    }, [count])
 
     return (
         <div>
             <h1>About</h1>
-            <button onClick={() => setCount(count+1)}>
-                Increment +1  = {count}
-            </button>
 
-            <br />
-            <br />
-            <input onChange={(e) => setStr(e.target.value)} value={str} />
-            <p>{ str }</p>
-
+            <TextContext.Provider value={{key: "Hello world"}}>
+                <Test />
+            </TextContext.Provider>
         </div>
     )
 }
