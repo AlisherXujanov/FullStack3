@@ -1,7 +1,11 @@
 import { memo } from 'react'
+import { useEffect } from 'react';
 
 function Test(props) {
-    console.log("Test component is called!")
+    useEffect(() => {
+        console.log("Test component is rendered");
+    })
+
     return (
         <>
             {props.str}

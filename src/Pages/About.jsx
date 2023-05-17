@@ -1,17 +1,22 @@
 import Test from "../Components/Test.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function About(props) {
-    // memo  ->  is used to prevent re-rendering of the component
-    // RU:  используется для предотвращения повторного рендеринга компонента
-
-    // useState  ->  is used to create a memory of the component
-    // RU: используется для создания памяти компонента
-
-    
-
     const [count, setCount] = useState(0);
     const [str, setStr] = useState("Hello world");
+
+
+    // useEffect(callback, dependency)   =>   is used to update the component 
+    //                              every time when the dependency is changed
+    // RU: используется для обновления компонента каждый раз, когда изменяется зависимость
+
+    
+    const reqresUrl = "https://reqres.in/api/users?page=2"
+    useEffect(() => {
+        fetch(reqresUrl)
+            .then(response => response.json())
+            .then(info => console.log(info.data))
+    }, [count])
 
     return (
         <div>
@@ -20,7 +25,11 @@ function About(props) {
                 Increment +1  = {count}
             </button>
 
-            <Test str={str} />
+            <br />
+            <br />
+            <input onChange={(e) => setStr(e.target.value)} value={str} />
+            <p>{ str }</p>
+
         </div>
     )
 }
