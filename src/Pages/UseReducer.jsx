@@ -1,5 +1,4 @@
 import { useReducer, useState } from "react";
-import ReactDOM from "react-dom/client";
 
 const initialTodos = [
     {
@@ -31,20 +30,13 @@ const reducer = (state, action) => {
 function Todos() {
     const [todos, dispatch] = useReducer(reducer, initialTodos);
 
-    let [todoss, setTodoss] = useState(initialTodos);
- 
+    // useReducer =>  is used to manage state in complex cases
+    // RU: используется для управления состоянием в сложных случаях 
 
     const handleComplete = (todo) => {
-        dispatch({ 
-            type: "COMPLETE", 
-            id: todo.id 
-        });
+        dispatch({ type: "COMPLETE",  id: todo.id });
     };
-
-    
-    let lineThroug= {
-        textDecoration: "line-through",
-    }
+    let lineThroug = { textDecoration: "line-through" }
 
     return (
         <>

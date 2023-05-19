@@ -1,4 +1,5 @@
 import cardStyle from './style.css'
+import { Link, Outlet } from 'react-router-dom'
 
 function Card({card}) {
     return (
@@ -17,6 +18,9 @@ function Card({card}) {
                     <div className="right">
                         <p>{card.owner.views}</p>
                     </div>
+                    <Link to="/cardDetails" state={{ from: String(card.id) }}>
+                        View
+                    </Link>
                 </div>
             </div>
         </div>

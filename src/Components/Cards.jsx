@@ -5,6 +5,7 @@ import { Button } from 'react-bootstrap';
 function Cards(props) {
     const cards = [
         {
+            id: 1,
             img: '',
             title: 'Главные турниры октября',
             subtitle: 'FURIA представила помощника тренера. Отныне tacitus...',
@@ -16,6 +17,7 @@ function Cards(props) {
             }
         },
         {
+            id: 2,
             img: '',
             title: 'Lorem test text 2',
             subtitle: 'FURIA представила помощника тренера. Отныне tacitus...',
@@ -27,6 +29,7 @@ function Cards(props) {
             }
         },
         {
+            id: 3,
             img: '',
             title: 'This is 3rd title',
             subtitle: 'FURIA представила помощника тренера. Отныне tacitus...',
@@ -38,6 +41,7 @@ function Cards(props) {
             }
         },
         {
+            id: 4,
             img: '',
             title: 'Главные турниры октября',
             subtitle: 'FURIA представила помощника тренера. Отныне tacitus...',
@@ -49,6 +53,7 @@ function Cards(props) {
             }
         },
         {
+            id: 5,
             img: '',
             title: 'Lorem test text 2',
             subtitle: 'FURIA представила помощника тренера. Отныне tacitus...',
@@ -60,6 +65,7 @@ function Cards(props) {
             }
         },
         {
+            id: 6,
             img: '',
             title: 'This is 3rd title',
             subtitle: 'FURIA представила помощника тренера. Отныне tacitus...',
