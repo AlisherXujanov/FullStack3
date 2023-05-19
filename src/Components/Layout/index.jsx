@@ -21,6 +21,10 @@ function Layout(props) {
                     <li>
                         <Link to="/Register">Register</Link>
                     </li>
+                    <li>
+                        <Link to="/useReducer">Use Reducer</Link>
+                    </li>
+                    
                 </ul>
             </nav>
             <Outlet />

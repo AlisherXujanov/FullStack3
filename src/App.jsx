@@ -5,6 +5,8 @@ import About from './Pages/About'
 import NoPage from './Pages/NoPage'
 import Register from './Components/Authentication/Register'
 import Login from './Components/Authentication/Login'
+import CardDetails from './Components/Card/CardDetails'
+import UseReducer from './Pages/UseReducer'
 import  'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
@@ -17,6 +19,8 @@ function App() {
             <Route path="/About" element={<About />} />
             <Route path="/Register" element={<Register />} />
             <Route path="/Login" element={<Login />} />
+            <Route path="/cardDetails" element={<CardDetails />} />
+            <Route path="/useReducer" element={<UseReducer />} />
             <Route path="*" element={<NoPage />} />
           </Route>
         </Routes>
