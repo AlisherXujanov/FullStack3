@@ -1,0 +1,51 @@
+.email-form {
+    margin: 0 auto;
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    text-align: center;
+
+    form {
+        input,
+        textarea {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+            &:focus { outline: 5px solid #26a69a80; }
+        }
+
+        label { margin-top: 20px; }
+
+        #email-help, 
+        #message-help {
+            display: block;
+            font-size: 14px;
+            color: #999;
+        } 
+
+    }
+    button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        border: 0;
+        border-radius: 5px;
+        background-color: #26a69a;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+
+        &:hover { background-color: #009688; }
+        &:active { background-color: #00796b; }
+    }
+    .error {
+        color: red;
+        font-size: 14px;
+    }
+}

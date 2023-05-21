@@ -32,3 +32,26 @@
 > - Outlet should be after all links that we created for navigtion
     
 
+### Installing formik
+1. **npm install formik --save**
+> - installs the library
+2. **import { Formik, Form, Field, ErrorMessage } from 'formik';**
+> - this should be located in the main JS / JSX file of the project
+
+> - The Form component wraps all the form fields and provides essential context for using Formik's tools. This includes managing the form's state, handling validation, and submitting the form.
+> - Field is a component provided by Formik that represents a form field. We can use this component to render an input, select, or other form elements. It automatically handles the state of the field, such as its value and validation.
+> - ErrorMessage is a component provided by Formik that renders an error message for a specific field. We can use this component to display validation errors for a field. This is especially helpful for displaying form errors in a user-friendly way.
+
+
+### Installing EmailJS
+1. **npm install @emailjs/browser**
+2. REGISTER ON emailjs.com TO GET YOUR OWN SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY
+<!-- 
+  import emailjs from '@emailjs/browser';
+  emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form.current, 'YOUR_PUBLIC_KEY')
+     .then((result) => {
+         //* show the user a success message
+     }, (error) => {
+         //* show the user an error
+     });
+-->

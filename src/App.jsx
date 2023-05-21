@@ -7,6 +7,7 @@ import Register from './Components/Authentication/Register'
 import Login from './Components/Authentication/Login'
 import CardDetails from './Components/Card/CardDetails'
 import UseReducer from './Pages/UseReducer'
+import SendEmail from './Pages/SendEmail'
 import  'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
             <Route path="/Login" element={<Login />} />
             <Route path="/cardDetails" element={<CardDetails />} />
             <Route path="/useReducer" element={<UseReducer />} />
+            <Route path="/sendEmail" element={<SendEmail />} />
             <Route path="*" element={<NoPage />} />
           </Route>
         </Routes>

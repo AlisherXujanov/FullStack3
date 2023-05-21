@@ -1,101 +1,69 @@
-import { useState } from "react";
-function Register() {
+import React from "react";
+import registrationSchema from "./registrationSchema.scss";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+function App() {
+  return (
+    <div style={registrationSchema}>
+      <center>
+        <h1>Register a new account</h1>
+        <Formik
+          initialValues={{ fullname: "", email: "", password: "" }}
+          validate={(values) => {
+            const errors = {};
+            if (!values.fullname) {
+              errors.fullname = "Required";
+            }
 
-    let [formData, setFormData] = useState({
-        username: "",
-        password: "",
-        password2: "",
-        passErr: "",
-        nameErr: "",
-    })
-    const usernamePattern = /^[a-zA-Z]{3,15}$/;
-    const passwordPattern = /^[a-zA-Z0-9]{3,15}$/;
+            if (!values.email) {
+              errors.email = "Required";
+            } else if (
+              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+            ) {
+              errors.email = "Invalid email address";
+            }
+            if (!values.password) {
+              errors.password = "Required";
+            }
+            return errors;
+          }}
+          onSubmit={(values, { setSubmitting }) => {
+            setTimeout(() => {
+              alert(JSON.stringify(values, null, 2));
+              setSubmitting(false);
+            }, 400);
+          }}
+        >
+          {({ isSubmitting }) => (
+            <Form>
+              <Field
+                type="text"
+                name="fullname"
+                placeholder="Enter your fullname"
+              />
+              <ErrorMessage className="error" name="fullname" component="div" />
 
-    function submit(event) {
-        event.preventDefault();
-        validateFormData()
-        console.log("submit");
-        console.log(formData);
-    }
-    function changeData(event) {
-        let name = event.target.name;
-        let value = event.target.value;
-        setFormData({...formData, [name]: value});
-    }
-    
-    function validateFormData() {
-        if (formData.password != formData.password2) {
-            let err = "Passwords do not match"
-            setFormData({...formData, "passErr": err})
-        } 
-        else if (!passwordPattern.test(formData.password)) {
-            let err = "Password must be 3-15 characters long"
-            setFormData({...formData, "passErr": err})
-        }
-        else {
-            setFormData({...formData, "passErr": ''})
-        }
+              <Field
+                type="email"
+                name="email"
+                placeholder="Enter email address"
+              />
+              <ErrorMessage className="error" name="email" component="div" />
 
-        if (!usernamePattern.test(formData.username)) {
-            let err = "Username must be 3-15 characters long"
-            setFormData({...formData, "nameErr": err})
-        }
-        else {
-            setFormData({...formData, "nameErr": ''})
-        }
-    }
+              <Field 
+                type="password" 
+                name="password" 
+                placeholder="Enter password"
+              />
+              <ErrorMessage className="error" name="password" component="div" />
 
-    // let a = {name: 'a', age: 20}
-    // let b = {name: 'b', age2: 30}
-    // let merged = {...a, ...b, name:"c"}
-
-    return (
-        <>
-            <form onSubmit={(e) => submit(e)}>
-                <div className="form-control">
-                    <b>Username:</b>
-                    <input 
-                        type="text" 
-                        placeholder="Enter Username"
-                        value={formData.username}
-                        name='username'
-                        onChange={(e) => changeData(e)}
-                    />
-                    <p style={{'color': 'red'}}>
-                        <small>
-                            <i>{formData.nameErr}</i>
-                        </small>
-                    </p>
-                </div>
-                <div className="form-control">
-                    <b>Password:</b>
-                    <input 
-                        type="password" 
-                        placeholder="Enter Password"
-                        value={formData.password}
-                        name='password'
-                        onChange={(e) => changeData(e)}
-                    />
-                    <input 
-                        type="password" 
-                        placeholder="Confirm Password" 
-                        value={formData.password2}
-                        name='password2'
-                        onChange={(e) => changeData(e)}
-                    />
-
-                    <p style={{'color': 'red'}}>
-                        <small>
-                            <i>{formData.passErr}</i>
-                        </small>
-                    </p>
-                </div>
-                <button type="submit">
-                    Submit
-                </button>
-            </form>
-        </>
-    );
+              <button type="submit" disabled={isSubmitting}>
+                Submit
+              </button>
+            </Form>
+          )}
+        </Formik>
+      </center>
+    </div>
+  );
 }
-
-export default Register;
+export default App;
