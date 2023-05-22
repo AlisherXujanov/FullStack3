@@ -56,6 +56,8 @@ function Test5(props) {
 
 function About(props) {
 
+    const notify = () => props.toast("Wow so easy!");
+
     return (
         <div>
             <h1>About</h1>
@@ -63,6 +65,11 @@ function About(props) {
             <TextContext.Provider value={{key: "Hello world"}}>
                 <Test />
             </TextContext.Provider>
+
+            <button onClick={notify}>
+                Show toast
+            </button>
+
         </div>
     )
 }
