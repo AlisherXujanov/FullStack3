@@ -6,12 +6,12 @@ import emailjs from '@emailjs/browser';
 
 function SendEmail(props) {
     const form = useRef(); // reference to the form element
-
+    
 
     const submit = (e) => {
         e.preventDefault(); // prevents the page from reloading when you hit “Send”
 
-        emailjs.sendForm('SERVICE_ID', 'TEMPLATE_ID', form.current, 'PUBLIC_KEY')
+        emailjs.sendForm('service_8aytxhp', 'template_dbx4qji', form.current, 'mbcCG18ZiPltCRfB-')
             .then((result) => {
                 alert('Message Sent', result.text);
                 // show the user a success message
@@ -28,6 +28,16 @@ function SendEmail(props) {
             <h1>Send Email</h1>
 
             <form ref={form} onSubmit={(e) => submit(e)}>
+                <input type="text" hidden value='напишите своё имя' name='from_name' />
+
+                <label htmlFor="reciever_name">Reciever name</label>
+                <input
+                    type="text"
+                    id="reciever_name"
+                    placeholder="Reciever name"
+                    name='to_name'
+                />
+
                 <label htmlFor="exampleInputEmail1">Email address</label>
                 <input
                     type="email"
