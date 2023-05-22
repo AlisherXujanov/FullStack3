@@ -27,8 +27,17 @@ const reducer = (state, action) => {
     }
 };
 
-function Todos() {
+function Todos(props) {
     const [todos, dispatch] = useReducer(reducer, initialTodos);
+
+    const [cards, setCards] = useState([{id: 0, title: "Card 1"}]);
+    function addCard() {
+        let cardDiv = document.getElementById("card-text");
+        let cardText = cardDiv.value === "" ? `Next Card` : cardDiv.value;
+        setCards([...cards, {id: cards.length, title: cardText}]);
+        props.toast(`${cardText} added!`);
+        cardDiv.value = "";
+    }
 
     // useReducer =>  is used to manage state in complex cases
     // RU: используется для управления состоянием в сложных случаях 
@@ -37,6 +46,14 @@ function Todos() {
         dispatch({ type: "COMPLETE",  id: todo.id });
     };
     let lineThroug = { textDecoration: "line-through" }
+    let cardStyle = {
+        margin: "10px",
+        padding: "10px",
+        display: "inline-block",
+        background: 'linear-gradient(to right, #4facfe, #00f2fe)',
+        color: 'snow',
+    }
+
 
     return (
         <>
@@ -51,6 +68,15 @@ function Todos() {
                         />
                         {todo.title}
                     </label>
+                </div>
+            ))}
+            <hr />
+            <input type="text" id="card-text" />
+            <button onClick={addCard}>Add Card</button>
+            <hr />
+            {cards.map(card => (
+                <div style={cardStyle} className="card" key={card.id}>
+                    <h1>{card.title}</h1>
                 </div>
             ))}
         </>

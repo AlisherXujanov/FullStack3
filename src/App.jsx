@@ -24,7 +24,7 @@ function App() {
             <Route path="/Register" element={<Register />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/cardDetails" element={<CardDetails />} />
-            <Route path="/useReducer" element={<UseReducer />} />
+            <Route path="/useReducer" element={<UseReducer toast={toast} />} />
             <Route path="/sendEmail" element={<SendEmail />} />
             <Route path="*" element={<NoPage />} />
           </Route>
