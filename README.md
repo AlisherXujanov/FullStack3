@@ -55,3 +55,20 @@
          //* show the user an error
      });
 -->
+
+
+1. Chakra UI
+> Альтернатива Bootstrap
+https://chakra-ui.com/
+
+2. Formik
+> Формы
+https://formik.org/
+
+3. EmailJS
+> Отправка писем (Gmail || Email  ...)
+https://www.emailjs.com/
+
+4. React Toastify
+> Оповещения (уведомления похожие на alert())
+https://www.npmjs.com/package/react-toastify
