@@ -15,7 +15,7 @@
         {% csrf_token %}
 
         {{ form.as_p }}
-        
+
         <button type="submit">
             Create User
         </button>
@@ -31,6 +31,7 @@
                     <li>{{ user.email }}</li>
                 </ul>
             </li>
+            <hr>
         {% endfor %}
     </ol>
 

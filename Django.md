@@ -154,7 +154,7 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'age', 'email')
+        fields = ('first_name', 'last_name', 'age', 'email')   ||  '__all__'
 
 ### ------------------------- ### ----------------------------- ###
 # IN VIEWS.PY
