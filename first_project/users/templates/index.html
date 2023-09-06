@@ -10,5 +10,17 @@
     <h1>Hello world</h1>
     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum similique quod dolorem dicta eius impedit repellat, suscipit officia harum iusto culpa illo. Necessitatibus dolores sunt ullam doloremque iure, culpa assumenda?</p>
 
+    <ol>
+        {% for user in users %}
+            <li>
+                <ul>
+                    <li>{{ user.first_name }}</li>
+                    <li>{{ user.last_name }}</li>
+                    <li>{{ user.email }}</li>
+                </ul>
+            </li>
+        {% endfor %}
+    </ol>
+
 </body>
 </html>
