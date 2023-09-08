@@ -26,7 +26,7 @@
 ---
 ---
 
-# models 
+# Modals  &&  Admin-page  &&  Forms-(basics) 
 - models.CharField      - a string of characters
 - models.URLField       - a string that has to be a valid URL format
 - models.IntegerField   - a whole number
@@ -189,3 +189,180 @@ form.as_table   => means that the form will be rendered as a table
 form.as_ul      => means that the form will be rendered as a list
 form.as_div     => means that the form will be rendered as a div
 ```
+
+
+
+
+
+# Templates (advanced)  &&  STATIC FILES
+
+### Syntax of jinja2
+```html
+https://jinja.palletsprojects.com/en/3.1.x/templates/
+
+{%  %}  =>  to write python code
+{{  }}  =>  to write python variables
+{#  #}  =>  to write comments
+
+<!-- ----------------------------- -->
+<!-- ----------------------------- -->
+<!-- Blocks -->
+{% block name %}
+    ...
+{% endblock %}
+<!-- ----------------------------- -->
+<!-- ----------------------------- -->
+<!-- Datetime in jinja -->
+{% now "Y-m-d" %}
+
+<!-- ----------------------------- -->
+<!-- ----------------------------- -->
+<!-- Creating variables -->
+{% with  variable_name = 'value' | filter-name %}
+    <p>{{ variable_name }}</p>
+{% endwith %}
+
+```
+Python filters:
+1. *safe*     => {{ variable_name|safe }}  => is used to mark a string as safe, so that it is not escaped (safe means characters like <, >, and & are not escaped but rendered as is)
+2. *escape*   => {{ variable_name|escape }}  => is used to escape a string (escape means characters like <, >, and & are escaped) 
+3. *lower*    => {{ variable_name|lower }}  => is used to convert a string to lowercase
+4. *upper*    => {{ variable_name|upper }}  => is used to convert a string to uppercase
+5. *title*    => {{ variable_name|title }}  => is used to convert a string to titlecase
+6. *length*   => {{ variable_name|length }}  => is used to get the length of a string
+7. *striptags* => {{ variable_name|striptags }}  => is used to remove HTML tags from a string
+8. *join*     => {{ variable_name|join:" " }}  => is used to join a list of strings with a separator
+9. *default*  => {{ variable_name|default:"default value" }}  => is used to set a default value if the variable is not defined
+10. *date*    => {{ variable_name|date:"Y-m-d" }}  => is used to format a date
+11. *time*    => {{ variable_name|time:"H:i:s" }}  => is used to format a time
+12. *random*  => {{ variable_name|random }}  => is used to get a random item from a list
+13. *first*   => {{ variable_name|first }}  => is used to get the first item of a list
+14. *last*    => {{ variable_name|last }}  => is used to get the last item of a list
+15. *length_is* => {{ variable_name|length_is:"5" }}  => is used to check if the length of a string is equal to a value
+16. *slice*   => {{ variable_name|slice:"1:3" }}  => is used to get a slice of a list
+... and many more
+https://jinja.palletsprojects.com/en/3.1.x/templates/#builtin-filters
+
+
+```
+<!-- ----------------------------- -->
+<!-- ----------------------------- -->
+<!-- For loop -->
+{% for item in items %}
+    <p>{{ item }}</p>
+{% endfor %}
+<!-- ----------------------------- -->
+<!-- ----------------------------- -->
+<!-- If statements -->
+{% if condition %}
+    <p>True</p>
+{% elif condition %}
+    <p>True</p>
+{% else %}
+    <p>False</p>
+{% endif %}
+<!-- ----------------------------- -->
+<!-- ----------------------------- -->
+<!-- Verbatim -->
+{% verbatim %}
+    <p>{{ this will not be interpreted as jinja code }}</p>
+{% endverbatim %}
+<!-- ----------------------------- -->
+<!-- ----------------------------- -->
+```
+
+### 404-page
+> 1. Debug mode must be set to False in settings.py
+> 2. Set the ==>> ALLOWED_HOSTS = ['*'] in settings.py
+> 3. TEMPLATES = [
+>    { 'DIRS': [BASE_DIR / 'templates']  },
+>]
+> 4. Create a 404.html file in the templates folder of project folder
+
+
+### base.html
+>- We need the base.html for the following reasons:
+>> RU: Нам нужен base.html по следующим причинам:
+>-  To avoid repeating the same code in every page
+>> RU: Чтобы избежать повторения одного и того же кода на каждой странице
+>-  To have a consistent look and feel across the website
+>> RU: Чтобы иметь единый внешний вид и ощущение на всем сайте
+>-  To make it easier to make changes to the website
+>> RU: Чтобы было легче вносить изменения на сайт
+
+```html
+<!-- base.html -->
+
+<!-- imports -->
+{% load static %} <!-- to load static files -->
+
+<html>
+<head>
+    <title>{% block title %}{% endblock title %}</title>
+    
+    {% block css %}{% endblock css %}
+</head>
+<body>
+    {% block content %}{% endblock content %}
+    {% block scripts %}{% endblock scripts %}
+</body>
+</html>
+
+...
+### ------------------------- ### ----------------------------- ###
+<!-- In other html files -->
+
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>My Website - Home</title>
+{% endblock title %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+{% endblock css %}
+
+{% block content %}
+    <h1>Welcome to my website!</h1>
+    <p>Here's some content...</p>
+{% endblock content %}
+
+{% block scripts %}
+    <script src="{% static 'js/script.js' %}"></script>
+{% endblock scripts %}
+```
+
+
+
+### Include .html files in other html
+> 1. Create a file with the html code that you want to include
+>> RU: Создайте файл с html-кодом, который вы хотите включить
+> 2. In the file that you want to include the html code, add the following code:
+>> RU: В файле, в котором вы хотите включить html-код, добавьте следующий код
+```
+        {% include 'file_name.html' %}
+```
+
+
+
+### LOAD CSS
+1. Put this into settings.py
+```python
+STATIC_URL = 'static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+```
+2. In your HTML template, load the static files by adding the following line at the top of the file:
+```html
+{% load static %}
+<head>
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+</head>
+
+<!-- TO IMPORT IMAGE -->
+<img src="{% static 'path/to/image.png' %}" alt="Image description">
+```
+
+
+
+#
+#
