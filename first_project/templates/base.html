@@ -4,10 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        {% block title %}
-        {% endblock title %}
-    </title>
+    
+    {% block title %}
+      <title>AC Django Project</title>
+    {% endblock title %}
+    
+    {% block link %}
+    {% endblock link %}
 </head>
 <body>
     {% block content %}

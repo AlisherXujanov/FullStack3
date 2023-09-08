@@ -1,45 +1,37 @@
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link 
-        rel="stylesheet" 
-        href="{% static 'css/style.css' %}"
-    >
-</head>
-<body>
-    
-    <h1>Users</h1>
-    <hr>
-    <h3>Create User</h3>
+{% block title %}
+  <title>Users</title>
+{% endblock %}
 
-    <form method="POST">
-        {% csrf_token %}
+{% block link %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+{% endblock %}
 
-        {{ form.as_p }}
+{% block content %}
+  <h1>Users</h1>
+  <hr />
+  <h3>Create User</h3>
 
-        <button type="submit">
-            Create User
-        </button>
-    </form>
+  <form method="POST">
+    {% csrf_token %}
 
-    <hr>
-    <ol>
-        {% for user in users %}
-            <li>
-                <ul>
-                    <li>{{ user.first_name }}</li>
-                    <li>{{ user.last_name }}</li>
-                    <li>{{ user.email }}</li>
-                </ul>
-            </li>
-            <hr>
-        {% endfor %}
-    </ol>
+    {{ form.as_p }}
 
-</body>
-</html>
+    <button type="submit">Create User</button>
+  </form>
+
+  <hr />
+  <ol>
+    {% for user in users %}
+      <li>
+        <ul>
+          <li>{{ user.first_name }}</li>
+          <li>{{ user.last_name }}</li>
+          <li>{{ user.email }}</li>
+        </ul>
+      </li>
+      <hr />
+    {% endfor %}
+  </ol>
+{% endblock %}
