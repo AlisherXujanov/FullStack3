@@ -364,5 +364,28 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 
 
+# Bootstrap  &&  Routing (intermediate)
+### Bootstrap
+1. Install bootstrap
+```pip install django-bootstrap5```
+2. Add bootstrap to INSTALLED_APPS in settings.py
+```python
+INSTALLED_APPS = [
+    ...
+    'django_bootstrap5',
+]
+```
+3. Add the following code to the top of the base.html file
+```html
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
+```
+
 #
+
+#
+
 #
