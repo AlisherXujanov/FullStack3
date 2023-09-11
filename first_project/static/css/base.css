@@ -1,0 +1,17 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    transition: 0.2s ease-out;
+    text-decoration: none;
+}
+body {
+    background-color: #eee;
+    color: #111;
+}
+main {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: 10px;
+}

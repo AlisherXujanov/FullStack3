@@ -9,6 +9,8 @@
       <title>AC Django Project</title>
     {% endblock title %}
     
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% block link %}
     {% endblock link %}
 
@@ -16,11 +18,18 @@
     {% endblock style %}
 </head>
 <body>
-    {% block content %}
-    {% endblock content %}
-    
-    {% block script %}
-    {% endblock script %}
+  <main>
+    <div>
+      {% include 'navbar.html' %}
+    </div>
+    <div>
+      {% block content %}
+      {% endblock content %}
+      
+      {% block script %}
+      {% endblock script %}
+    </div>
+  </main>
     
 </body>
 </html>
