@@ -1,8 +1,8 @@
-from django.http import HttpResponse
 from django.shortcuts import render
 
 from .forms import UserForm
 from .models import User
+from .usecases import *
 
 
 def first_view(request):
@@ -11,10 +11,7 @@ def first_view(request):
         if form.is_valid():
             form.save(commit=True)
 
-    context = {
-        'form': UserForm(),
-        "users": User.objects.all()
-    }
+    context = get_users_context()
 
     return render(request, 'index.html', context)
 
@@ -23,3 +20,13 @@ def user_details(request, user_id):
     user = User.objects.get(id=user_id)
     context = {'user': user}
     return render(request, 'user_details.html', context)
+
+
+def delete_user(request, del_id):
+    user = User.objects.get(id=del_id)
+    print(user.first_name)
+    user.delete()
+    print(user.first_name)
+
+    context = get_users_context()
+    return render(request, 'index.html', context)

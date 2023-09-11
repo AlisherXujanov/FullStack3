@@ -32,14 +32,22 @@
         <th>First Name</th>
         <th>Last Name</th>
         <th>Email</th>
+        <th>Delete user</th>
       </tr>
       
       {% for user in users %}
-        <tr onclick="go_to_details({{user.id}})" style="cursor:pointer;">
-          <th>{{ user.id }}</th>
+        <tr>
+          <th>
+            <a href="{% url 'user_details' user.id %}">
+              {{ user.id }}
+            </a>
+          </th>
           <td>{{ user.first_name }}</td>
           <td>{{ user.last_name }}</td>
           <td>{{ user.email }}</td>
+          <td style="cursor:pointer;" onclick="delete_user({{user.id}})">
+            ❌
+          </td>
         </tr>
       {% endfor %}
     </table>
@@ -48,10 +56,17 @@
 
 {% block script %}
   <script>
-    let url = "{% url 'user_details' 99999 %}"
-    function go_to_details(id) {
-      url = url.replace('99999', id)
-      location.href = url
+    function delete_user(id) {
+      let delete_url = "{% url 'delete_user' 99999 %}"
+      if (confirm(`Are you sure to delete?`)) {
+        delete_url = delete_url.replace('99999', id)
+        location.href = delete_url
+      } else {
+        console.log('Canceled')
+        alert("Canceled")
+      }
     }
+
+
   </script>
 {% endblock %}
