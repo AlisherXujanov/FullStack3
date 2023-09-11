@@ -1,4 +1,6 @@
 {% load static %}
+{% load django_bootstrap5 %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +10,8 @@
     {% block title %}
       <title>AC Django Project</title>
     {% endblock title %}
-    
-
+        
+    {% bootstrap_css %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% block link %}
     {% endblock link %}
@@ -18,6 +20,8 @@
     {% endblock style %}
 </head>
 <body>
+  {% bootstrap_messages %}
+    
   <main>
     <div>
       {% include 'navbar.html' %}
@@ -30,6 +34,7 @@
       {% endblock script %}
     </div>
   </main>
-    
+  
+  {% bootstrap_javascript %}
 </body>
 </html>

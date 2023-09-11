@@ -3,7 +3,6 @@
     margin: 0;
     box-sizing: border-box;
     transition: 0.2s ease-out;
-    text-decoration: none;
 }
 body {
     background-color: #eee;
@@ -14,4 +13,8 @@ main {
     display: grid;
     grid-template-columns: 50px 1fr;
     gap: 10px;
+    background-color: #eee;
+}
+main > div:last-child {
+    padding: 10px;
 }

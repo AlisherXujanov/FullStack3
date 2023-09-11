@@ -10,6 +10,7 @@ nav a {
     display: flex;
     justify-content: center;
     align-items: center;
+    text-decoration: none;
 }
 nav a:hover {
     background-color: #111;
