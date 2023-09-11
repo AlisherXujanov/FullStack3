@@ -384,6 +384,15 @@ INSTALLED_APPS = [
 
 ```
 
+### Routing
+```html
+   1. href="{% url 'name_of_url' %}" => to go to a url
+
+   2. href="{% url 'name_of_url' variable %}" => to go to a url with a variable
+
+   3. href="{% url 'name_of_url' variable1 variable2 %}" => to go to a url with multiple variables
+```
+
 #
 
 #
