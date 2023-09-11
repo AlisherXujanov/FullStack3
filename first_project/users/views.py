@@ -17,3 +17,9 @@ def first_view(request):
     }
 
     return render(request, 'index.html', context)
+
+
+def user_details(request, user_id):
+    user = User.objects.get(id=user_id)
+    context = {'user': user}
+    return render(request, 'user_details.html', context)

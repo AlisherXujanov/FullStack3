@@ -15,6 +15,9 @@ main {
     gap: 10px;
     background-color: #eee;
 }
+main > div {
+    position: relative;
+}
 main > div:last-child {
     padding: 10px;
 }

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load django_bootstrap5 %}
 
 {% block title %}
   <title>Users</title>
@@ -20,20 +21,37 @@
 
     {{ form.as_p }}
 
-    <button type="submit">Create User</button>
+    <button class="btn btn-success" type="submit">Create User</button>
   </form>
 
   <hr />
-  <ol>
-    {% for user in users %}
-      <li>
-        <ul>
-          <li>{{ user.first_name }}</li>
-          <li>{{ user.last_name }}</li>
-          <li>{{ user.email }}</li>
-        </ul>
-      </li>
-      <hr />
-    {% endfor %}
-  </ol>
+  <div class="container">
+    <table class="table table-secondary table-striped table-hover table-responsive">
+      <tr>
+        <th>№</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+      </tr>
+      
+      {% for user in users %}
+        <tr onclick="go_to_details({{user.id}})" style="cursor:pointer;">
+          <th>{{ user.id }}</th>
+          <td>{{ user.first_name }}</td>
+          <td>{{ user.last_name }}</td>
+          <td>{{ user.email }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script>
+    let url = "{% url 'user_details' 99999 %}"
+    function go_to_details(id) {
+      url = url.replace('99999', id)
+      location.href = url
+    }
+  </script>
 {% endblock %}
