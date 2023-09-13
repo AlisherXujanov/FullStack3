@@ -472,6 +472,9 @@ objs = ModelName.objects.exclude(field1=value1, field2=value2, ...)
 ```python
 from django.db.models import F
 
+F() allows us to compare two fields in a model.
+
+
 # Get all the objects where field1 is greater than field2
 objs = ModelName.objects.filter(field1__gt=F('field2'))
 ex: 
@@ -572,6 +575,8 @@ in_stock_books = Book.in_stock_objects.all()
 import json
 class Book(models.Model):
     ...
+    # We don't use json-field because it is not supported by all databases
+    
     all_json_data = models.TextField(default='{}')
 
     def get_data(key=None, detault=None):
@@ -620,6 +625,37 @@ class Book(models.Model):
 ```
 
 
+
+#### Updating db with migrations
+To create an empty migration file 
+```python manage.py makemigrations --empty yourappname```
+
+
+Then we update the migration file like this:
+```python
+from django.db import migrations
+
+def combine_names(apps, schema_editor):
+    # We can't import the Person model directly as it may be a newer
+    # version than this migration expects. We use the historical version.
+    Person = apps.get_model("yourappname", "Person")
+    for person in Person.objects.all():
+        person.name = f"{person.first_name} {person.last_name}"
+        person.save()
+
+
+class Migration(migrations.Migration):
+    dependencies = [
+        ("yourappname", "0001_initial"),
+    ]
+
+    operations = [
+        migrations.RunPython(combine_names),
+    ]
+```
+
+
 #
+
 
 #
