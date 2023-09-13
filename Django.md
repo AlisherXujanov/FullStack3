@@ -626,7 +626,7 @@ class Book(models.Model):
 
 
 
-#### Updating db with migrations
+## Updating db with migrations
 To create an empty migration file 
 ```python manage.py makemigrations --empty yourappname```
 
