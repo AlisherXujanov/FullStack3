@@ -25,6 +25,7 @@
 ---
 ---
 ---
+---
 
 # Modals  &&  Admin-page  &&  Forms-(basics) 
 - models.CharField      - a string of characters
@@ -193,6 +194,7 @@ form.as_div     => means that the form will be rendered as a div
 
 
 
+---
 
 # Templates (advanced)  &&  STATIC FILES
 
@@ -363,6 +365,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 ```
 
 
+---
 
 # Bootstrap  &&  Routing (intermediate)  &&  Details  &&  CRUD operations
 ### Bootstrap
@@ -398,8 +401,224 @@ INSTALLED_APPS = [
 
    3. href="{% url 'name_of_url' variable1 variable2 %}" => to go to a url with multiple variables
 ```
+---
 
-#
+# Querysets  &&  Models (advanced) 
+---
+
+```CRUD - operations```
+>'*C*'reate
+>'*R*'ead
+>'*U*'pdate
+>'*D*'elete
+
+
+##### Create
+```python
+# Create a new object
+new_object = ModelName.objects.create(field1=value1, field2=value2, ...)
+ex: new_object = User.objects.create(first_name='John', last_name='Doe', age=30)
+```
+
+##### Read
+```python
+# Get all the objects
+all_objs = ModelName.objects.all()
+filtered_objs = ModelName.objects.filter(field1=value1, field2=value2, ...)
+one_obj = ModelName.objects.get(field1=value1, field2=value2, ...)
+...
+```
+
+##### Update
+```python
+# Update an object
+obj.field1 = value1
+obj.field2 = value2
+obj.save()
+```
+
+##### Delete
+```python
+# Delete an object
+obj.delete()
+```
+
+
+#### Chaining Querysets
+
+```python
+# Get all the objects that match the query and are ordered by the query
+objs = ModelName.objects.filter(field1=value1, field2=value2, ...).order_by('field1', 'field2', ...)
+
+# Get the first object that matches the query
+obj = ModelName.objects.filter(field1=value1, field2=value2, ...).first()
+
+# Get an object by chain-filtering
+# Double underscore (__) is used to chain filters
+objs = ModelName.objects.filter(user__name__endswith='John')
+objs = ModelName.objects.filter(name__contains='John').filter(age__gt=30)
+objs = ModelName.objects.filter(name__startswith='John').filter(age__gt=30).first()
+objs = ModelName.objects.filter(name__in=[names]).filter(age__lt=30)
+```
+
+#### Exclude
+```python
+# Get all the objects that don’t match the query
+objs = ModelName.objects.exclude(field1=value1, field2=value2, ...)
+
+```
+
+#### F() = is used to compare two fields
+```python
+from django.db.models import F
+
+# Get all the objects where field1 is greater than field2
+objs = ModelName.objects.filter(field1__gt=F('field2'))
+ex: 
+    ice_creams = IceCream.objects.filter(sugar__lt=F('fat'))
+    # This will return all the ice creams where the sugar is less than the fat
+
+# Get all the objects where field1 is greater than field2 and field3 is less than field4
+objs = ModelName.objects.filter(field1__gt=F('field2'), field3__lt=F('field4'))
+```
+
+#### Q() = is used to make complex queries
+```python
+from django.db.models import Q
+
+Q means OR and ~Q means NOT
+
+# Q
+# Get all the objects where field1 is greater than field2 or field3 is less than field4
+objs = ModelName.objects.filter(Q(field1__gt=F('field2')) | Q(field3__lt=F('field4')))
+objs = ModelName.objects.filter(Q(field1__gt=F('field2')) | Q(field3__lt=F('field4'))).order_by('field1', 'field2', ...)
+
+
+# ~Q
+# Get all the objects where field1 is greater than field2 and field3 is less than field4
+objs = ModelName.objects.filter(~Q(field1__gt=F('field2')) & Q(field3__lt=F('field4')))
+objs = ModelName.objects.filter(~Q(field1__gt=F('field2')) & Q(field3__lt=F('field4'))).order_by('field1', 'field2', ...)
+```
+
+
+#### ORM and Aggregation
+ORM  =>  Object-Relational Mapping
+It allows us to query the database using object-oriented programming.
+It is useful on large databases rather than small ones as it can get the results faster.
+
+Suppose you have a Book model with fields *title*, *author*, and *price*. You want to find the average price of all books, the count of all books, the minimum price of all books, the maximum price of all books, and the total price of all books.
+
+Here's how you can use the aggregate function to achieve this:
+```python
+from django.db.models import Avg, Count, Min, Max, Sum
+from myapp.models import Book
+
+# Get the average price of all books
+avg_price = Book.objects.all().aggregate(Avg('price'))
+
+# Get the count of all books
+book_count = Book.objects.all().aggregate(Count('id'))
+
+# Get the minimum price of all books
+min_price = Book.objects.all().aggregate(Min('price'))
+
+# Get the maximum price of all books
+max_price = Book.objects.all().aggregate(Max('price'))
+
+# Get the total price of all books
+total_price = Book.objects.all().aggregate(Sum('price'))
+```
+
+This will return a dictionary with the calculated values for each query. For example, **avg_price** will be a dictionary with a single key-value pair, where the key is '**price__avg**' and the value is the average price of all books. Similarly, **book_count** will be a dictionary with a single key-value pair, where the key is '**id__count**' and the value is the count of all books.
+
+
+#### Custom Manager
+```python
+class InStockManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(in_stock=True)
+
+class Book(models.Model):
+    title = models.CharField(max_length=100)
+    author = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=5, decimal_places=2)
+    in_stock = models.BooleanField(default=True)
+
+    objects = models.Manager()  # The default manager
+    in_stock_objects = InStockManager()  # Custom manager
+
+    def __str__(self):
+        return self.title
+
+### ------------------------- ### ----------------------------- ###
+### VIEWS
+### ------------------------- ### ----------------------------- ###
+
+from myapp.models import Book
+
+# Get all books
+all_books = Book.objects.all()
+
+# Get only books that are currently in stock
+# RU: Получить только книги, которые в настоящее время есть в наличии
+in_stock_books = Book.in_stock_objects.all()
+```
+
+
+
+
+#### Overriding existing methods and adding new methods
+```python
+import json
+class Book(models.Model):
+    ...
+    all_json_data = models.TextField(default='{}')
+
+    def get_data(key=None, detault=None):
+        data = json.parse(self.all_json_data)
+        default = default or f'Key {key} does not exist'
+        if (key):
+            return data.get(key, default)
+        return data
+
+    def set_data(data):
+        self.all_json_data = json.dumps(data)
+        self.save()
+
+    def update_data(data):
+        old_data = self.get_data()
+        old_data.update(data)
+        self.set_data(old_data)
+        self.save()
+    
+
+    def save(self, *args, **kwargs):
+        # Do something
+        # ex: self.title = self.title.upper()
+        super().save(*args, **kwargs)  # Call the "real" save() method.
+
+    def delete(self, *args, **kwargs):
+        # Do something
+        # ex: self.children.all().delete()
+        super().delete(*args, **kwargs)  # Call the "real" delete() method.
+
+    
+```
+#### Integrity checks and custom Exceptions
+Integrity checks are used to ensure that the data is consistent and correct. For example, if we have a Book model with a field *title* that is required, we can use an integrity check to ensure that the title is not empty.
+
+```python
+from django.db import IntegrityError
+
+class Book(models.Model):
+    ...
+
+    def save(self, *args, **kwargs):
+        if not ...
+            raise IntegrityError(f'...')
+        super().save(*args, **kwargs)  # Call the "real" save() method.
+```
+
 
 #
 
