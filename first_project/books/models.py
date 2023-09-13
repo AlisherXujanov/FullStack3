@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import IntegrityError, models
 from users.models import User
 
@@ -11,6 +13,10 @@ from users.models import User
 # models.PROTECT    =>   if the user is deleted,
 #                        the book will not be deleted and
 #                        an error will be raised
+# -----------------------------------------------------
+# ORM = Object Relational Mapper
+# l = []
+# Books.objects.filter(user__first_name__in=l).order_by("created")
 
 
 class BooksManager(models.Manager):
@@ -22,6 +28,7 @@ class NullPriceException(Exception):
 
 
 class Books(models.Model):
+    fullname = models.CharField(max_length=50, null=True, blank=True)
     title: str = models.CharField(max_length=50)
     description: str = models.TextField()
     author: User = models.ForeignKey(
@@ -29,9 +36,10 @@ class Books(models.Model):
     genre: str = models.CharField(max_length=25)
     is_available: bool = models.BooleanField(default=True)
     price: float = models.DecimalField(max_digits=5, decimal_places=2)
+    created: datetime = models.DateTimeField(auto_now_add=True)
 
-    objects = models.Manager()
-    c_objects = BooksManager()
+    objects = models.Manager()  # default
+    c_objects = BooksManager()  # custom manager
 
     def __str__(self):
         return self.title

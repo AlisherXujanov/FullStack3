@@ -517,19 +517,19 @@ from django.db.models import Avg, Count, Min, Max, Sum
 from myapp.models import Book
 
 # Get the average price of all books
-avg_price = Book.objects.all().aggregate(Avg('price'))
+avg_price = Book.objects.aggregate(Avg('price'))
 
 # Get the count of all books
-book_count = Book.objects.all().aggregate(Count('id'))
+book_count = Book.objects.aggregate(Count('id'))
 
 # Get the minimum price of all books
-min_price = Book.objects.all().aggregate(Min('price'))
+min_price = Book.objects.aggregate(Min('price'))
 
 # Get the maximum price of all books
-max_price = Book.objects.all().aggregate(Max('price'))
+max_price = Book.objects.aggregate(Max('price'))
 
 # Get the total price of all books
-total_price = Book.objects.all().aggregate(Sum('price'))
+total_price = Book.objects.aggregate(Sum('price'))
 ```
 
 This will return a dictionary with the calculated values for each query. For example, **avg_price** will be a dictionary with a single key-value pair, where the key is '**price__avg**' and the value is the average price of all books. Similarly, **book_count** will be a dictionary with a single key-value pair, where the key is '**id__count**' and the value is the count of all books.
@@ -580,9 +580,9 @@ class Book(models.Model):
     all_json_data = models.TextField(default='{}')
 
     def get_data(key=None, detault=None):
-        data = json.parse(self.all_json_data)
-        default = default or f'Key {key} does not exist'
+        data = json.loads(self.all_json_data)
         if (key):
+            default = default or f'Key {key} does not exist'
             return data.get(key, default)
         return data
 
@@ -590,9 +590,9 @@ class Book(models.Model):
         self.all_json_data = json.dumps(data)
         self.save()
 
-    def update_data(data):
+    def update_data(new_data):
         old_data = self.get_data()
-        old_data.update(data)
+        old_data.update(new_data)
         self.set_data(old_data)
         self.save()
     
@@ -638,10 +638,10 @@ from django.db import migrations
 def combine_names(apps, schema_editor):
     # We can't import the Person model directly as it may be a newer
     # version than this migration expects. We use the historical version.
-    Person = apps.get_model("yourappname", "Person")
-    for person in Person.objects.all():
-        person.name = f"{person.first_name} {person.last_name}"
-        person.save()
+    User = apps.get_model("users", "User")
+    for user in User.objects.all():
+        user.name = f"{user.first_name} {user.last_name}"
+        user.save()
 
 
 class Migration(migrations.Migration):
