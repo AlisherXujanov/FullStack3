@@ -655,6 +655,55 @@ class Migration(migrations.Migration):
 ```
 
 
+# Forms (advanced)  &&  File upload  &&  Data validation
+
+#### Simple forms
+```python
+# forms.py
+
+from django import forms
+
+class UserForm(forms.Form):
+    first_name = forms.CharField(label='First Name', max_length=100)
+    last_name = forms.CharField(label='Last Name', max_length=100)
+    age = forms.IntegerField(label='Age')
+    email = forms.EmailField(label='Email', max_length=100)
+```
+
+#### Django messages
+```python
+from django.contrib import messages
+messages.mode(request, 'message')
+messages.success(request, f'Hello world')
+```
+And in HTML
+```html
+    <div class="container" id="messages">
+       {% bootstrap_messages %}
+    </div>
+
+
+    <!-- Make it disappear after a while -->
+    <script>
+      setTimeout(function () {
+        var messages = document.querySelectorAll('#messages')
+        messages.forEach(function (message) {
+          message.remove()
+        })
+      }, 5000)
+    </script>
+```
+
+#### Forms with widgets
+
+Widgets are used to customize the look and feel of the form fields. For example, we can use a TextInput widget to change the input field from a text field to a password field.
+
+```python
+
+
+#
+
+
 #
 
 

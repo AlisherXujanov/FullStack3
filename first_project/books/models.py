@@ -28,7 +28,6 @@ class NullPriceException(Exception):
 
 
 class Books(models.Model):
-    fullname = models.CharField(max_length=50, null=True, blank=True)
     title: str = models.CharField(max_length=50)
     description: str = models.TextField()
     author: User = models.ForeignKey(
