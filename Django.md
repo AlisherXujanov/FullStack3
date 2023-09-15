@@ -802,6 +802,75 @@ def save(self, *args, **kwargs):
 
 
 
+#### Data validation
+clean methods are used to validate the data. For example, we can use the clean_first_name method to check if the first name is empty. Or, use just clean to check if the form is valid.
+
+```python
+
+def clean(self):
+    cleaned_data = super().clean()
+    first_name = cleaned_data.get('first_name')
+    last_name = cleaned_data.get('last_name')
+    age = cleaned_data.get('age')
+    email = cleaned_data.get('email')
+    choice = cleaned_data.get('choice')
+
+    if not first_name:
+        raise forms.ValidationError('First name is required')
+    if not last_name:
+        raise forms.ValidationError('Last name is required')
+    if not age:
+        raise forms.ValidationError('Age is required')
+    if not email:
+        raise forms.ValidationError('Email is required')
+    if not choice:
+        raise forms.ValidationError('Choice is required')
+    return cleaned_data
+```
+
+```python
+from django import forms
+
+class UserForm(forms.Form):
+    first_name = forms.CharField(label='First Name', max_length=100, widget=forms.TextInput(attrs={'placeholder': 'First Name'}))
+    last_name = forms.CharField(label='Last Name', max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Last Name'}))
+    age = forms.IntegerField(label='Age', widget=forms.NumberInput(attrs={'placeholder': 'Age'}))
+    email = forms.EmailField(label='Email', max_length=100, widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
+    choice = forms.ChoiceField(choices=CHOICES, widget=forms.Select(attrs={'class': 'form-select'}))
+
+    def clean_first_name(self):
+        first_name = self.cleaned_data.get('first_name')
+        if not first_name:
+            raise forms.ValidationError('First name is required')
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data.get('last_name')
+        if not last_name:
+            raise forms.ValidationError('Last name is required')
+        return last_name
+
+    def clean_age(self):
+        age = self.cleaned_data.get('age')
+        if not age:
+            raise forms.ValidationError('Age is required')
+        return age
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if not email:
+            raise forms.ValidationError('Email is required')
+        return email
+
+    def clean_choice(self):
+        choice = self.cleaned_data.get('choice')
+        if not choice:
+            raise forms.ValidationError('Choice is required')
+        return choice
+```
+
+
+
 #
 
 
