@@ -1,17 +1,21 @@
 from django.contrib import messages
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from .forms import UserForm
 from .models import User
 from .usecases import *
 
 
-def first_view(request):
+def users(request):
     if request.method == 'POST':
         form = UserForm(request.POST, request.FILES)
         if form.is_valid():
-            messages.success(request, form.cleaned_data)
-            # form.save(commit=True)
+            username = form.cleaned_data['first_name']
+            messages.success(
+                request,
+                f'{username} hass been created successfully!'
+            )
+            form.save(commit=True)
 
     context = get_users_context()
 
@@ -30,5 +34,4 @@ def delete_user(request, del_id):
     user.delete()
     print(user.first_name)
 
-    context = get_users_context()
-    return render(request, 'index.html', context)
+    return redirect('users_view')

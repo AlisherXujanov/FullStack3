@@ -4,7 +4,10 @@ from .models import User
 
 
 class UserForm(forms.ModelForm):
-    first_name = forms.CharField(max_length=255, label="Your name")
+    first_name = forms.CharField(
+        max_length=255, label="Your name",
+        widget=forms.PasswordInput(attrs={'placeholder': 'Your name'})
+    )
     last_name = forms.CharField(max_length=255, label="Your surname")
     email = forms.EmailField(required=True, label="Your email",
                              help_text="We will never share your information with anyone!")

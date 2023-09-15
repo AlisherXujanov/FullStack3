@@ -875,7 +875,7 @@ class UserForm(forms.Form):
 # Class Based Views (intermediate)
 
 
-# Sign - In/Out   &&   Profile🧑🏻‍🏫  &&   User-related-updates
+# Sign - In/Out   &&   Profile🧑🏻‍🏫  &&   User-related-updates 
 
 
 # Middleware (advanced)
