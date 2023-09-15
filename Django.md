@@ -673,15 +673,14 @@ class UserForm(forms.Form):
 #### Django messages
 ```python
 from django.contrib import messages
-messages.mode(request, 'message')
-messages.success(request, f'Hello world')
+SYNTAX:  messages.mode(request, 'message')
+EXAMPLE: messages.success(request, f'Hello world')
 ```
 And in HTML
 ```html
     <div class="container" id="messages">
        {% bootstrap_messages %}
     </div>
-
 
     <!-- Make it disappear after a while -->
     <script>
@@ -699,6 +698,108 @@ And in HTML
 Widgets are used to customize the look and feel of the form fields. For example, we can use a TextInput widget to change the input field from a text field to a password field.
 
 ```python
+
+from django import forms
+
+class UserForm(forms.Form):
+    first_name = forms.CharField(label='First Name', max_length=100, widget=forms.TextInput(attrs={'placeholder': 'First Name'}))
+    last_name = forms.CharField(label='Last Name', max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Last Name'}))
+    age = forms.IntegerField(label='Age', widget=forms.NumberInput(attrs={'placeholder': 'Age'}))
+    email = forms.EmailField(label='Email', max_length=100, widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
+
+### ------------------------- ### ----------------------------- ###
+# WITH CHOICES FIELD
+from django import forms
+
+CHOICES = (
+    ('1', 'First Choice'),
+    ('2', 'Second Choice'),
+    ('3', 'Third Choice'),
+)
+class UserForm(forms.Form):
+    first_name = forms.CharField(label='First Name', max_length=100, widget=forms.TextInput(attrs={'placeholder': 'First Name'}))
+    last_name = forms.CharField(label='Last Name', max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Last Name'}))
+    age = forms.IntegerField(label='Age', widget=forms.NumberInput(attrs={'placeholder': 'Age'}))
+    email = forms.EmailField(label='Email', max_length=100, widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
+    choice = forms.ChoiceField(choices=CHOICES, widget=forms.Select(attrs={'class': 'form-select'}))
+```
+
+#### Uploading Images
+First we need to install Pillow
+```pip install Pillow```
+
+Then we need to add the following code to settings.py
+```python
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+```
+
+Then we need to add the following code to urls.py
+```python
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    ...
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```
+
+Then we need to add the following code to models.py
+```python
+from django.db import models
+
+class User(models.Model):
+    ...
+    image = models.ImageField(upload_to='images/', default='images/default.png')
+```
+
+Then we need to add the following code to forms.py
+```python
+from django import forms
+
+class UserForm(forms.Form):
+    ...
+    image = forms.ImageField(label='Image', widget=forms.FileInput(attrs={'class': 'form-control'}))
+```
+
+Then in views.py
+```python
+...
+def index(request):
+    ...
+    if request.method == 'POST':
+        form = Form(request.POST, request.FILES)
+        if form.is_valid():
+            form.save(commit=True)
+    ...
+...
+```
+
+Then we need to add the following code to index.html
+```html
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+</form>
+
+```
+
+Then we should decrease the size of the image
+```python
+from PIL import Image
+
+def save(self, *args, **kwargs):
+    super().save(*args, **kwargs)
+
+    img = Image.open(self.image.path)
+    if img.height > 300 or img.width > 300:
+        output_size = (300, 300)
+        img.thumbnail(output_size)
+        img.save(self.image.path)
+```
+
 
 
 #
