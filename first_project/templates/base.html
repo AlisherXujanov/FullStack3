@@ -20,13 +20,16 @@
     {% endblock style %}
 </head>
 <body>
-  {% bootstrap_messages %}
-    
+  
   <main>
     <div>
       {% include 'navbar.html' %}
     </div>
     <div>
+      <div id="messages">
+        {% bootstrap_messages %}
+      </div>
+
       {% block content %}
       {% endblock content %}
       
@@ -35,6 +38,15 @@
     </div>
   </main>
   
+  <script>
+    setTimeout(() => {
+      const messages = document.querySelectorAll('#messages');
+      messages.forEach(msg => {
+        msg.remove();
+      })
+    }, 5000)
+
+  </script>
   {% bootstrap_javascript %}
 </body>
 </html>

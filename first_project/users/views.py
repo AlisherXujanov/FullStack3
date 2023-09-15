@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render
 
 from .forms import UserForm
@@ -7,9 +8,10 @@ from .usecases import *
 
 def first_view(request):
     if request.method == 'POST':
-        form = UserForm(request.POST)
+        form = UserForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save(commit=True)
+            messages.success(request, form.cleaned_data)
+            # form.save(commit=True)
 
     context = get_users_context()
 

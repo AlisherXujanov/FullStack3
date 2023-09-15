@@ -16,7 +16,7 @@
   <hr />
   <h3>Create User</h3>
 
-  <form method="POST">
+  <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 
     {{ form.as_p }}
