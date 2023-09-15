@@ -871,10 +871,26 @@ class UserForm(forms.Form):
 
 
 
-#
+
+# Class Based Views (intermediate)
 
 
-#
+# Sign - In/Out   &&   Profile🧑🏻‍🏫  &&   User-related-updates
 
 
-#
+# Middleware (advanced)
+
+
+# 📚Django-allauth  VS   📚JWT-Token  libraries
+
+
+# Security 🔐 (advanced)
+
+
+# Signals   &&  Caching    &&   Sending Emails 📧 (advanced)
+
+
+# 🌐 Internationalisation  &&  localisation  (advanced)
+
+
+# Performance && optimization &&  Unit Tests
