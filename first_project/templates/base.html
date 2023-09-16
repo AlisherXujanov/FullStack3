@@ -3,57 +3,58 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
 
     {% block title %}
       <title>AC Django Project</title>
-    {% endblock title %}
-        
+    {% endblock %}
+
     {% bootstrap_css %}
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
-    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}" />
+
     {% block link %}
-    {% endblock link %}
+    {% endblock %}
 
     {% block style %}
-    {% endblock style %}
-</head>
-<body>
-  
-  <main>
-    <div>
-      {% include 'navbar.html' %}
-    </div>
-    <div>
-      <div id="messages">
-        {% bootstrap_messages %}
+    {% endblock %}
+  </head>
+  <body>
+    <main>
+      <div>
+        {% include 'navbar.html' %}
       </div>
+      <div>
+        <div id="messages">
+          {% bootstrap_messages %}
+        </div>
 
-      {% block content %}
-      {% endblock content %}
+        {% block content %}
+
+        {% endblock %}
+
+        {% block script %}
+
+        {% endblock %}
+      </div>
+    </main>
+
+    {% bootstrap_javascript %}
+    <script>
+      setTimeout(() => {
+        const messages = document.querySelectorAll('#messages')
+        messages.forEach((msg) => {
+          msg.remove()
+        })
+      }, 5000)
       
-      {% block script %}
-      {% endblock script %}
-    </div>
-  </main>
-  
-  {% bootstrap_javascript %}
-  <script>
-    setTimeout(() => {
-      const messages = document.querySelectorAll('#messages');
-      messages.forEach(msg => {
-        msg.remove();
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
       })
-    }, 5000)
-
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-      return new bootstrap.Tooltip(tooltipTriggerEl)
-    })
-  </script>
-</body>
+    </script>
+  </body>
 </html>

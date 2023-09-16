@@ -25,6 +25,7 @@ urlpatterns = [
     path("", home),
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
+    path('books/', include('books.urls')),
 ]
 
 urlpatterns += static(
@@ -33,5 +34,5 @@ urlpatterns += static(
 )
 urlpatterns += static(
     settings.STATIC_URL,
-    document_root=settings.STATICFILES_DIRS
+    document_root=settings.STATIC_ROOT
 )

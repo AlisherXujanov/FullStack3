@@ -1,23 +1,21 @@
+from django.contrib.auth.models import User
 from django.db import models
 from PIL import Image
 
 
-# Create your models here.
-class User(models.Model):
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    email = models.EmailField(unique=True)
-    created = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(default='default.png', upload_to='profile_pics')
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
     def __str__(self):
-        return self.first_name + self.last_name
+        return f'{self.user.username} Profile'
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-
+        print(f"{self.image.path=}")
         img = Image.open(self.image.path)
-        if img.height > 600 or img.width > 600:
-            output_size = (600, 600)
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)

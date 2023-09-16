@@ -5,6 +5,7 @@ nav {
     position: fixed;
     top: 0;
     left: 0;
+    border-radius: 0 10px 10px 0;
 }
 nav a {
     font-size: x-large;
@@ -14,6 +15,7 @@ nav a {
     justify-content: center;
     align-items: center;
     text-decoration: none;
+    border-radius: 0 10px 10px 0;
 }
 nav a:hover {
     background-color: #111;

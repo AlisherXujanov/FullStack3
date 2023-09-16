@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+
+{% block link %}
+{% endblock %}
+
+{% block content %}
+    <h1>Books</h1>
+
+    {% for book in books %}
+            {{ book }}
+    {% endfor %}
+
+{% endblock %}
+
+{% block script %}
+{% endblock %}

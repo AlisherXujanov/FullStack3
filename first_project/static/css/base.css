@@ -18,6 +18,30 @@ main {
 main > div {
     position: relative;
 }
+main > div:first-child {
+    border-radius: 0 10px 10px 0;
+}
 main > div:last-child {
     padding: 10px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 20px;
+    background-color: #333;
+    border-radius: 10px 0 0 10px;
+    padding: 5px;
+}
+::-webkit-scrollbar-thumb {
+    width: 10px;
+    background-color: gray;
+    border-radius: 20px;
+    border: 3px solid #333;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: darkgray;
+}
+::-webkit-scrollbar-button {
+    width: 10px;
+    height: 10px;
 }
