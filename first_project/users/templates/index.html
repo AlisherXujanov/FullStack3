@@ -6,23 +6,13 @@
   <title>Users</title>
 {% endblock %}
 
-{% block link %}
-  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-{% endblock %}
-
 {% block content %}
   <h1>Users</h1>
 
   <hr />
   <h3>Create User</h3>
 
-  <form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-
-    {{ form.as_p }}
-
-    <button class="btn btn-success" type="submit">Create User</button>
-  </form>
+  {% include "form_snippets.html" with form=form btn_text='Create user' %}
 
   <hr />
   <div class="container">
@@ -35,29 +25,19 @@
         <th>Image</th>
         <th>Delete user</th>
       </tr>
-      
+
       {% for user in users %}
         <tr>
           <th>
-            <a href="{% url 'user_details' user.id %}">
-              {{ user.id }}
-            </a>
+            <a href="{% url 'user_details' user.id %}">{{ user.id }}</a>
           </th>
           <td>{{ user.first_name }}</td>
           <td>{{ user.last_name }}</td>
           <td>{{ user.email }}</td>
           <td>
-            <img 
-              class="rounded-circle"
-              src="{{ user.image.url }}" 
-              alt="{{ user.first_name }}-image"
-              width="30"
-              height="30"
-            >
+            <img class="rounded-circle" src="{{ user.image.url }}" alt="{{ user.first_name }}-image" width="30" height="30" />
           </td>
-          <td style="cursor:pointer;" onclick="delete_user({{user.id}})">
-            ❌
-          </td>
+          <td style="cursor:pointer;" onclick="delete_user({{ user.id }})">❌</td>
         </tr>
       {% endfor %}
     </table>
@@ -73,10 +53,8 @@
         location.href = delete_url
       } else {
         console.log('Canceled')
-        alert("Canceled")
+        alert('Canceled')
       }
     }
-
-
   </script>
 {% endblock %}

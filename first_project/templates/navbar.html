@@ -1,11 +1,14 @@
-{% load static %}
-
-{% block link %}
-    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
-{% endblock %}
-
 <nav>
-    <a href="/">🏠</a>
-    <a href="/users">👤</a>
-    <a href="#">➕</a>
+    <a href="/" data-bs-toggle="tooltip" data-bs-placement="top" title="Home">
+        🏠
+    </a>
+    <a href="/users" data-bs-toggle="tooltip" data-bs-placement="top" title="Users">
+        👤
+    </a>
+    <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Books">
+        📖
+    </a>
+    <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Add a book">
+        ➕
+    </a>
 </nav>

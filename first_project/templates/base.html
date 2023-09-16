@@ -6,13 +6,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+
     {% block title %}
       <title>AC Django Project</title>
     {% endblock title %}
         
     {% bootstrap_css %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    
     {% block link %}
     {% endblock link %}
 
@@ -38,6 +41,7 @@
     </div>
   </main>
   
+  {% bootstrap_javascript %}
   <script>
     setTimeout(() => {
       const messages = document.querySelectorAll('#messages');
@@ -46,7 +50,10 @@
       })
     }, 5000)
 
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
   </script>
-  {% bootstrap_javascript %}
 </body>
 </html>
