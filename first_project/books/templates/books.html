@@ -1,17 +1,49 @@
 {% extends 'base.html' %}
-
+{% load static %}
+{% load django_bootstrap5 %}
 
 {% block link %}
+  <link rel="stylesheet" href="{% static 'css/books.css' %}" />
 {% endblock %}
 
 {% block content %}
-    <h1>Books</h1>
+  <h1>Books</h1>
 
-    {% for book in books %}
-            {{ book }}
-    {% endfor %}
+  <div class="container-fluid">
+    <div class="all-books">
+      {% if books %}
+        {% for book in books %}
+          <div class="book">
+            <div class="book-header">
+              {% comment %}to filter created we can use | date:'d-m-Y' or | timesince or | timeuntil{% endcomment %}
+              <small class="text-secondary">Created at: {{ book.created|date:'d-m-Y' }}</small>
+              <p class="book-cost">$ {{ book.price }}</p>
+            </div>
+            <hr />
+            <h3>{{ book.title }}</h3>
+            <img src="{{ book.image.url }}" alt="{{ book.title }}" />
+            <p>{{ book.description }}</p>
 
+            {% comment %}we update it if only current user is creator of book{% endcomment %}
+            {% comment %} {% if book.creator == request.user %}
+              {% endcomment %}
+              <div class="book-footer">
+                <hr />
+                <a href="#" class="btn btn-sm col-sm-4 btn-outline-success">View</a>
+                <a href="#" class="btn btn-sm col-sm-4 btn-outline-primary">Update</a>
+                <a href="#" class="btn btn-sm col-sm-4 btn-outline-danger">Delete</a>
+              </div>
+              {% comment %}
+            {% endif %} {% endcomment %}
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No books found</p>
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}
 
 {% block script %}
+
 {% endblock %}

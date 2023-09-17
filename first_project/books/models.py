@@ -51,7 +51,9 @@ class Books(models.Model):
             raise IntegrityError("Genre cannot be null")
         if self.price == 0:
             raise NullPriceException
+        super().save(*args, **kwargs)
 
+        # We have to save the form first before getting the image path
         img = Image.open(self.image.path)
         if img.height > 600 or img.width > 600:
             output_size = (600, 600)
@@ -59,4 +61,5 @@ class Books(models.Model):
             img.save(self.image.path)
 
     def delete(self, *args, **kwargs):
+        # TODO: delete the image too
         super().delete(*args, **kwargs)

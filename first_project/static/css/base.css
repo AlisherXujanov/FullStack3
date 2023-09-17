@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wght@8..144,500&display=swap');
 * {
     padding: 0;
     margin: 0;
@@ -7,6 +8,24 @@
 body {
     background-color: #eee;
     color: #111;
+}
+h1 {
+    font-family: 'Roboto Serif', serif;
+    text-shadow: 3px 3px 5px #000000;
+    display: inline-block;
+
+    /* make gradient colors */
+    background: linear-gradient(to right, green, indigo, blue, green);
+    background-size: 200% auto;
+    background-clip: text;
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: h1_bg 1s linear infinite alternate;
+}
+@keyframes h1_bg {
+    from { background-position: left; }
+    to { background-position: right; }
 }
 main {
     min-height: 100vh;
