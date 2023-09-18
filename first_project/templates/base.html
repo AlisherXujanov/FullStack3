@@ -17,30 +17,41 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}" />
 
     {% block link %}
+
     {% endblock %}
 
     {% block style %}
+
     {% endblock %}
   </head>
   <body>
-    <main>
-      <div>
-        {% include 'navbar.html' %}
-      </div>
-      <div>
-        <div id="messages">
-          {% bootstrap_messages %}
+    {% if user.is_authenticated %}
+      <main id="logged-in-menu">
+        <div>
+          {% include 'navbar.html' %}
         </div>
+        <div>
+          <div id="messages">
+            {% bootstrap_messages %}
+          </div>
 
-        {% block content %}
+          {% block content %}
 
+          {% endblock %}
+
+          {% block script %}
+
+          {% endblock %}
+        </div>
+      </main>
+    {% else %}
+      <main id="logged-out-menu">
+        {% bootstrap_messages %}
+        {% block auth_content %}
+          <h1>Login</h1>
         {% endblock %}
-
-        {% block script %}
-
-        {% endblock %}
-      </div>
-    </main>
+      </main>
+    {% endif %}
 
     {% bootstrap_javascript %}
     <script>

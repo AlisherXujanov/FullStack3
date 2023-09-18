@@ -15,7 +15,7 @@ h1 {
     display: inline-block;
 
     /* make gradient colors */
-    background: linear-gradient(to right, green, indigo, blue, green);
+    background: linear-gradient(to right, blue, green, darkviolet);
     background-size: 200% auto;
     background-clip: text;
 
@@ -27,23 +27,25 @@ h1 {
     from { background-position: left; }
     to { background-position: right; }
 }
-main {
+
+/*! --------------------------------------------------------------------------------------- */
+/*! --------------------------------------------------------------------------------------- */
+/*! --------------------------------------------------------------------------------------- */
+/* MAIN tag  for logged-in-menu */
+main#logged-in-menu {
     min-height: 100vh;
     display: grid;
     grid-template-columns: 50px 1fr;
     gap: 10px;
     background-color: #eee;
 }
-main > div {
-    position: relative;
-}
-main > div:first-child {
-    border-radius: 0 10px 10px 0;
-}
-main > div:last-child {
-    padding: 10px;
-}
+main#logged-in-menu > div { position: relative; }
+main#logged-in-menu > div:first-child { border-radius: 0 10px 10px 0; }
+main#logged-in-menu > div:last-child { padding: 10px; }
 
+/*! --------------------------------------------------------------------------------------- */
+/*! --------------------------------------------------------------------------------------- */
+/*! --------------------------------------------------------------------------------------- */
 /* Scrollbar */
 ::-webkit-scrollbar {
     width: 20px;
