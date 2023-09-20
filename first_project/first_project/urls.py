@@ -22,7 +22,7 @@ from django.urls import include, path
 from .views import home
 
 urlpatterns = [
-    path("", home),
+    path("", home, name="home_page"),
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('books/', include('books.urls')),

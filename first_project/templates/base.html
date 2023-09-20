@@ -48,7 +48,11 @@
       <main id="logged-out-menu">
         {% bootstrap_messages %}
         {% block auth_content %}
-          <h1>Login</h1>
+          <h1>Authenticate</h1> 
+          <hr>
+          <a class="btn btn-info" href="{% url 'registration' %}">
+            Registration
+          </a>
         {% endblock %}
       </main>
     {% endif %}

@@ -1,11 +1,11 @@
 <nav>
-    <a href="/" data-bs-toggle="tooltip" data-bs-placement="top" title="Home">
+    <a href="{% url 'home_page' %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Home">
         🏠
     </a>
-    <a href="/books" data-bs-toggle="tooltip" data-bs-placement="top" title="Books">
+    <a href="{% url 'books_view' %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Books">
         📖
     </a>
-    <a href="/books/add_book" data-bs-toggle="tooltip" data-bs-placement="top" title="Add a book">
+    <a href="{% url 'add_book' %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Add a book">
         ➕
     </a>
     <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Users">
