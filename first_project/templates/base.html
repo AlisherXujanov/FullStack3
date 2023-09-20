@@ -45,23 +45,15 @@
         </div>
       </main>
     {% else %}
+      <div class="logged-out-navbar">
+        <a href="{% url 'registration' %}">Registration</a>
+        <a href="{% url 'login' %}">Login</a>
+      </div>
       <main id="logged-out-menu">
         {% bootstrap_messages %}
         {% block auth_content %}
-          <h1>Authenticate</h1> 
-          <hr>
-          <a 
-            class="btn btn-info" 
-            href="{% url 'registration' %}"
-          >
-            Registration
-          </a>
-          <a 
-            class="btn btn-info" 
-            href="{% url 'login' %}"
-          >
-            Login
-          </a>
+          <h1>Authenticate</h1>
+          <hr />
         {% endblock %}
       </main>
     {% endif %}
