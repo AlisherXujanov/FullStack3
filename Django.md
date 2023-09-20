@@ -1050,7 +1050,194 @@ def profile(request):
 
 
 
+
+
+
 # Class Based Views (intermediate)
+Class-based views are an alternative to function-based views. They provide a lot of functionality out of the box, and they are easier to extend and customize.
+
+#### General rulses of CBV
+> 1. Each view class must inherit from a base view class
+> 2. Each view does something and returns an HttpResponse object
+> 3. Each view has a get method and/or a post method
+> 4. Each view has a template_name attribute that specifies which template to use and/or a model attribute that specifies which model to use
+> 5. Each view has a get_context_data method that returns a dictionary of context data to be used in the template
+> 6. Each view does only one thing and does it well and has a descriptive name that describes what it does
+
+
+#### TemplateView
+```python
+from django.views.generic import TemplateView
+class HomePageView(TemplateView):
+    template_name = 'home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['message'] = 'Welcome to my website!'
+        return context
+```
+
+#### ListView
+TemplateView is used when you want to display a template without any model data. It's typically used for static pages like the homepage, about page, or contact page. You can override the template_name attribute to specify which template to use, and you can also override the get_context_data method to add additional context data to the template.
+
+ListView, on the other hand, is used when you want to display a list of objects from a model. It automatically generates a queryset based on the model you specify, and it uses a default template to display the list of objects. You can override the model attribute to specify which model to use, and you can also override the template_name attribute to use a custom template.
+```python
+from django.views.generic import TemplateView, ListView
+from .models import Post
+
+class HomePageView(TemplateView):
+    template_name = 'home.html'
+
+class PostListView(ListView):
+    model = Post
+    template_name = 'post_list.html'
+
+### ------------------------- ### ----------------------------- ###
+# post_list.html
+...
+    {% for post in object_list %}
+        <p>{{ post.title }}</p>
+    {% endfor %}
+...
+```
+
+#### DetailView
+DetailView is a class-based view in Django that is used to display the details of a single object from a model. It's typically used when you want to display more information about an object than just a list of objects.
+```python
+from django.views.generic import DetailView
+from .models import Post
+
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'post_detail.html'
+```
+```html
+<h1>{{ object.title }}</h1>
+<p>{{ object.body }}</p>
+```
+
+#### CreateView
+It's used when we want to allow users to create new objects in our application.
+```python
+from django.views.generic import CreateView
+from .models import Post
+from .forms import PostForm
+
+class PostCreateView(CreateView):
+    model = Post
+    form_class = PostForm # This lets to use the form that we created inside templates
+    template_name = 'post_form.html'
+    success_url = '/posts/'
+```
+
+#### UpdateView
+It's used when we want to allow users to update existing objects in our application.
+```python
+from django.views.generic import UpdateView
+from .models import Post
+from .forms import PostForm
+
+class PostUpdateView(UpdateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'post_form.html'
+    success_url = '/posts/'
+```
+
+#### DeleteView
+It's used when we want to allow users to delete existing objects in our application.
+```python
+from django.views.generic import DeleteView
+from .models import Post
+class PostDeleteView(DeleteView):
+    model = Post
+    template_name = 'post_confirm_delete.html'
+    success_url = '/posts/'
+```
+
+#### FormView
+It's used when we want to display a form to the user and process the form data in the same view.
+```python
+from django.views.generic import FormView
+from .forms import ContactForm
+
+class ContactView(FormView):
+    form_class = ContactForm
+    template_name = 'contact.html'
+    success_url = '/thanks/'
+
+    def form_valid(self, form):
+        form.send_email()
+        return super().form_valid(form)
+```
+
+#### RedirectView
+It's used when we want to redirect the user to a different URL.
+```python
+from django.views.generic import RedirectView
+
+class HomeRedirectView(RedirectView):
+    url = '/home/'
+```
+
+#### ListView with pagination
+```python
+from django.views.generic import ListView
+from .models import Post
+
+
+class PostListView(ListView):
+    model = Post
+    template_name = 'post_list.html'
+    paginate_by = 5
+```
+```html
+{% if is_paginated %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% for i in paginator.page_range %}
+                {% if page_obj.number == i %}
+                    <li class="page-item active">
+                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
+```
+
+
 
 
 # Middleware (advanced)
