@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>Registration</title>
+{% endblock %}
+
+{% block auth_content %}
+  <div class="container">
+    <h1>Registration</h1>
+
+    {% include "form_snippets.html" with form=form btn_text='Register' %}
+
+    <hr>
+    <div class="mb-5">
+        <small class="text-muted">
+            Already have an account? 
+            <a href="{% url 'login' %}">Login</a> 
+        </small>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

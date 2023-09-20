@@ -17,6 +17,8 @@ def registration(request):
         else:
             messages.error(request,
                            "Please correct the errors below.")
+            context = {'form': form}
+            return render(request, 'registration/create_user.html', context)
 
     context = {'form': UserForm()}
-    return render(request, 'create_user.html', context)
+    return render(request, 'registration/create_user.html', context)
