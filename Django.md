@@ -941,6 +941,7 @@ urlpatterns = [
 ```
 and in settings.py we must put these so that it knows where to redirect after login and logout
 ```python
+LOGIN_REDIRECT_URL = 'home_page'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 ```

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>Logged out</title>
+{% endblock %}
+
+{% block auth_content %}
+  <div class="container">
+    <h1>Logged out successfully</h1>
+
+    <hr>
+    <div class="mb-5">
+        <small class="text-muted">
+            Login again
+            <a href="{% url 'login' %}">
+                Login
+            </a>
+        </small>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}
