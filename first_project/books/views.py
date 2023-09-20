@@ -11,7 +11,7 @@ def add_book(request):
         form = BookForm(request.POST, request.FILES)
         if form.is_valid():
             book = form.save(commit=False)
-            book.author = request.user
+            # book.author = request.user
             book.save()
             messages.success(request, 'Book added successfully!')
             return redirect('books_view')
