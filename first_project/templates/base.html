@@ -24,7 +24,22 @@
 
     {% endblock %}
   </head>
+  {% comment %} 
+    1. Menu Nav
+      - Logo
+      - Name
+      - Logged In/Out buttons
+      - Social accounts
+    2. Background - 
+      - Image
+      - Slogan
+      - Links
+    3. Get Navbar into this header of bg-image
+    4. Use font-family Fino
+  {% endcomment %}
   <body>
+
+
     {% if user.is_authenticated %}
       <main id="logged-in-menu">
         <div>
