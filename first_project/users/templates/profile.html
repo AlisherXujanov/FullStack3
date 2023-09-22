@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block title %}
+  <title>{{ user.first_name }} profile</title>
+{% endblock %}
+
+{% block content %}
+  <h1>{{ user.first_name }} profile</h1>
+
+  <form method="POST" 
+    enctype="multipart/form-data"
+  >
+    {% csrf_token %}
+
+    {% if form.errors %}
+      {% bootstrap_form_errors form %}
+    {% endif %}
+
+    {% bootstrap_form u_form %}
+    {% bootstrap_form p_form %}
+
+    <button class="btn btn-success" type="submit">Update</button>
+  </form>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

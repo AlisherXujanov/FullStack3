@@ -46,6 +46,8 @@
       </main>
     {% else %}
       <div class="logged-out-navbar">
+        <a style="float: left;" href="{% url 'home_page' %}">🏠</a>
+        
         <a href="{% url 'registration' %}">Registration</a>
         <a href="{% url 'login' %}">Login</a>
       </div>
