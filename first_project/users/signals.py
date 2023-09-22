@@ -11,6 +11,16 @@ log = logging.getLogger(__name__)
 
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
-    if (created and not kwargs.get('raw')):
+    """
+    This function will be called every time a new user is created.
+    It will create a new profile for the user.
+    """
+    if created:
         Profile.objects.create(user=instance)
-        log.info(f"UserProfile has been created for {instance.username}")
+
+
+@receiver(post_save, sender=User)
+def save_profile(sender, instance, **kwargs):
+    """This function will be called every time a user is saved."""
+    instance.profile.save()
+    log.info(f"UserProfile has been created for {instance.username}")

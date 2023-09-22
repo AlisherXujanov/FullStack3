@@ -17,6 +17,12 @@ class UserForm(UserCreationForm):
                   'password1', 'password2')
 
 
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email')
+
+
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile

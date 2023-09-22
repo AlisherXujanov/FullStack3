@@ -3,19 +3,22 @@
 {% load django_bootstrap5 %}
 
 {% block title %}
-  <title>{{ user.first_name }} profile</title>
+  <title>{{ user.username }} profile</title>
 {% endblock %}
 
 {% block content %}
-  <h1>{{ user.first_name }} profile</h1>
+  <h1>{{ user.username }} profile</h1>
 
   <form method="POST" 
     enctype="multipart/form-data"
   >
     {% csrf_token %}
 
-    {% if form.errors %}
-      {% bootstrap_form_errors form %}
+    {% if u_form.errors %}
+      {% bootstrap_form_errors u_form %}
+    {% endif %}
+    {% if p_form.errors %}
+      {% bootstrap_form_errors p_form %}
     {% endif %}
 
     {% bootstrap_form u_form %}
