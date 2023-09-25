@@ -19,10 +19,10 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-from .views import home
+from .views import HomeView
 
 urlpatterns = [
-    path("", home, name="home_page"),
+    path("", HomeView.as_view(), name="home_page"),
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('books/', include('books.urls')),

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block title %}
+  <title>Book details</title>
+{% endblock %}
+
+{% block link %}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ object.title }}</h1>
+    <p>{{ object.description }}</p>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

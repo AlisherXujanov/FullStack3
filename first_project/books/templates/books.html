@@ -15,8 +15,8 @@
 
   <div class="container-fluid">
     <div class="all-books">
-      {% if books %}
-        {% for book in books %}
+      {% if object_list %}
+        {% for book in object_list %}
           <div class="book">
             <div class="book-header">
               {% comment %}to filter created we can use | date:'d-m-Y' or | timesince or | timeuntil{% endcomment %}
@@ -33,7 +33,7 @@
               {% endcomment %}
               <div class="book-footer">
                 <hr />
-                <a href="#" class="btn btn-sm col-sm-4 btn-outline-success">View</a>
+                <a href="{% url 'book_details' book.id %}" class="btn btn-sm col-sm-4 btn-outline-success">View</a>
                 <a href="#" class="btn btn-sm col-sm-4 btn-outline-primary">Update</a>
                 <a href="#" class="btn btn-sm col-sm-4 btn-outline-danger">Delete</a>
               </div>

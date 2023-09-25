@@ -1065,6 +1065,29 @@ Class-based views are an alternative to function-based views. They provide a lot
 > 5. Each view has a get_context_data method that returns a dictionary of context data to be used in the template
 > 6. Each view does only one thing and does it well and has a descriptive name that describes what it does
 
+`SYNTAX`
+```python
+from django.views.generic import ...
+
+class ViewName(...):
+    template_name = 'template_name.html' 
+    # it is better to use this because it is more flexible 
+    #
+    model = ModelName # optional and not needed for all views
+
+    def get(self, request, *args, **kwargs):
+        # Do something
+        return HttpResponse(...)
+
+    def post(self, request, *args, **kwargs):
+        # Do something
+        return HttpResponse(...)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Do something
+        return context
+```
 
 #### TemplateView
 ```python
@@ -1093,6 +1116,9 @@ class PostListView(ListView):
     model = Post
     template_name = 'post_list.html'
 
+    def get_queryset(self):
+        return Books.objects.all()
+
 ### ------------------------- ### ----------------------------- ###
 # post_list.html
 ...
@@ -1111,7 +1137,15 @@ from .models import Post
 class PostDetailView(DetailView):
     model = Post
     template_name = 'post_detail.html'
+
+    def get_queryset(self):
+        return Books.objects.filter(id=self.kwargs['pk'])
 ```
+In urls.py
+```python
+    path("book_details/<int:pk>", BookDetailsView.as_view(), name="book_details"),
+```
+
 ```html
 <h1>{{ object.title }}</h1>
 <p>{{ object.body }}</p>
@@ -1241,7 +1275,7 @@ class PostListView(ListView):
 
 
 
-# Middleware (advanced)
+# Middleware (advanced)   &&  TinyMCI (intermediate)
 
 
 # 📚Django-allauth 

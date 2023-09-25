@@ -1,6 +1,9 @@
+from typing import Any
+
 from django.contrib import messages
-from django.contrib.auth.models import User
+from django.db import models
 from django.shortcuts import redirect, render
+from django.views.generic import DetailView, ListView
 
 from .forms import BookForm
 from .models import Books
@@ -22,6 +25,21 @@ def add_book(request):
     return render(request, 'add_book.html', context)
 
 
-def books(request):
-    context = {'books': Books.objects.all()}
-    return render(request, 'books.html', context)
+# def books(request):
+#     context = {'books': Books.objects.all()}
+#     return render(request, 'books.html', context)
+
+class BooksListView(ListView):
+    modal = Books
+    template_name = 'books.html'
+
+    def get_queryset(self):
+        return Books.objects.all()
+
+
+class BookDetailsView(DetailView):
+    modal = Books
+    template_name = 'book_details.html'
+
+    def get_queryset(self):
+        return Books.objects.filter(id=self.kwargs['pk'])
