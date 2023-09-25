@@ -61,5 +61,5 @@ class Books(models.Model):
             img.save(self.image.path)
 
     def delete(self, *args, **kwargs):
-        # TODO: delete the image too
+        self.image.delete()
         super().delete(*args, **kwargs)

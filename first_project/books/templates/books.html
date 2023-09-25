@@ -33,9 +33,18 @@
               {% endcomment %}
               <div class="book-footer">
                 <hr />
-                <a href="{% url 'book_details' book.id %}" class="btn btn-sm col-sm-4 btn-outline-success">View</a>
-                <a href="#" class="btn btn-sm col-sm-4 btn-outline-primary">Update</a>
-                <a href="#" class="btn btn-sm col-sm-4 btn-outline-danger">Delete</a>
+
+                {% if book.author.id == request.user.id %}
+                  <a href="{% url 'book_details' book.id %}" class="btn btn-sm col-sm-4 btn-outline-success">View</a>
+                  <a href="#" class="btn btn-sm col-sm-4 btn-outline-primary">Update</a>
+                  <a href="#" class="btn btn-sm col-sm-4 btn-outline-danger">Delete</a>
+                {% else %}
+                  <a href="{% url 'book_details' book.id %}" 
+                    class="btn btn-sm col-sm-12 btn-outline-success"
+                  >
+                    View
+                  </a>
+                {% endif %}
               </div>
               {% comment %}
             {% endif %} {% endcomment %}

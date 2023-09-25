@@ -11,8 +11,8 @@ from .models import Books
 # def add_book(request):
 #     if request.method == 'POST':
 #         form = BookForm(request.POST, request.FILES)
-#         if form.is_valid():
 #             book = form.save(commit=False)
+#         if form.is_valid():
 #             # book.author = request.user
 #             book.save()
 #             messages.success(request, 'Book added successfully!')
@@ -29,6 +29,14 @@ class AddBookView(CreateView):
     form_class = BookForm
     template_name = 'add_book.html'
     success_url = '/books/'
+
+    def post(self):
+        form = self.get_form()
+        if form.is_valid():
+            book = form.save(commit=False)
+            book.author = self.request.user
+            book.save()
+        return redirect('books_view')
 
 
 # def books(request):
