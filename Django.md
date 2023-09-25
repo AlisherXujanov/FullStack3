@@ -1244,8 +1244,105 @@ class PostListView(ListView):
 # Middleware (advanced)
 
 
-# 📚Django-allauth  VS   📚JWT-Token  libraries
+# 📚Django-allauth 
+```pip install django-allauth```
+<br>
+<br>
 
+### Configuration
+First of all we need to configure our settings.py file
+```python
+# INSTALLED_APPS
+INSTALLED_APPS = [
+    ...
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    ...
+]
+# =============================================================
+# And we need to set SITE ID
+SITE_ID = 1
+# This helps allauth to know which site we are using and which site to redirect to after login
+# =============================================================
+# AUTHENTICATION_BACKENDS
+# It is needed to allow this site to use allauth with the default authentication system of Django
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+# ============================================================= 
+# Then we should specify context processors
+# They are used to add context variables to all templates
+TEMPLATES = [
+    {
+        ...
+        'OPTIONS': {
+            'context_processors': [
+                ...
+                'django.template.context_processors.request',
+                ...
+            ],
+        },
+    },
+]
+# =============================================================
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '...',
+            'secret': '...',
+            'key': '...'
+        }
+    },
+    'github': { 'APP': { ... } }
+}
+MIDDLEWARE = [
+    ...
+    # REQUIRED by allauth
+    'allauth.account.middleware.AccountMiddleware',
+]
+```
+Then in urls.py 
+```python
+...
+path('accounts/', include('allauth.urls')),
+...
+```
+<br>
+<br>
+
+### Creating Google OAuth project
+1. Go ahead and navigate to *https://console.cloud.google.com/* and click on APIs & Services. There you will find a dashboard and at the top click on the New Project button.
+2. This will open another page and you will be prompted to enter a project name and location. Choose a name and organization and click on `create to proceed`.
+3. Then the next step is to go back to the dashboard and click on Credentials>Create Credentials>OAuth Client ID as shown below.
+   - (Please ensure that you are operating within the project that was recently created, which in our case is ‘DemoProject’.)
+4. At the next page we will be asked to enter Application type, Name, Authorized JavaScript origins and Authorized redirect URIs. These information are important and should be added carefully as per the documentation.
+   - Application Type = Web application
+   - Name = DemoProject
+   - Authorized JavaScript origins= *http://localhost:8000*
+   - Authorized redirect URIs = *http://localhost:8000/accounts/google/login/callback/*
+
+After that is done, lets go ahead and click on the create. This will then open a popup that provides us with our client_id and client secret so that we can copy and paste it in our `settings.py` file accordingly.
+
+And then we can run
+```bash
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+```
+
+
+<br><br><br>
+
+
+
+#### 
 
 # Security 🔐 (advanced)
 
