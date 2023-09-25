@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block title %}
+  <title>Update a book</title>
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block link %}
+{% endblock %}
+
+{% block content %}
+    <h1>Update book</h1>
+    {% include "form_snippets.html" with form=form %}
+
+{% endblock %}
+
+{% block script %}
+{% endblock %}

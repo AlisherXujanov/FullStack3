@@ -3,7 +3,7 @@ from typing import Any
 from django.contrib import messages
 from django.db import models
 from django.shortcuts import redirect, render
-from django.views.generic import CreateView, DetailView, ListView
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from .forms import BookForm
 from .models import Books
@@ -30,7 +30,7 @@ class AddBookView(CreateView):
     template_name = 'add_book.html'
     success_url = '/books/'
 
-    def post(self):
+    def post(self, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
             book = form.save(commit=False)
@@ -57,3 +57,28 @@ class BookDetailsView(DetailView):
 
     def get_queryset(self):
         return Books.objects.filter(id=self.kwargs['pk'])
+
+
+class BookUpdateView(UpdateView):
+    modal = Books
+    form_class = BookForm
+    template_name = 'update_book.html'
+    success_url = '/books/'
+
+    def get_queryset(self):
+        return Books.objects.filter(id=self.kwargs['pk'])
+
+
+# class DeleteBook(DeleteView):
+#     modal = Books
+#     template_name = 'delete_book.html'
+#     success_url = '/books/'
+
+#     def get_queryset(self):
+#         return Books.objects.filter(id=self.kwargs['pk'])
+
+def delete_book(request, book_id: int):
+    book = Books.objects.get(id=book_id)
+    book.delete()
+    messages.success(request, 'Book deleted successfully!')
+    return redirect('books_view')

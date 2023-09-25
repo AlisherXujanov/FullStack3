@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 
 from django.contrib.auth.models import User
@@ -61,5 +62,7 @@ class Books(models.Model):
             img.save(self.image.path)
 
     def delete(self, *args, **kwargs):
-        self.image.delete()
+        image_url = self.image.url
+        if image_url != '/media/books/book_default_img.png':
+            os.remove(self.image.path)
         super().delete(*args, **kwargs)
