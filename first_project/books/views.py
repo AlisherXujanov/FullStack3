@@ -1,6 +1,7 @@
 from typing import Any
 
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db import models
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
@@ -59,7 +60,7 @@ class BookDetailsView(DetailView):
         return Books.objects.filter(id=self.kwargs['pk'])
 
 
-class BookUpdateView(UpdateView):
+class BookUpdateView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     modal = Books
     form_class = BookForm
     template_name = 'update_book.html'
@@ -67,6 +68,12 @@ class BookUpdateView(UpdateView):
 
     def get_queryset(self):
         return Books.objects.filter(id=self.kwargs['pk'])
+
+    def test_func(self):
+        book = self.get_object()
+        if self.request.user == book.author:
+            return True
+        return False
 
 
 # class DeleteBook(DeleteView):
