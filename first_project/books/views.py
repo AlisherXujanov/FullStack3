@@ -76,14 +76,6 @@ class BookUpdateView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
         return False
 
 
-# class DeleteBook(DeleteView):
-#     modal = Books
-#     template_name = 'delete_book.html'
-#     success_url = '/books/'
-
-#     def get_queryset(self):
-#         return Books.objects.filter(id=self.kwargs['pk'])
-
 def delete_book(request, book_id: int):
     book = Books.objects.get(id=book_id)
     book.delete()

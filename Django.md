@@ -1275,7 +1275,7 @@ class PostListView(ListView):
 
 
 
-# Middleware and Sessions (advanced)   &&  TinyMCI (intermediate)
+# Middleware and Sessions (advanced)
 
 #### Middleware
 - Middleware in django is a framework of hooks into Django’s request/response processing. It’s a light, low-level “plugin” system for globally altering Django’s input or output. **In other words, it is a better way to modify the request and response objects in Django.**
@@ -1326,6 +1326,25 @@ MIDDLEWARE = [
 ```
 Note that path.to.MyMiddleware should be replaced with the actual path to your middleware class.
 
+
+#### Sessions
+To use sessions in Django, you need to enable session support in your project's settings.py file by adding `'django.contrib.sessions.middleware.SessionMiddleware'` to the MIDDLEWARE setting. Once session support is enabled, you can use the request.session object to store and retrieve data in the session.
+```python
+# views.py
+from django.shortcuts import render
+
+def my_view(request):
+    # Get the value of the 'my_key' key from the session, or return None if it doesn't exist
+    my_value = request.session.get('my_key')
+
+    # Set the value of the 'my_key' key in the session
+    request.session['my_key'] = 'my_value'
+
+    return render(request, 'my_template.html', {'my_value': my_value})
+```
+<br>
+<br>
+<br>
 
 # 📚Django-allauth 
 ```pip install django-allauth```
