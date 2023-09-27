@@ -1275,7 +1275,46 @@ class PostListView(ListView):
 
 
 
-# Middleware (advanced)   &&  TinyMCI (intermediate)
+# Middleware and Sessions (advanced)   &&  TinyMCI (intermediate)
+
+#### Middleware
+- Middleware in django is a framework of hooks into Django’s request/response processing. It’s a light, low-level “plugin” system for globally altering Django’s input or output. **In other words, it is a better way to modify the request and response objects in Django.**
+
+- To create a middleware in Django, you can follow these steps:
+  1. Create a new Python module in your Django project's directory, for example middleware.py.
+  2. Define a class that implements the middleware functionality you need. The class should have a __init__ method that takes a get_response argument, which is a callable that takes a request and returns a response. The class should also have a __call__ method that takes a request and returns a response.
+  3. Implement the middleware functionality in the __call__ method. This could include tasks such as modifying the request or response, performing authentication, or logging.
+  4. Add the middleware class to the MIDDLEWARE setting in your project's settings.py file. The order of middleware classes in the list matters, so make sure to add your middleware in the appropriate position.
+
+```python
+class MyMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        # Get the view function name
+
+        # Code to be executed for each request before
+        print('I am before the view is called')
+
+        response = self.get_response(request)
+        # Do something after the view is called
+
+        view_name = request.resolver_match.view_name
+        if view_name is not None:
+            print(f'I am after the {view_name} view is called')
+
+        return response
+```
+And here's how you would add this middleware to the MIDDLEWARE setting in your settings.py file:
+```python
+MIDDLEWARE = [
+    ...
+    'myapp.middleware.MyMiddleware',
+    ...
+]
+```
+Note that path.to.MyMiddleware should be replaced with the actual path to your middleware class.
 
 
 # 📚Django-allauth 
