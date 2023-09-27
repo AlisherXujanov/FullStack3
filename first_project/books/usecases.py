@@ -37,9 +37,14 @@ class Session:
 
 
 def send_to_wishlist(request, id: int, obj_name: str) -> None:
+    session = Session(request)
+    wish_list = session.get(WISH_LIST, {})
+
     if obj_name == "book":
-        session = Session(request)
-        wish_list = session.get(WISH_LIST, [])
-        wish_list.book_ids.append(id)
+        if wish_list.get("book_ids"):
+            wish_list["book_ids"].append(id)
+        else:
+            wish_list["book_ids"] = [id]
+
         session.set(WISH_LIST, wish_list)
     pass

@@ -1,10 +1,5 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from books.usecases import *
 from django.views.generic import TemplateView
-
-# @login_required
-# def home(request):
-#     return render(request, 'home.html')
 
 
 class HomeView(TemplateView):
@@ -12,5 +7,13 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        books_ids = []
+        if wish_list := Session(self.request).get(WISH_LIST, []):
+            books_ids = wish_list.get("book_ids", [])
+
+        context.update({
+            "books_ids": books_ids
+        })
         # Do something
         return context
