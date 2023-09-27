@@ -44,9 +44,14 @@
                   </a>
                 {% else %}
                   <a href="{% url 'book_details' book.id %}" 
-                    class="btn btn-sm col-sm-12 btn-outline-success"
+                    class="btn btn-sm col-sm-6 btn-info"
                   >
                     View
+                  </a>
+                  <a href="{% url 'add_to_wishlist' book.id %}" 
+                    class="btn btn-sm col-sm-6 btn-success"
+                  >
+                    Add to wishlist
                   </a>
                 {% endif %}
               </div>

@@ -24,6 +24,9 @@ class MyMiddleware:
 
         view_name = request.resolver_match.view_name
         if view_name is not None:
+            username = request.user.username
+            if username:
+                print(f"Client '{username}' has entered to {view_name}")
             print(f'I am after the {view_name} view is called')
 
         return response
