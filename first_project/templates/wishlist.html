@@ -1,5 +1,59 @@
-<div id="wishlist">
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
 
-    {{ book_ids }}
+{% block title %}
+  <title>Wishlist. {{ books|length }} items</title>
+{% endblock %}
 
-</div>
+{% block style %}
+  <style>
+    .card {
+      overflow: hidden;
+    }
+    .card h3 {
+        float: left;
+        font-family: fantasy;
+    }
+    #delete-book-from-wl {
+      float: right;
+      padding: 10px;
+      background-color: rgb(255,0,0,0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+    #delete-book-from-wl:hover { background-color: red;}
+    a {
+        color: snow;
+        text-decoration: none;
+        font-size: 1.2em;
+    }
+    a:hover { color: snow; }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div id="wishlist-page">
+    {% if books|length > 0 %}
+      {% for book in books %}
+        <div class="card bg-dark text-light mb-3">
+          <div class="card-header">
+            <h3 class="card-title">{{ book.title }}</h3>
+            <span id="delete-book-from-wl">
+                <a href="{% url 'delete_from_wl' book.id %}">&times;</a>
+            </span>
+          </div>
+          <div class="card-body">
+            <p class="card-description">{{ book.description }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h2>Your wishlist is empty 😭</h2>
+    {% endif %}
+  </div>
+{% endblock %}

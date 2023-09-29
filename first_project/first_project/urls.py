@@ -19,13 +19,19 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-from .views import HomeView
+from .views import *
 
 urlpatterns = [
-    path("", HomeView.as_view(), name="home_page"),
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('books/', include('books.urls')),
+
+
+    # UNIVERSAL views
+    path("", HomeView.as_view(), name="home_page"),
+    path("wishlist/", wishlist_view, name="wishlist_view"),
+    path("delete_from_wl/<int:book_id>/",
+         delete_from_wl, name="delete_from_wl"),
 ]
 
 urlpatterns += static(

@@ -68,8 +68,12 @@ def delete_book(request, book_id: int):
 @login_required
 def add_to_wishlist(request, book_id: int):
     book = Books.objects.get(id=book_id)
-    send_to_wishlist(request, book_id, 'book')
+    added = send_to_wishlist(request, book_id, 'book')
 
-    messages.success(
-        request, f"Successfully added a book {book.title} into wishlist")
+    if not added:
+        messages.success(
+            request, f"Successfully added a book {book.title.upper()} into wishlist!")
+    else:
+        messages.warning(
+            request, f"The book {book.title.upper()} already exists in your wishlist!")
     return redirect('books_view')

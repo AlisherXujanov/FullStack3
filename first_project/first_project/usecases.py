@@ -53,8 +53,7 @@ def send_to_wishlist(request, item_id: int, obj_name: str) -> None:
         case "book":
             if wish_list.get(BOOK_IDS):
                 if item_id in wish_list[BOOK_IDS]:
-                    messages.warning(request, "Already in wishlist")
-                    return
+                    return True
                 wish_list[BOOK_IDS].append(item_id)
             else:
                 wish_list[BOOK_IDS] = [item_id]
@@ -79,3 +78,16 @@ def getItemsFromWishlist(request, item_type: str = 'all') -> list[int]:
 
     # We can add more logic here
     pass
+
+
+def delete_item_from_wishlist(request, item_id: int, item_type: str) -> None:
+    session = Session(request)
+    wish_list = session.get(WISH_LIST, {})
+
+    match item_type:
+        case "book":
+            books_ids = wish_list.get(BOOK_IDS)
+            books_ids.remove(item_id)
+            wish_list[BOOK_IDS] = books_ids
+
+    session.set(WISH_LIST, wish_list)

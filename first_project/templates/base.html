@@ -44,6 +44,10 @@
       <main id="logged-in-menu">
         <div>
           {% include 'navbar.html' %}
+          <a id="wishlist" href="{% url 'wishlist_view' %}" 
+            data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
+            🧺
+          </a>
         </div>
         <div>
           <div id="messages">

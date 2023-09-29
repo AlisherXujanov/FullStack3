@@ -20,3 +20,18 @@ nav a {
 nav a:hover {
     background-color: #111;
 }
+
+
+#wishlist {
+    position: fixed;
+    z-index: 999;
+    right: 5px;
+    bottom: 5px;
+    padding: 5px;
+    font-size: 2em;
+    text-decoration: none;
+    border-radius: 50px;
+    display: inline-block;
+    cursor: pointer;
+    background-color: #333;
+}
