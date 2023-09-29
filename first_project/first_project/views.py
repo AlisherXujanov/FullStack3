@@ -1,5 +1,8 @@
-from books.usecases import *
+from books.usecases import get_saved_books
+from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
+
+from .usecases import *
 
 
 class HomeView(TemplateView):
@@ -17,3 +20,10 @@ class HomeView(TemplateView):
         })
         # Do something
         return context
+
+
+def wishlist_view(request):
+    context = {
+        "books": get_saved_books(request)
+    }
+    return render(request, 'wishlist.html', context)

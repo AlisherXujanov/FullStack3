@@ -655,7 +655,7 @@ class Migration(migrations.Migration):
 ```
 
 
-# Forms (advanced)  &&  File upload  &&  Data validation
+# Forms (advanced)  &&  File upload  &&  Data validation &&  TinyMCE
 
 #### Simple forms
 ```python
@@ -872,6 +872,97 @@ class UserForm(forms.Form):
 
 
 
+
+
+
+
+#### TinyMCE
+`pip3 install django-tinymce4-lite`
+
+
+Next is open your setting.py and add ‘tinymce’ on your INSTALLED_APPS.
+And, put this into settings.py
+```python
+TINYMCE_DEFAULT_CONFIG = {
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 20,
+    'selector': 'textarea',
+    'theme': 'modern',
+    'plugins': '''
+            textcolor save link image media preview codesample contextmenu
+            table code lists fullscreen  insertdatetime  nonbreaking
+            contextmenu directionality searchreplace wordcount visualblocks
+            visualchars code fullscreen autolink lists  charmap print  hr
+            anchor pagebreak
+            ''',
+    'toolbar1': '''
+            fullscreen preview bold italic underline | fontselect,
+            fontsizeselect  | forecolor backcolor | alignleft alignright |
+            aligncenter alignjustify | indent outdent | bullist numlist table |
+            | link image media | codesample |
+            ''',
+    'toolbar2': '''
+            visualblocks visualchars |
+            charmap hr pagebreak nonbreaking anchor |  code |
+            ''',
+    'contextmenu': 'formats | link image',
+    'menubar': True,
+    'statusbar': True,
+}
+```
+Next is open your urls.py and add this code.
+```python
+...
+path('tinymce/', include('tinymce.urls')),
+...
+```
+
+Next is open your models.py and add this code.
+```python
+from tinymce.models import HTMLField
+
+class Post(models.Model):
+    ...
+    content = HTMLField()
+```
+
+Next is open your admin.py and add this code.
+```python
+from django.contrib import admin
+from .models import Post
+from tinymce.widgets import TinyMCE
+from django.db import models
+
+class PostAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ("Title/date", {'fields': ["post_title", "post_date"]}),
+        ("Content", {"fields": ["post_content"]})
+    ]
+
+    formfield_overrides = {
+        models.TextField: {'widget': TinyMCE()},
+    }
+
+admin.site.register(Post, PostAdmin)
+```
+
+
+Next is open your index.html and add this code.
+```html
+...
+<p>{{ object.html_field|safe }}</p>
+...
+```
+
+Next is our forms.py and add this code.
+```python
+from tinymce.widgets import TinyMCE
+
+class PostForm(forms.ModelForm):
+    ...
+    post_content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
+    ...
+```
 
 
 
