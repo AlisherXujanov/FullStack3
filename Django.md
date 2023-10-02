@@ -1537,7 +1537,41 @@ python manage.py runserver
 
 #### 
 
-# Security 🔐 (advanced)
+# Permissions &&  Security 🔐 (advanced)   &&  📚 BeautifulSoup  
+## Permissions
+```python
+class Product(models.Model): 
+    # A custom permission called change_category has been defined.
+    ...
+    class Meta: 
+        permissions = [('can_change_category', 'Can change category')] 
+```
+Here we can use decorators to check permissions every time before accessing any view
+```python
+@login_required  # is the first example of a decorator
+@permission_required('products.can_change_category')  # is the second example of a decorator
+
+# or we can use custom decorators
+def testpermission(user): 
+    if user.is_authenticated() and user.has_perm("myapp.change_category"): 
+        return True 
+    else: 
+        return False 
+
+
+from django.contrib.auth.decorators import user_passes_test 
+@user_passes_test(testpermission)
+def my_view(request): 
+    ...
+``` 
+
+Similarly, the available permissions can be checked inside the template with perms.name syntax.  
+For example:
+```html
+{% if perms.products.can_change_category %}
+    <p>You can change category</p>
+{% endif %}
+```
 
 
 # Signals   &&  Caching    &&   Sending Emails 📧 (advanced)
