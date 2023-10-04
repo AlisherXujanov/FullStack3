@@ -66,3 +66,8 @@ class Books(models.Model):
         if image_url != '/media/books/book_default_img.png':
             os.remove(self.image.path)
         super().delete(*args, **kwargs)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['is_available', 'price']),
+        ]

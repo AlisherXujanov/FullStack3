@@ -1445,6 +1445,15 @@ def my_view(request):
 ### Configuration
 First of all we need to configure our settings.py file
 ```python
+# 1-Click Button Generate a New Client Secret;
+# 2-fill in the blanks in .settings.py:
+# 3-Application name:  Django Demo Auth
+# 4-Homepage URL: https://127.0.0.1:8000/
+# 5-Authorization callback URL:  https://127.0.0.1:8000/accounts/github/login/callback
+# 6-Goto to your app login (http://127.0.0.1:8000/) and authorize app.
+```
+
+```python
 # INSTALLED_APPS
 INSTALLED_APPS = [
     ...
@@ -1483,6 +1492,7 @@ TEMPLATES = [
 ]
 # =============================================================
 SOCIALACCOUNT_PROVIDERS = {
+    # site for creating google auth service https://console.cloud.google.com/
     'google': {
         # For each OAuth based provider, either add a ``SocialApp``
         # (``socialaccount`` app) containing the required client
@@ -1493,6 +1503,8 @@ SOCIALACCOUNT_PROVIDERS = {
             'key': '...'
         }
     },
+    # ============================================================================
+    # site for creating github auth service https://github.com/settings/developers
     'github': { 'APP': { ... } }
 }
 MIDDLEWARE = [
@@ -1500,6 +1512,7 @@ MIDDLEWARE = [
     # REQUIRED by allauth
     'allauth.account.middleware.AccountMiddleware',
 ]
+# =============================================================
 ```
 Then in urls.py 
 ```python
@@ -1507,6 +1520,15 @@ Then in urls.py
 path('accounts/', include('allauth.urls')),
 ...
 ```
+
+Then in html
+```html
+{% load socialaccount %}
+
+<a href="{% provider_login_url 'google' %}">Login with Google</a>
+<a href="{% provider_login_url 'github' %}">Login with Github</a>
+```
+
 <br>
 <br>
 
