@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% load account socialaccount %}
+
+
+{% block title %}
+  <title>Login</title>
+{% endblock %}
+{% block style %}
+  <style>
+    * {
+        transition: 0.2s;
+    }
+    form, .form-control {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+    input {
+        padding: 10px 20px;
+        border: none;
+        background-color: lightgray;
+        border-radius: 5px;
+        outline: none;
+    }
+    input:focus {
+        padding: 10px 25px;
+        background-color: green;
+        color: snow;
+    }
+  </style>
+{% endblock %}
+
+{% block auth_content %}
+  <div class="container">
+    <h1>Login</h1>
+    <form action="{% url 'login' %}"  method="POST" class="form">
+      {% csrf_token %}
+
+      <div class="form-control">
+        <label for="username">Username</label>
+        <input id="username" type="text" placeholder="Username" />
+      </div>
+      <div class="form-control">
+        <label for="password">Password</label>
+        <input id="password" type="password" placeholder="Password" />
+      </div>
+
+      <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+
+    <hr>
+    <div class="text-center">
+        <a class="btn btn-success" href="{% provider_login_url 'github' %}">
+            <i class="fab fa-github"></i>
+            GitHub
+        </a>
+        <a class="btn btn-danger" href="{% provider_login_url 'google' %}">
+            <i class="fab fa-google"></i>
+            Google
+        </a>
+    </div>
+  </div>
+{% endblock %}

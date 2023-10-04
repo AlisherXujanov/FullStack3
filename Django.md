@@ -1462,6 +1462,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
     ...
 ]
 # =============================================================
@@ -1500,12 +1501,18 @@ SOCIALACCOUNT_PROVIDERS = {
         'APP': {
             'client_id': '...',
             'secret': '...',
-            'key': '...'
+            'key': ''
         }
     },
     # ============================================================================
     # site for creating github auth service https://github.com/settings/developers
-    'github': { 'APP': { ... } }
+    'github': {
+        'APP': {
+            'client_id': '...',
+            'secret': '...',
+            'key': ''
+        }
+    }
 }
 MIDDLEWARE = [
     ...

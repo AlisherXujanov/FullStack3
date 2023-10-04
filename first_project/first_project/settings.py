@@ -40,8 +40,47 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'django_bootstrap5',
-    'books'
+    'books',
+
+
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
 ]
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    # site for creating google auth service https://console.cloud.google.com/
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '538991880397-eahtia99eroj7vcenqfp6m1qklgi16pj.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    },
+    # ============================================================================
+    # site for creating github auth service https://github.com/settings/developers
+    'github': {
+        'APP': {
+            'client_id': '42e23f788d86598105fe',
+            'secret': '274999953de3d082710d3a8e72e6117d4fc57004',
+            'key': ''
+        }
+    }
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -51,6 +90,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'first_project.urls'

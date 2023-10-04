@@ -32,6 +32,9 @@ urlpatterns = [
     path("wishlist/", wishlist_view, name="wishlist_view"),
     path("delete_from_wl/<int:book_id>/",
          delete_from_wl, name="delete_from_wl"),
+
+    # AllAuth
+    path('accounts/', include('allauth.urls')),
 ]
 
 urlpatterns += static(

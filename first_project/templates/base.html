@@ -15,6 +15,7 @@
     {% bootstrap_css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.min.css' %}" />
 
     {% block link %}
 
@@ -24,19 +25,6 @@
 
     {% endblock %}
   </head>
-  {% comment %} 
-    1. Menu Nav
-      - Logo
-      - Name
-      - Logged In/Out buttons
-      - Social accounts
-    2. Background - 
-      - Image
-      - Slogan
-      - Links
-    3. Get Navbar into this header of bg-image
-    4. Use font-family Fino
-  {% endcomment %}
   <body>
 
 
@@ -67,8 +55,8 @@
       <div class="logged-out-navbar">
         <a style="float: left;" href="{% url 'home_page' %}">🏠</a>
         
-        <a href="{% url 'registration' %}">Registration</a>
-        <a href="{% url 'login' %}">Login</a>
+        <a href="/accounts/signup">Registration</a>
+        <a href="/accounts/login">Login</a>
       </div>
       <main id="logged-out-menu">
         {% bootstrap_messages %}
