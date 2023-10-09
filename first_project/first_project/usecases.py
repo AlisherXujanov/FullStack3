@@ -94,7 +94,7 @@ def delete_item_from_wishlist(request, item_id: int, item_type: str) -> None:
 
 
 def testpermission(user, book_id: int = None) -> bool:
-    if user.is_authenticated():
+    if user.is_authenticated:
 
         if book_id:
             if book := Books.objects.filter(id=book_id).first():

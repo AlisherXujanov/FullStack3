@@ -8,6 +8,9 @@ django = "*"
 django-bootstrap5 = "*"
 pillow = "*"
 django-allauth = "*"
+python-decouple = "*"
+beautifulsoup4 = "*"
+requests = "*"
 
 [dev-packages]
 

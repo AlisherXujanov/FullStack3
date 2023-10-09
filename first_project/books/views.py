@@ -1,9 +1,11 @@
 
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
+
+from first_project.usecases import testpermission
 
 from .forms import BookForm
 from .models import Books
@@ -58,6 +60,7 @@ class BookUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 
 @login_required
+@user_passes_test(testpermission, login_url='books_view')
 def delete_book(request, book_id: int):
     book = Books.objects.get(id=book_id)
     book.delete()

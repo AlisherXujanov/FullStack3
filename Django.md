@@ -1604,8 +1604,8 @@ def my_view(request):
 Similarly, the available permissions can be checked inside the template with perms.name syntax.  
 For example:
 ```html
-{% if perms.products.can_change_category %}
-    <p>You can change category</p>
+{% if perms.books.can_change_book %}
+    <p>You can update this book</p>
 {% endif %}
 ```
 
