@@ -32,8 +32,8 @@ class NullPriceException(Exception):
 class Books(models.Model):
     title: str = models.CharField(max_length=50)
     description: str = models.TextField()
-    author: User = models.ForeignKey(User, on_delete=models.SET_NULL,
-                                     null=True, blank=True)
+    author: User = models.ForeignKey(User,
+                                     on_delete=models.SET_NULL, null=True, blank=True)
     genre: str = models.CharField(max_length=25)
     is_available: bool = models.BooleanField(default=True)
     price: float = models.DecimalField(max_digits=5, decimal_places=2)
@@ -71,3 +71,4 @@ class Books(models.Model):
         indexes = [
             models.Index(fields=['is_available', 'price']),
         ]
+        permissions = [('can_change_book', 'Can change book')]

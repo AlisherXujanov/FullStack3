@@ -1,6 +1,6 @@
 
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
@@ -41,7 +41,7 @@ class BookDetailsView(DetailView):
         return Books.objects.filter(id=self.kwargs['pk'])
 
 
-class BookUpdateView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
+class BookUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     modal = Books
     form_class = BookForm
     template_name = 'update_book.html'

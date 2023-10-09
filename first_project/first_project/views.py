@@ -1,6 +1,8 @@
 from books.models import Books
 from books.usecases import *
 from books.usecases import get_saved_books
+from django.contrib import messages
+from django.contrib.auth.decorators import permission_required
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
 
@@ -31,6 +33,7 @@ def wishlist_view(request):
     return render(request, 'wishlist.html', context)
 
 
+@permission_required('books.can_change_book', raise_exception=True)
 def delete_from_wl(request, book_id: int):
     book = Books.objects.filter(id=book_id).first()
     delete_book_from_wl(request, book_id)

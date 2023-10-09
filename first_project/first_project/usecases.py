@@ -1,4 +1,4 @@
-from django.contrib import messages
+from books.models import Books
 
 WISH_LIST = 'wish-list'
 VIEWED_BOOKS = 'viewed-books'
@@ -91,3 +91,17 @@ def delete_item_from_wishlist(request, item_id: int, item_type: str) -> None:
             wish_list[BOOK_IDS] = books_ids
 
     session.set(WISH_LIST, wish_list)
+
+
+def testpermission(user, book_id: int = None) -> bool:
+    if user.is_authenticated():
+
+        if book_id:
+            if book := Books.objects.filter(id=book_id).first():
+                if user == book.author:
+                    return True
+            return False
+        else:
+            return True
+    else:
+        return False
