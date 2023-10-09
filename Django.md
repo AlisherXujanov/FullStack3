@@ -1566,8 +1566,8 @@ python manage.py runserver
 
 #### 
 
-# Permissions &&  Security 🔐 (advanced)   &&  📚 BeautifulSoup  
-## Permissions
+# Permissions &&  Security 🔐 (intermediate)   &&  📚 BeautifulSoup  
+#### Permissions
 ```python
 class Product(models.Model): 
     # A custom permission called change_category has been defined.
@@ -1575,6 +1575,13 @@ class Product(models.Model):
     class Meta: 
         permissions = [('can_change_category', 'Can change category')] 
 ```
+Migrations
+Creating custom permissions requires a database migration. To create the migration, run the following command:
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
 Here we can use decorators to check permissions every time before accessing any view
 ```python
 @login_required  # is the first example of a decorator
@@ -1602,8 +1609,87 @@ For example:
 {% endif %}
 ```
 
+#### SECURITY
+```python
+
+SECURE_SSL_REDIRECT = True
+SECURE_HSTS_SECONDS = 3600
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# This setting ensures that all HTTP requests and subdomains are redirected to HTTPS.
+# We need to put this setting in production settings.py file
+
+# =============================================================
+# secret key
+We also should create .env file and put our 
+    1. secret key
+    2. database settings
+    3. email settings
+    4. DEBUG
+    etc
+configurations inside it from settings.py file
+This ensures that our secret key is not exposed to the public
+```
+`https://pypi.org/project/python-decouple/`
+The library for extracting secret key from .env file is called python-decouple
+```python
+from decouple import config
+# in the settings file to import anything from .env file
+# we use <config> instead of <os.environ.get>
+# =============================================================
+```
+
+#### XSS  (Cross-site scripting)
+This is a type of attack where a malicious user injects malicious code into a website. This code can be used to steal sensitive information from the user, or it can be used to redirect the user to a malicious website. To prevent this type of attack, we need to make sure that all user input is properly escaped before it is displayed on the website. We can do this by using the escape filter in our templates, or by using the escape function in our views.
+```html
+{{ user_input|escape }}
+```
+
+#### CSRF (Cross-site request forgery)
+This is a type of attack where a malicious user tricks a user into submitting a request to a website without their knowledge. This can be done by sending a link to the user that contains a malicious request, or by using a malicious script to submit a request to the website. To prevent this type of attack, we need to make sure that all forms on our website have a CSRF token. We can do this by using the csrf_token tag in our templates, or by using the csrf_protect decorator in our views.
+```html
+<form>
+ {% csrf_token %}
+</form>
+```
+
+
+
+
+
+
+
+
+
+#### BeautifulSoup
+To install BeautifulSoup, run the following command:
+```bash
+pip install beautifulsoup4
+```
+
+```python
+from bs4 import BeautifulSoup
+
+html_doc = BeautifulSoup("<p>Some<b>bad<i>HTML", 'html.parser')
+
+print(html_doc.prettify())  # This will print the html in a nice format
+print(html_doc.title)       # This will print the title of the html
+print(html_doc.title.name)  # This will print the name of the title tag
+print(html_doc.title.string)# This will print the string inside the title tag
+print(html_doc.title.parent.name)  # This will print the name of the parent tag of the title tag
+print(html_doc.p)           # This will print the first p tag
+...
+```
+
+
+
 
 # Signals   &&  Caching    &&   Sending Emails 📧 (advanced)
+####
+####
+####
+####
 
 
 # 🌐 Internationalisation  &&  localisation  (advanced)

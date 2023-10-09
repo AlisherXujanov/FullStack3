@@ -74,8 +74,8 @@ SOCIALACCOUNT_PROVIDERS = {
     # site for creating github auth service https://github.com/settings/developers
     'github': {
         'APP': {
-            'client_id': '42e23f788d86598105fe',
-            'secret': '274999953de3d082710d3a8e72e6117d4fc57004',
+            'client_id': '',
+            'secret': '',
             'key': ''
         }
     }
