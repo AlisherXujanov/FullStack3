@@ -1685,11 +1685,96 @@ print(html_doc.p)           # This will print the first p tag
 
 
 
-# Signals   &&  Caching    &&   Sending Emails 📧 (advanced)
-####
-####
-####
-####
+# Signals  &&   Sending Emails 📧 (advanced)
+#### Signals
+Signals are used to execute code when certain events occur in Django. For example, we can use signals to execute code when a user is created, or when a user is logged in. We can also use signals to execute code when a model is saved, or when a model is deleted. Signals are useful for executing code that is not directly related to a view, such as sending an email when a user is created, or updating a model when a user is logged in.
+```python
+from django.db.models.signals import post_save
+from django.contrib.auth.models import User
+from django.dispatch import receiver
+
+@receiver(post_save, sender=User)
+def create_profile(sender, instance, created, **kwargs):
+    """This function will be called every time a new user is created."""
+    if created:
+        Profile.objects.create(user=instance)
+        instance.profile.save()
+
+# - pre_save signal: This signal gets fired before an object is saved.
+# - post_save signal: This signal gets fired after an object is saved.
+# - receiver: This decorator is used to register a signal receiver function.
+# - sender: This is the model class that sends the signal. In our case, it is the User model.
+# - instance: This is the actual instance of the model class that sends the signal.
+```
+
+#### Create local variable in windows and access in python
+First, go to the Control Panel and click on System and Security. Then, click on System. Next, click on Advanced system settings. Then, click on Environment Variables. Finally, click on New and enter the name of the variable and the value of the variable. For example, if you want to create a variable called MY_NAME with the value "YOUR-NAME", you would enter MY_NAME for the name and "YOUR-NAME" for the value. Once you have created the variable, you can access it in Python using the os.environ.get function.
+```python
+import os
+
+gmail = os.environ.get('gmail')
+print(gmail)
+
+# To see available variables in nice format
+for key, value in os.environ.items():
+    print(f'{key} = {value}')
+```
+
+
+#### Django debug toolbar
+```pip install django-debug-toolbar```
+```python
+# settings.py
+INSTALLED_APPS = [
+    ...
+    'debug_toolbar',
+    ...
+]
+MIIDDLEWARE = [
+    ...
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    ...
+]
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
+```
+
+#### EMAILS
+```python
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('GMAIL')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+
+
+# EMAIL_HOST_PASSWORD is a sensitive information that should not be shared or stored in plain text. It is recommended to store it in a secure location such as an environment variable or a configuration file that is not tracked by version control.
+
+# To create an EMAIL_HOST_PASSWORD, you can follow these steps:
+#  -----   Log in to your email provider's website.
+#  -----   Navigate to the security settings or account settings.
+#  -----   Look for an option to generate an app password or an API key.
+#  -----   Follow the instructions to generate a new password or key.
+#  -----   Copy the generated password or key and store it in a secure location.
+# Once you have the EMAIL_HOST_PASSWORD, you can set it as an environment variable in your development environment or in your production server. 
+```
+Then in views.py
+```python
+from django.core.mail import send_mail
+from django.conf import settings
+
+send_mail(
+    'Subject here',
+    'Here is the message.',
+    settings.EMAIL_HOST_USER,
+    ['somebody@gmail.com'],
+    fail_silently=False,
+)
+```
 
 
 # 🌐 Internationalisation  &&  localisation  (advanced)
