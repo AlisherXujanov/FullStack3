@@ -4,6 +4,8 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.db import IntegrityError, models
 from PIL import Image
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # models.SET_NULL   =>   if the user is deleted,
 #                        the book will still exist but the author
@@ -72,3 +74,12 @@ class Books(models.Model):
             models.Index(fields=['is_available', 'price']),
         ]
         permissions = [('can_change_book', 'Can change book')]
+
+
+
+@receiver(post_save, sender=Books)
+def print_info_of_book(sender, instance, created, **kwargs):
+    if created:
+        print("--------------------------------------------------")
+        print(f'Book instance named: {instance.title} was created')
+        print("--------------------------------------------------")
