@@ -1,11 +1,15 @@
+from math import exp
 import os
 from datetime import datetime
+from smtplib import SMTPException
 
 from django.contrib.auth.models import User
 from django.db import IntegrityError, models
 from PIL import Image
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core.mail import send_mail
+from django.conf import settings
 
 # models.SET_NULL   =>   if the user is deleted,
 #                        the book will still exist but the author
@@ -83,3 +87,16 @@ def print_info_of_book(sender, instance, created, **kwargs):
         print("--------------------------------------------------")
         print(f'Book instance named: {instance.title} was created')
         print("--------------------------------------------------")
+
+        try:
+            send_mail(
+                f'Book instance named: {instance.title} was created',
+                'In your project Alisher Company Fullstack Developer new book was created',
+                settings.EMAIL_HOST_USER,
+                ['alisherxujanov163@gmail.com'],
+                fail_silently=False,
+            )
+        except SMTPException as error:
+            print("--------------------------------------------")
+            print("Error while sending email: ", error)
+            print("--------------------------------------------")

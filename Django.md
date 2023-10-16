@@ -1762,16 +1762,16 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 #  -----   Copy the generated password or key and store it in a secure location.
 # Once you have the EMAIL_HOST_PASSWORD, you can set it as an environment variable in your development environment or in your production server. 
 ```
-Then in views.py
+Then in views.py or in the modals.py we can use this code to send emails
 ```python
 from django.core.mail import send_mail
 from django.conf import settings
 
 send_mail(
-    'Subject here',
-    'Here is the message.',
+    'Topic',
+    'Message',
     settings.EMAIL_HOST_USER,
-    ['somebody@gmail.com'],
+    ["receiver-emails"],
     fail_silently=False,
 )
 ```
