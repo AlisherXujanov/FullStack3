@@ -1,5 +1,5 @@
 **/__pycache__/
-.env
+# .env  # Uncomment if you use environment variables for configuration
 
 
 
