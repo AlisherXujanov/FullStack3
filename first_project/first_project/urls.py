@@ -30,6 +30,7 @@ urlpatterns = [
     # UNIVERSAL views
     path("", HomeView.as_view(), name="home_page"),
     path("wishlist/", wishlist_view, name="wishlist_view"),
+    path("send_email/", send_email_view, name="send_email_view"),
     path("delete_from_wl/<int:book_id>/",
          delete_from_wl, name="delete_from_wl"),
 

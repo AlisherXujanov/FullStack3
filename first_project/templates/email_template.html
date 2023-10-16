@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+
+{% block title %}
+    <title>Send email</title>
+{% endblock %}
+
+
+{% block content %}
+    {% include "form_snippets.html" with form=form %}
+{% endblock %}
+
+

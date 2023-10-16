@@ -2,10 +2,15 @@ from books.models import Books
 from books.usecases import *
 from books.usecases import get_saved_books
 from django.contrib import messages
-from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import permission_required, login_required
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
+from smtplib import SMTPException
 
+
+from django.core.mail import send_mail
+from django.conf import settings
+from .forms import SendEmailForm
 from .usecases import *
 
 
@@ -41,3 +46,30 @@ def delete_from_wl(request, book_id: int):
     messages.success(
         request, f"Successfully deleted {book.title} from wishlist")
     return redirect('wishlist_view')
+
+
+
+
+@login_required
+def send_email_view(request):
+    if request.method == "POST":
+        form = SendEmailForm(request.POST)
+        if form.is_valid():
+            email   = form.cleaned_data['email']
+            title   = form.cleaned_data['title']
+            message = form.cleaned_data['message']
+            try:
+                send_mail(title, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
+                messages.success(request, "Email sent successfully")
+                return redirect('home_page')
+            except SMTPException as error:
+                messages.error(request, f"Error while sending email: {error}")
+                return redirect('send_email_view')
+        else:
+            messages.error(request, f"Invalid form: {form.errors}")
+            context = { 'form': form }
+            return render(request, 'email_template.html', context)
+
+    form = SendEmailForm()
+    context = { 'form': form }
+    return render(request, 'email_template.html', context)
