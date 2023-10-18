@@ -1853,23 +1853,6 @@ def home(request):
     # and if something goes wrong, you can use the default language
 ```
 
----
-To work with templates we need to add this to our settings.py file
-```python
-TEMPLATES = [
-    {
-        ...
-        'OPTIONS': {
-            'context_processors': [
-                ...
-                'django.template.context_processors.i18n',
-                ...
-            ],
-        },
-    },
-]
-
-```
 In urls.py
 ```python
 from django.conf.urls.i18n import i18n_patterns

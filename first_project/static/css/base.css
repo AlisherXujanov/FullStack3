@@ -90,3 +90,12 @@ main#logged-in-menu > div:last-child {
 .logged-out-navbar a:hover {
     background-color: green;
 }
+
+
+#current-language {
+    position: absolute;
+    bottom: 30px;
+    left: 5px;
+    font-size: 2em;
+    cursor: pointer;
+} 

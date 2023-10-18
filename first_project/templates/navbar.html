@@ -1,3 +1,7 @@
+{% load i18n %}
+
+{% get_available_languages as languages %}
+{% get_current_language as language %}
 <nav>
     <a href="{% url 'home_page' %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Home">
         🏠
@@ -17,4 +21,9 @@
     <a href="{% url 'logout' %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Logout">
         &rightarrow;
     </a>
+
+
+    <span id="current-language" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="{{language}}">
+        🌐
+    </span>
 </nav>

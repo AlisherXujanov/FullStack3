@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load django_bootstrap5 %}
+{% load i18n %}
 
 {% block title %}
-  <title>Wishlist. {{ books|length }} items</title>
+  <title>{% translate "Wishlist." %} {{ books|length }} {% translate "items" %}</title>
 {% endblock %}
 
 {% block style %}
@@ -54,7 +55,7 @@
         </div>
       {% endfor %}
     {% else %}
-      <h2>Your wishlist is empty 😭</h2>
+      <h2>{% translate 'Your wishlist is empty' %} 😭</h2>
     {% endif %}
   </div>
 {% endblock %}

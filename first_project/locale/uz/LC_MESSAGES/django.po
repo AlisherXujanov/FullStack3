@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-18 18:36+0500\n"
+"POT-Creation-Date: 2023-10-18 19:25+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,9 +30,17 @@ msgstr ""
 msgid "Uzbek"
 msgstr ""
 
-#: .\first_project\views.py:36
+#: .\first_project\views.py:37
 msgid "Hello world"
 msgstr "Salom dunyo"
+
+#: .\first_project\views.py:49
+msgid "Language changed successfully"
+msgstr "Tilingiz muvaffaqiyatli o'zgartirildi"
+
+#: .\first_project\views.py:52
+msgid "Invalid language"
+msgstr ""
 
 #: .\templates\socialaccount\login.html:4
 msgid "Sign In"
@@ -61,3 +69,31 @@ msgstr ""
 #: .\templates\socialaccount\login.html:19
 msgid "Continue"
 msgstr ""
+
+#: .\templates\wishlist.html:7
+msgid "Wishlist."
+msgstr "Savat"
+
+#: .\templates\wishlist.html:7
+msgid "items"
+msgstr "buyumlar"
+
+#: .\templates\wishlist.html:58
+msgid "Your wishlist is empty"
+msgstr "Sizning savatingiz bo'm-bo'sh"
+
+#: .\users\templates\profile.html:7 .\users\templates\profile.html:11
+msgid "profile"
+msgstr "profil"
+
+#: .\users\templates\profile.html:16
+msgid "Preferred language"
+msgstr "Istalgan til"
+
+#: .\users\templates\profile.html:18
+msgid "Choose language"
+msgstr "Tilni tanlang"
+
+#: .\users\templates\profile.html:43
+msgid "Update"
+msgstr "Yangilash"

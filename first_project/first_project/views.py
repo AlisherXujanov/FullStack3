@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import permission_required, login_required
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
 from smtplib import SMTPException
-from django.utils.translation import activate, gettext_lazy as _
+from django.utils.translation import activate, get_language, gettext_lazy as _
 
 
 from django.core.mail import send_mail
@@ -43,13 +43,15 @@ def wishlist_view(request):
 
 
 def translate(request, language:str):
+    current_lang = get_language()
     try:
         activate(language)
-        messages.success(request, "Language changed successfully")
+        messages.success(request, _("Language changed successfully"))
     except:
-        messages.error(request, "Invalid language")
+        activate(current_lang)
+        messages.error(request, _("Invalid language"))
 
-    return redirect('home_page')
+    return redirect('profile')
 
 
 @permission_required('books.can_change_book', raise_exception=True)

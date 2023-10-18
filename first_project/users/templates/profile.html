@@ -1,17 +1,34 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load django_bootstrap5 %}
+{% load i18n %}
 
 {% block title %}
-  <title>{{ user.username }} profile</title>
+  <title>{{ user.username }} {% translate "profile" %}</title>
 {% endblock %}
 
 {% block content %}
-  <h1>{{ user.username }} profile</h1>
+  <h1>{{ user.username }} {% translate "profile" %}</h1>
 
-  <form method="POST" 
-    enctype="multipart/form-data"
-  >
+  <div class="btn-group">
+    {% get_available_languages as languages %}
+    {% get_current_language as language %}
+    <h3>{% translate "Preferred language" %}</h3>
+
+    <button type="button" class="btn btn-success rounded ms-2">{% translate "Choose language" %}: {{ language }}</button>
+    <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"><span class="visually-hidden">Toggle Dropdown</span></button>
+    <ul class="dropdown-menu">
+      {% for lang_code, lang_name in languages %}
+        <li>
+          <a class="dropdown-item" href="{% url 'translate' lang_code %}">
+            <strong>{{ lang_name }}</strong>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 
     {% if u_form.errors %}
@@ -24,7 +41,7 @@
     {% bootstrap_form u_form %}
     {% bootstrap_form p_form %}
 
-    <button class="btn btn-success" type="submit">Update</button>
+    <button class="btn btn-success" type="submit">{% translate "Update" %}</button>
   </form>
 {% endblock %}
 
