@@ -1782,5 +1782,86 @@ send_mail(
 
 # 🌐 Internationalisation  &&  localisation  (advanced)
 
+First of all we need to install gettext on windows
+`https://mlocati.github.io/articles/gettext-iconv-windows.html`
+
+
+
+Then you can visit: `https://docs.djangoproject.com/en/4.2/topics/i18n/translation/`
+In Django's utils.translation module, `gettext` and `gettext_lazy` are both functions used for translating text in a Django project.
+
+`gettext` is a function that is used to translate text at runtime. It takes a string as input and returns a translated string based on the current language setting. The translated string is determined by looking up the translation in the appropriate message catalog.
+
+`gettext_lazy` is a lazy version of `gettext`. It returns a lazy object that can be translated later when needed. This is useful when you need to translate text in a context where the translation may not be immediately needed, such as in a model field or a default value for a form field.
+
+The main difference between `gettext` and `gettext_lazy` is that `gettext` returns a translated string immediately, while `gettext_lazy` returns a lazy object that can be translated later.
+
+In summary, `gettext` is used for translating text at runtime, while `gettext_lazy` is used for translating text in a lazy manner, which can be useful in certain contexts.
+
+
+First we need to add this to our settings.py file
+```python
+MIDDLEWARE = [
+    ...
+    'django.middleware.locale.LocaleMiddleware', 
+    ...
+]
+
+from django.utils.translation import gettext_lazy as _
+LANGUAGE_CODE = 'en' # This is the default language
+LANGUAGES = (
+    ('en', _("English")),
+    ('ru', _("Russian")),
+    ('uz', _("Uzbek")),
+)
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
+```
+
+Then we need to create a folder named `locale` in our project directory 
+and inside it we should create folders for each language that we want to use.
+Then we should run this command in terminal to initialize the translation files
+`https://docs.djangoproject.com/en/4.2/ref/django-admin/#makemessages`
+**and install gettext on VSCode extension**
+```bash
+django-admin makemessages --all
+# This is going to create a .po file for each language that we have specified in settings.py file
+# po translates as Portable Object
+```
+Afterwards, the translation files should be edited manually by a translator.
+Once the translation files have been edited, we can compile them into .mo files using the following command:
+```bash
+django-admin compilemessages
+```
+---
+
+in views.py
+```python
+from django.utils.translation import activate, gettext_lazy as _
+
+def home(request):
+    # This is how we can get the current language
+    current_language = get_language()
+    # This is how we can change the current language
+    activate('uz')
+    # This is how we can translate text
+    text = _("Hello World")
+    return render(request, 'home.html', {'text': text})
+
+    # You could also use try and except to translate text
+    # and if something goes wrong, you can use the default language
+```
+
+Also, we have to load i18n in the templates for using 
+{% translate '...' %}
+```html
+{% load i18n %}
+
+{% translate 'Hello World' %}
+<!-- This will translate text into active-language -->
+```
+
+
 
 # Performance && optimization &&  Unit Tests
