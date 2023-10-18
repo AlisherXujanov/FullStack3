@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'users',
     'django_bootstrap5',
     'books',
+    'debug_toolbar',
 
 
     'django.contrib.sites',
@@ -95,6 +96,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+]
+
+INTERNAL_IPS = [
+    "127.0.0.1",
 ]
 
 ROOT_URLCONF = 'first_project.urls'

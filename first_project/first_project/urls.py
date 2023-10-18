@@ -38,6 +38,11 @@ urlpatterns += i18n_patterns(
     path('translate/<str:language>/', translate, name="translate"),
 )
 
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
 
 
 urlpatterns += static(
