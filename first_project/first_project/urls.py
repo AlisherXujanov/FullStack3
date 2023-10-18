@@ -18,25 +18,27 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from django.conf.urls.i18n import i18n_patterns
 
 from .views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+]
+urlpatterns += i18n_patterns(
+     # Patterns that need to be translated
     path('users/', include('users.urls')),
     path('books/', include('books.urls')),
-
-
-    # UNIVERSAL views
     path("", HomeView.as_view(), name="home_page"),
     path("wishlist/", wishlist_view, name="wishlist_view"),
     path("send_email/", send_email_view, name="send_email_view"),
     path("delete_from_wl/<int:book_id>/",
          delete_from_wl, name="delete_from_wl"),
-
-    # AllAuth
     path('accounts/', include('allauth.urls')),
-]
+    path('translate/<str:language>/', translate, name="translate"),
+)
+
+
 
 urlpatterns += static(
     settings.MEDIA_URL,

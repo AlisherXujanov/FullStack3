@@ -1853,13 +1853,53 @@ def home(request):
     # and if something goes wrong, you can use the default language
 ```
 
-Also, we have to load i18n in the templates for using 
-{% translate '...' %}
-```html
-{% load i18n %}
+---
+To work with templates we need to add this to our settings.py file
+```python
+TEMPLATES = [
+    {
+        ...
+        'OPTIONS': {
+            'context_processors': [
+                ...
+                'django.template.context_processors.i18n',
+                ...
+            ],
+        },
+    },
+]
 
-{% translate 'Hello World' %}
-<!-- This will translate text into active-language -->
+```
+In urls.py
+```python
+from django.conf.urls.i18n import i18n_patterns
+
+urlpatterns = [
+    # Patterns that do not need to be translated
+    ...
+]
+urlpatterns += i18n_patterns(
+    # Patterns that need to be translated
+    path('', include('pages.urls')),
+    path('admin/', admin.site.urls),
+)
+```
+
+Then we can use this code in our templates
+```html
+ {% load i18n %}
+
+   {% get_available_languages as languages %}
+    {% get_current_language as language %}
+
+    {% for lang_code, lang_name in languages %}
+        <strong>{{ lang_name }}</strong>
+        <strong>{{ lang_code }}</strong>
+    {% endfor %}
+
+<!-- ======================================================== -->
+<!-- FOR TRANSLATIONS -->
+{% translate '...' %}
 ```
 
 

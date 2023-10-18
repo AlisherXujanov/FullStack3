@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 from decouple import config
 
@@ -196,4 +196,7 @@ LANGUAGES = (
     ('en', _("English")),
     ('ru', _("Russian")),
     ('uz', _("Uzbek")),
+)
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
 )

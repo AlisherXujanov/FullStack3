@@ -1,3 +1,4 @@
+import re
 from books.models import Books
 from books.usecases import *
 from books.usecases import get_saved_books
@@ -6,6 +7,7 @@ from django.contrib.auth.decorators import permission_required, login_required
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
 from smtplib import SMTPException
+from django.utils.translation import activate, gettext_lazy as _
 
 
 from django.core.mail import send_mail
@@ -32,10 +34,22 @@ class HomeView(TemplateView):
 
 
 def wishlist_view(request):
+    test = _("Hello world")
     context = {
-        "books": get_saved_books(request)
+        "books": get_saved_books(request),
+        "test": test
     }
     return render(request, 'wishlist.html', context)
+
+
+def translate(request, language:str):
+    try:
+        activate(language)
+        messages.success(request, "Language changed successfully")
+    except:
+        messages.error(request, "Invalid language")
+
+    return redirect('home_page')
 
 
 @permission_required('books.can_change_book', raise_exception=True)

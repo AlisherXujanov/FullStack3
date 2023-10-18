@@ -1,0 +1,63 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-18 18:36+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\first_project\settings.py:196
+msgid "English"
+msgstr ""
+
+#: .\first_project\settings.py:197
+msgid "Russian"
+msgstr ""
+
+#: .\first_project\settings.py:198
+msgid "Uzbek"
+msgstr ""
+
+#: .\first_project\views.py:36
+msgid "Hello world"
+msgstr ""
+
+#: .\templates\socialaccount\login.html:4
+msgid "Sign In"
+msgstr ""
+
+#: .\templates\socialaccount\login.html:8
+#, python-format
+msgid "Connect %(provider)s"
+msgstr ""
+
+#: .\templates\socialaccount\login.html:10
+#, python-format
+msgid "You are about to connect a new third party account from %(provider)s."
+msgstr ""
+
+#: .\templates\socialaccount\login.html:12
+#, python-format
+msgid "Sign In Via %(provider)s"
+msgstr ""
+
+#: .\templates\socialaccount\login.html:14
+#, python-format
+msgid "You are about to sign in using a third party account from %(provider)s."
+msgstr ""
+
+#: .\templates\socialaccount\login.html:19
+msgid "Continue"
+msgstr ""
