@@ -129,14 +129,8 @@ WSGI_APPLICATION = 'first_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql', 
-        'NAME': 'postgres', # defaults 'postgres'
-        'USER': 'superuser', # get it from your specified database in AWS as Master username
-        'PASSWORD': os.environ.get('aws_password'), # get it from your specified database in AWS
-        'HOST': os.environ.get('aws_host'), # Change this to your database host
-              # rds => Relational Database Service
-              # aws => Amazon Web Services
-        'PORT': '5432'  # defaults '5432'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
