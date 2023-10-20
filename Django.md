@@ -1887,4 +1887,96 @@ Then we can use this code in our templates
 
 
 
-# Performance && optimization &&  Unit Tests
+# PostgreSQL && Unit Tests &&  Debugging
+
+First of all, we need to install PostgreSQL on our computer.
+And then we need to install psycopg2-binary to let django
+communicate with PostgreSQL
+`pip install psycopg2-binary`
+
+
+#### Create AWS account
+`https://www.w3schools.com/django/django_db_create_aws_account.php`
+`https://www.w3schools.com/django/django_db_create_rds.php`
+
+
+#### Connect to database PostgreSQL
+```python
+# settings.py
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql', 
+        'NAME': 'postgres', # defaults 'postgres'
+        'USER': 'superuser', # get it from your specified database in AWS as Master username
+        'PASSWORD': os.environ.get('aws_password'), # get it from your specified database in AWS
+        'HOST': os.environ.get('aws_host'), # Change this to your database host
+              # rds => Relational Database Service
+              # aws => Amazon Web Services
+        'PORT': '5432'  # defaults '5432'
+    }
+    # ALL VALUES DEPEND ON YOUR PROJECT's DATABASE
+}
+
+# NOTE: RUN migrations afterwards!
+# Then you can visit admin-page and create records in your database
+```
+
+
+
+
+#### Unit Tests
+To run unittests we can use local buily-in unittest library
+RU: Чтобы запустить unittests, мы можем использовать встроенную в локальную библиотеку unittest
+
+Firstly, we install selenium and we can initialize it with the help of 
+unittest.TestCase
+RU: Во-первых, мы устанавливаем selenium, и мы можем инициализировать его с помощью
+unittest.TestCase
+
+```python
+# --- import helpers ---
+# 1. login
+# 2. logout
+# 3. choose_from_navbar(...)
+# 4. create_book(title, description, cost, genre)
+
+class Test...(TestCase):
+    def setUp(self):
+        self.username = '...'
+        self.password = '...'
+
+    def tearDown(self):
+        helpers.logout()
+
+    # 1. test main page
+    # 2. test books page
+    # 3. test all view routers
+
+    def test_...(self):
+        helpers.login(self, self.username, self.password)
+```
+
+#### Debugging
+We can also use VSCode debugging tools to debug our code
+So, we can just pass args to test instead of running the server
+RU: Мы также можем использовать инструменты отладки VSCode для отладки нашего кода
+Поэтому мы можем просто передавать аргументы в тест вместо запуска сервера
+
+```python
+  {
+      "name": "Run unittest",
+      "type": "python",
+      "request": "launch",
+      "program": "first_project\\manage.py",
+      "args": [
+          "test test-file-name"
+      ],
+      "django": true,
+      "justMyCode": true
+  },
+```
+
+Afterwards, we can use breakpoints to stop anywhere 
+and see what is going on in our code if there is smth happened
+RU: После этого мы можем использовать точки останова, чтобы остановиться где угодно
+и посмотреть, что происходит в нашем коде, если что-то произошло
