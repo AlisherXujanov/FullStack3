@@ -13,6 +13,7 @@ beautifulsoup4 = "*"
 requests = "*"
 django-debug-toolbar = "*"
 psycopg2-binary = "*"
+selenium = "*"
 
 [dev-packages]
 

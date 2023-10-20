@@ -1922,8 +1922,6 @@ DATABASES = {
 ```
 
 
-
-
 #### Unit Tests
 To run unittests we can use local buily-in unittest library
 RU: Чтобы запустить unittests, мы можем использовать встроенную в локальную библиотеку unittest
