@@ -12,6 +12,7 @@ python-decouple = "*"
 beautifulsoup4 = "*"
 requests = "*"
 django-debug-toolbar = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 
