@@ -1,15 +1,12 @@
 from django.test import TestCase
 
 # Create your tests here.
-import time
-from pytest import console_main
-
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
-PATH = "C:\Users\user\Documents\Alisher\FullStack3\chromedriver.exe"
+PATH = "C:\\Users\\user\\Documents\\Alisher\\FullStack3\\chromedriver.exe"
 
 HALF_SECOND = 0.5
 
@@ -27,7 +24,6 @@ class Fullstack(TestCase):
         self.driver.close()
         self.driver.quit()
         print(f"Ending test for {self.driver}")
-
 
     def test_wikipedia(self):
         self.driver.get("http://127.0.0.1:8000/")
