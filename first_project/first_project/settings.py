@@ -53,6 +53,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.github',
+
+    # add DRF
+    'rest_framework',
 ]
 SITE_ID = 1
 
