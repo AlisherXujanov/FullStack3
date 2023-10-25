@@ -14,7 +14,7 @@ requests = "*"
 django-debug-toolbar = "*"
 psycopg2-binary = "*"
 selenium = "*"
-django-rest-framework = "*"
+djangorestframework = "*"
 
 [dev-packages]
 
