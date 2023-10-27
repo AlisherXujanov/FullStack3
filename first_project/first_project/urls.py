@@ -19,11 +19,18 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from django.conf.urls.i18n import i18n_patterns
-
 from .views import *
+
+from rest_framework import routers
+from books.api_views import *
+
+router = routers.DefaultRouter()
+router.register('books', BooksViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),
+    path('api-rest/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 urlpatterns += i18n_patterns(
      # Patterns that need to be translated
