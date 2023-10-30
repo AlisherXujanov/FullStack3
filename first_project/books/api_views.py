@@ -20,13 +20,21 @@ class BooksList(AuthApiView):
         return Response(books.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        data = request.data
-        print(data)
+        data = BooksSerializer(data=request.data)
+        if data.is_valid():
+            data.save()
+            return Response(data.data, status=status.HTTP_201_CREATED)
 
+    def put(self, request):
+        pass
+# {
+#   "title": "Test title",
+#   "genre": "Test genre", 
+#   "description": "test desc", 
+#   "price": 20
+# }
 
-
-
-class BooksViewSet(viewsets.ModelViewSet):
+class BooksViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Books.objects.all()
     serializer_class = BooksSerializer
     permission_classes = [permissions.IsAuthenticated]

@@ -107,17 +107,16 @@ class Books():
 
 # If we want to use it in the class-based view
 class BookView(APIView):
-	def get(self, request, pk):
-    	return Response(
-                      {"message":"single book with id " + str(pk)},
-                       status.HTTP_200_OK
-                   )
-	def put(self, request, pk):
-    	return Response(
-                       {"title":request.data.get('title')}, 
-                       status.HTTP_200_OK
-                    )
+	def get(self, request):
+        all_books = Books.objects.all()
+        books = BooksSerializer(all_books, many=True)
+        return Response(books.data, status=status.HTTP_200_OK)
 
+    def post(self, request):
+        data = BooksSerializer(data=request.data)
+        if data.is_valid():
+            data.save()
+            return Response(data.data, status=status.HTTP_201_CREATED)
 ```
 
 ### ViewSets
@@ -188,7 +187,7 @@ class MyCreateAPIView(generics.CreateAPIView):
     serializer_class = MyModelSerializer
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save(author=self.request.user)
 
 class MyListAPIView(generics.ListAPIView):
     """ Used for listing objects. """
@@ -196,7 +195,7 @@ class MyListAPIView(generics.ListAPIView):
     serializer_class = MyModelSerializer
 
     def get_queryset(self):
-        return self.queryset.filter(user=self.request.user)
+        return self.queryset.filter(author=self.request.user)
 
 class MyRetrieveAPIView(generics.RetrieveAPIView):
     """ Used for retrieving a single object. """
@@ -241,12 +240,12 @@ path('api/.../', ...APIView.as_view(), name='...'),
 ```
 
 
+
 ### Permissions classes
 - `AllowAny` - Allow any access
 - `IsAuthenticated` - Allow access only to authenticated users
 - `IsAdminUser` - Allow access only to admin users
 - `IsAuthenticatedOrReadOnly` - Allow access to authenticated users (read-only) and allow access to non-authenticated users (read-only)
-- `DjangoModelPermissions` - Allow access only to authenticated users with the correct permission (read-only)
 
 
 # Serializers
