@@ -89,9 +89,11 @@ from rest_framework.decorators import api_view
 
 # For using class-based views
 from rest_framework.views import APIView
+from rest_framework import generics, viewsets
 
 @api_view(['GET', 'POST'])
 def books_view(request):
+    data = modal_to_dict(Book.objects.all())
     return Response({'message': 'Hello, world!'}, status=status.HTTP_200_OK)
 
 class Books():
@@ -247,8 +249,9 @@ path('api/.../', ...APIView.as_view(), name='...'),
 - `DjangoModelPermissions` - Allow access only to authenticated users with the correct permission (read-only)
 
 
+# Serializers
 
-# Authentication and Authorization  &&  Permissions
+# Authentication and Authorization
 
 ### Authentication
 Authentication is the process of verifying the credentials of a user. Logging into websites with a username and password is a typical example of authentication. When the username and password match, the website recognizes the user and sets some cookies in the user’s browser. When the user visits another page on that website, the browser sends those cookies within the HTTP request header. The website recognizes the cookies as well as server-side session data and therefore doesn’t ask for credentials until the user logs out again.  
@@ -279,11 +282,12 @@ The two steps in the API authentication process can be represented by the follow
 ### Authorization
 
 
-# 
 
 
-#
 
+# Relationships and Hyperlinks
 
-#
+# Requests and Responses
+
+# Throttling  &  Filtering  &  Pagination
 

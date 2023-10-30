@@ -1,6 +1,18 @@
 from first_project.usecases import *
 
 from .models import Books
+from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
+
+
+class NoAuthApiView(APIView):
+    """Doesn't require authentication"""
+    permission_classes = [AllowAny]
+
+class AuthApiView(NoAuthApiView):
+    """Requires authentication"""
+    permission_classes = [IsAuthenticated]
+
 
 
 def get_saved_books(request) -> list[Books]:
