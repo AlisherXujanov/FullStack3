@@ -248,7 +248,127 @@ path('api/.../', ...APIView.as_view(), name='...'),
 - `IsAuthenticatedOrReadOnly` - Allow access to authenticated users (read-only) and allow access to non-authenticated users (read-only)
 
 
-# Serializers
+# Serialization and Deserialization
+
+### Serializer
+In easy words, serializers are used to convert complex data, such as querysets and model instances, to native Python datatypes that can then be easily rendered into JSON, XML, or other content types. Serializers also provide deserialization, allowing parsed data to be converted back into complex types, after first validating the incoming data.
+
+```python
+from rest_framework import serializers
+
+class BookSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True) # NOTE: usually we don't want to add id field
+    title = serializers.CharField(max_length=255)
+    author = serializers.CharField(max_length=255)
+    description = serializers.CharField(max_length=255)
+    created_at = serializers.DateTimeField(read_only=True)
+    updated_at = serializers.DateTimeField(read_only=True)
+
+    def create(self, validated_data:dict) -> Books:
+        return Books.objects.create(**validated_data)
+
+    def update(self, instance:Books, validated_data:dict) -> Books:
+        instance.title = validated_data.get('title', instance.title)
+        instance.author = validated_data.get('author', instance.author)
+        instance.description = validated_data.get('description', instance.description)
+        instance.save()
+        return instance
+```
+
+### ModelSerializer
+ModelSerializer is a shortcut to create a serializer class with fields that correspond to the Model fields. It will create a set of default fields for you, based on the model.
+
+```python
+from rest_framework import serializers
+DISCOUNT_IN_PERCENT = 10
+
+class BookSerializer(serializers.ModelSerializer):
+    price_in_discount = serializers.IntegerField(read_only=True, method_name='price_after_discount')
+    author_name = serializers.CharField(read_only=True, method_name='current_user_as_author')
+
+    # NOTE: 
+    # 1. We can aslo use rename existing fields by using source attribute
+    # ex: author_name = serializers.CharField(source='author.username')
+    # 2. We can also use SerializerMethodField() to create a custom field
+    # ex: price_in_discount = serializers.SerializerMethodField(method_name='price_after_discount')
+
+    class Meta:
+        model = Book
+        fields = ['title', 'author_name', 'price_in_discount', 'description', 'created_at']
+
+    def price_after_discount(self, obj:Book):
+        discount_price = obj.price - (obj.price * DISCOUNT_IN_PERCENT / 100)
+        return f'${discount_price} - ({DISCOUNT_IN_PERCENT}% discount)'
+
+    def current_user_as_author(self, obj:Book):
+        request = self.context.get('request')
+        return request.user.username
+
+# NOTE: To be able to get request object in serializer, 
+#       you need to pass it in the view MySerializer(..., context={'request': request})
+
+```
+
+
+### Relationship serializer
+Let's say we have another model for 'genre' field of Books model.
+```python
+# models.py
+class Genre(models.Model):
+    slug = models.SlugField(unique=True) # this is for url
+    name = models.CharField(max_length=50, unique=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            from django.utils.text import slugify
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+class Books(models.Model):
+    ...
+    genre = models.ForeignKey(Genre, on_delete=models.PROTECT, default=1)
+    ...
+```
+
+So, we need to create a serializer for it and then use it in BooksSerializer
+```python
+# serializers.py
+class BooksSerializer(serializers.ModelSerializer):
+    ...
+    genre = serializers.HyperlinkedRelatedField(
+        queryset=Genre.objects.all(),
+        view_name='genre-detail',
+        lookup_field='slug'
+    )
+    class Meta:
+        model = Books
+        fields = [..., 'genre', ...]
+    ...
+```
+
+Then, we need to create a view for it.
+```python
+# NOTE: There is a convention you must follow when you create this view name. The rule is that you have to add -detail after the related field name, which is category in the MenuItemSerializer. This is why the view name was category-detail in this code. If the related field name was user, the view name would be user-detail. 
+
+from .models import Genre 
+from .serializers import GenreSerializer
+from django.shortcuts import get_object_or_404 # for 404 error if the object does not exist
+@api_view()
+def genre_detail(request, slug):
+    genre = get_object_or_404(Genre, slug=slug)
+    serializer = GenreSerializer(genre)
+    return Response(serializer.data)
+
+# In urls.py
+urlpatterns = [
+    ...
+    path('genres/<slug:slug>/', genre_detail, name='genre-detail'),
+]
+```
+
 
 # Authentication and Authorization
 
