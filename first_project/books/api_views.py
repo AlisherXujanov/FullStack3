@@ -9,11 +9,7 @@ from .models import Books
 from .serializers import BooksSerializer
 
 
-# @api_view(["GET"])
-# def books_list(request):
-#     return Response({"Hello": "World"}, status=status.HTTP_200_OK)
-
-class BooksList(AuthApiView):
+class BooksViewSet(NoAuthApiView):
     def get(self, request):
         all_books = Books.objects.all()
         books = BooksSerializer(all_books, many=True)
@@ -25,16 +21,21 @@ class BooksList(AuthApiView):
             data.save()
             return Response(data.data, status=status.HTTP_201_CREATED)
 
-    def put(self, request):
-        pass
+
+"""
+# @api_view(["GET"])
+# def books_list(request):
+#     return Response({"Hello": "World"}, status=status.HTTP_200_OK)
+
+# class BooksViewSet(viewsets.ReadOnlyModelViewSet):
+#     queryset = Books.objects.all()
+#     serializer_class = BooksSerializer
+#     permission_classes = [permissions.IsAuthenticated]
+
 # {
 #   "title": "Test title",
 #   "genre": "Test genre", 
 #   "description": "test desc", 
 #   "price": 20
 # }
-
-class BooksViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Books.objects.all()
-    serializer_class = BooksSerializer
-    permission_classes = [permissions.IsAuthenticated]
+"""
