@@ -25,11 +25,12 @@ from rest_framework import routers
 from books.api_views import *
 
 router = routers.DefaultRouter()
-router.register(r'books', BooksViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('api/genre-detail/<slug:slug>/', GenreDetails.as_view(), name='genre-detail'),
+    path('api/books/', BooksViewSet.as_view()),
     path('api-rest/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 urlpatterns += i18n_patterns(

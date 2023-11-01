@@ -5,14 +5,15 @@ from rest_framework.response import Response
 
 
 from .usecases import *
-from .models import Books
-from .serializers import BooksSerializer
+from .models import Books, Genre
+from .serializers import BooksSerializer, GenreSerializer
+from django.shortcuts import get_object_or_404
 
 
 class BooksViewSet(NoAuthApiView):
     def get(self, request):
         all_books = Books.objects.all()
-        books = BooksSerializer(all_books, many=True)
+        books = BooksSerializer(all_books, many=True, context={'request': request})
         return Response(books.data, status=status.HTTP_200_OK)
 
     def post(self, request):
@@ -20,6 +21,12 @@ class BooksViewSet(NoAuthApiView):
         if data.is_valid():
             data.save()
             return Response(data.data, status=status.HTTP_201_CREATED)
+
+class GenreDetails(NoAuthApiView):
+    def get(self, request, slug):
+        genre = get_object_or_404(Genre, slug=slug)
+        serializer = GenreSerializer(genre)
+        return Response(serializer.data)
 
 
 """

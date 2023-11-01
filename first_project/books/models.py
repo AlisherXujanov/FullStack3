@@ -35,12 +35,26 @@ class NullPriceException(Exception):
     pass
 
 
+class Genre(models.Model):
+    slug = models.SlugField(unique=True)  # this is for url
+    name = models.CharField(max_length=50, unique=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            from django.utils.text import slugify
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
 class Books(models.Model):
     title: str = models.CharField(max_length=50)
     description: str = models.TextField()
     author: User = models.ForeignKey(User,
                                      on_delete=models.SET_NULL, null=True, blank=True)
-    genre: str = models.CharField(max_length=25)
+    genre: Genre = models.ForeignKey(Genre, on_delete=models.PROTECT, null=True, blank=True)
     is_available: bool = models.BooleanField(default=True)
     price: float = models.DecimalField(max_digits=5, decimal_places=2)
     created: datetime = models.DateTimeField(auto_now_add=True)
@@ -78,7 +92,6 @@ class Books(models.Model):
             models.Index(fields=['is_available', 'price']),
         ]
         permissions = [('can_change_book', 'Can change book')]
-
 
 
 @receiver(post_save, sender=Books)
