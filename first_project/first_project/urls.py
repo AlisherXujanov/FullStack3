@@ -29,12 +29,13 @@ router = routers.DefaultRouter()
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('api/genre-detail/<slug:slug>/', GenreDetails.as_view(), name='genre-detail'),
-    path('api/books/', BooksViewSet.as_view()),
-    path('api-rest/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-rest/', include('rest_framework.urls', namespace='rest_framework')),
+    
+    # APIs
+    path('api/books/', include('books.api_urls')),
 ]
 urlpatterns += i18n_patterns(
-     # Patterns that need to be translated
+    # Patterns that need to be translated
     path('users/', include('users.urls')),
     path('books/', include('books.urls')),
     path("", HomeView.as_view(), name="home_page"),
