@@ -16,6 +16,7 @@ psycopg2-binary = "*"
 selenium = "*"
 djangorestframework = "*"
 djoser = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 

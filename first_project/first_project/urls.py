@@ -35,6 +35,8 @@ urlpatterns = [
     # APIs
     path('api/books/', include('books.api_urls')),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.authtoken')),
 ]
 urlpatterns += i18n_patterns(
     # Patterns that need to be translated
