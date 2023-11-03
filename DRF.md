@@ -120,7 +120,8 @@ class BookView(APIView):
 ```
 
 ### ViewSets
-ViewSets are simple class-based views, but they come with benefits. There are a few ViewSets classes available in DRF that you can use to quickly scaffold a functioning API CRUD project. You can also provide permission classes and throttle classes to allow authenticated API calls and rate limiting.
+- ViewSets are simple class-based views, but they come with benefits. There are a few ViewSets classes available in DRF that you can use to quickly scaffold a functioning API CRUD project. You can also provide permission classes and throttle classes to allow authenticated API calls and rate limiting.
+- RU: ViewSets - это простые представления на основе классов, но они имеют свои преимущества. В DRF доступно несколько классов ViewSets, которые вы можете использовать для быстрого создания функционирующего проекта API CRUD. Вы также можете предоставить классы разрешений и классы ограничения пропускной способности, чтобы разрешить аутентифицированные вызовы API и ограничение скорости.
 
 Here are some of them that are mostly used:
 1. **ViewSet** - does not provide any actions by default, and does not include the base set of generic view behavior.
@@ -165,7 +166,8 @@ class MyReadOnlyModelViewSet(viewsets.ReadOnlyModelViewSet):
 ```
 
 ### Generic views 
-Generic views are another way of quickly writing class-based views to scaffold fully functional CRUD API projects. There are several generic views that offer a particular functionality, like displaying resources or creating a new resource and so on. All you must do is extend these generic views to make your API endpoints work.
+- Generic views are another way of quickly writing class-based views to scaffold fully functional CRUD API projects. There are several generic views that offer a particular functionality, like displaying resources or creating a new resource and so on. All you must do is extend these generic views to make your API endpoints work.
+- RU: Обобщенные представления - это еще один способ быстрого написания представлений на основе классов для создания полностью функциональных проектов API CRUD. Существует несколько обобщенных представлений, которые предлагают определенную функциональность, например, отображение ресурсов или создание нового ресурса и т. Д. Все, что вам нужно сделать, это расширить эти обобщенные представления, чтобы ваши конечные точки API работали.
 
 - CreateAPIView           - `POST` - Used for creating objects.
 - ListAPIView             - `GET`  - Used for listing objects.
@@ -251,7 +253,9 @@ path('api/.../', ...APIView.as_view(), name='...'),
 # Serialization and Deserialization
 
 ### Serializer
-In easy words, serializers are used to convert complex data, such as querysets and model instances, to native Python datatypes that can then be easily rendered into JSON, XML, or other content types. Serializers also provide deserialization, allowing parsed data to be converted back into complex types, after first validating the incoming data.
+- In easy words, serializers are used to convert complex data, such as querysets and model instances, to native Python datatypes that can then be easily rendered into JSON, XML, or other content types. Serializers also provide deserialization, allowing parsed data to be converted back into complex types, after first validating the incoming data.
+- RU: В простых словах сериализаторы используются для преобразования сложных данных, таких как наборы запросов и экземпляры моделей, в собственные типы данных Python, которые затем можно легко преобразовать в JSON, XML или другие типы контента. Сериализаторы также обеспечивают десериализацию, позволяя преобразовывать разобранные данные обратно в сложные типы после первичной проверки входных данных.
+
 
 ```python
 from rest_framework import serializers
@@ -276,7 +280,10 @@ class BookSerializer(serializers.Serializer):
 ```
 
 ### ModelSerializer
-ModelSerializer is a shortcut to create a serializer class with fields that correspond to the Model fields. It will create a set of default fields for you, based on the model.
+- ModelSerializer is a shortcut to create a serializer class with fields that correspond to the Model fields. It will create a set of default fields for you, based on the model.
+- RU: ModelSerializer - это сокращение для создания класса сериализатора с полями, соответствующими полям модели. Он создаст для вас набор полей по умолчанию на основе модели.
+
+```python
 
 ```python
 from rest_framework import serializers
@@ -311,7 +318,8 @@ class BookSerializer(serializers.ModelSerializer):
 
 
 ### Relationship serializer
-Let's say we have another model for 'genre' field of Books model.
+- Let's say we have another model for 'genre' field of Books model.
+- RU: Допустим, у нас есть другая модель для поля «жанр» модели Books.
 ```python
 # models.py
 class Genre(models.Model):
@@ -333,7 +341,9 @@ class Books(models.Model):
     ...
 ```
 
-So, we need to create a serializer for it and then use it in BooksSerializer
+- So, we need to create a serializer for it and then use it in BooksSerializer
+- RU: Итак, нам нужно создать для него сериализатор, а затем использовать его в BooksSerializer
+
 ```python
 # serializers.py
 class BooksSerializer(serializers.ModelSerializer):
@@ -352,6 +362,7 @@ class BooksSerializer(serializers.ModelSerializer):
 Then, we need to create a view for it.
 ```python
 # NOTE: There is a convention you must follow when you create this view name. The rule is that you have to add -detail after the related field name, which is category in the MenuItemSerializer. This is why the view name was category-detail in this code. If the related field name was user, the view name would be user-detail. 
+# RU: Существует соглашение, которого вы должны придерживаться при создании этого имени представления. Правило таково, что вы должны добавить -detail после имени связанного поля, которое является категорией в MenuItemSerializer. Вот почему имя представления было category-detail в этом коде. Если бы имя связанного поля было пользователь, имя представления было бы user-detail.
 
 from .models import Genre 
 from .serializers import GenreSerializer
@@ -372,24 +383,30 @@ urlpatterns = [
 
 # Authentication and Authorization
 
-### Authentication
-Authentication is the process of verifying the credentials of a user. Logging into websites with a username and password is a typical example of authentication. When the username and password match, the website recognizes the user and sets some cookies in the user’s browser. When the user visits another page on that website, the browser sends those cookies within the HTTP request header. The website recognizes the cookies as well as server-side session data and therefore doesn’t ask for credentials until the user logs out again.  
-So, how does this work? Token-based authentication usually involves two steps in the API Architecture. First, the client identifies itself with a username and password. Then the API server gives it a bearer token. From there, the client includes the bearer token with every API call that it places. The API server verifies it and then allows the client to perform the action or not. This is where authorization comes in
+### General information
+- Authentication is the process of verifying the credentials of a user. Logging into websites with a username and password is a typical example of authentication. When the username and password match, the website recognizes the user and sets some cookies in the user’s browser. When the user visits another page on that website, the browser sends those cookies within the HTTP request header. The website recognizes the cookies as well as server-side session data and therefore doesn’t ask for credentials until the user logs out again.  
+- RU: Аутентификация - это процесс проверки учетных данных пользователя. Вход на веб-сайты с именем пользователя и паролем - типичный пример аутентификации. Когда имя пользователя и пароль совпадают, веб-сайт распознает пользователя и устанавливает некоторые файлы cookie в браузере пользователя. Когда пользователь посещает другую страницу на этом веб-сайте, браузер отправляет эти файлы cookie в заголовке HTTP-запроса. Веб-сайт распознает файлы cookie, а также данные сеанса на стороне сервера и поэтому не запрашивает учетные данные до тех пор, пока пользователь снова не выйдет из системы.
+- So, how does this work? Token-based authentication usually involves two steps in the API Architecture. First, the client identifies itself with a username and password. Then the API server gives it a bearer token. From there, the client includes the bearer token with every API call that it places. The API server verifies it and then allows the client to perform the action or not. This is where authorization comes in
+- RU: Итак, как это работает? Аутентификация на основе токенов обычно включает два шага в архитектуре API. Сначала клиент идентифицирует себя с именем пользователя и паролем. Затем сервер API дает ему маркер-носитель. Оттуда клиент включает маркер-носитель в каждый вызов API, который он размещает. Сервер API проверяет его, а затем разрешает клиенту выполнять действие или нет. Вот тут и вступает авторизация.
 
-If the credentials are not valid, the client will receive a **`401 - Unauthorized`** HTTP status code.
 
-This is like coming to the office on the first day, submitting all your papers and documents, and then receiving your employee card. After that, only your employee card will be sufficient to get inside. Authentication works just like that!
+- If the credentials are not valid, the client will receive a **`401 - Unauthorized`** HTTP status code.
+- RU: Если учетные данные недействительны, клиент получит код состояния HTTP **`401 - Unauthorized`**.
 
-The two steps in the API authentication process can be represented by the following two diagrams.
+- This is like coming to the office on the first day, submitting all your papers and documents, and then receiving your employee card. After that, only your employee card will be sufficient to get inside. Authentication works just like that!
+- RU: Это похоже на то, как вы приходите в офис в первый день, сдаете все свои бумаги и документы, а затем получаете свою служебную карту. После этого только ваша служебная карта будет достаточна, чтобы попасть внутрь. Аутентификация работает так же!
+  
+- The two steps in the API authentication process can be represented by the following two diagrams.
+- RU: Два шага в процессе аутентификации API можно представить следующими двумя диаграммами.
 
 ```markdown
 1. Authentication      2. Authorization
 +----------------+     +----------------+
 |    Client      |     |     Client     |
 |  +----------+  |     |  +----------+  |
-|  |          |  |     |  |          |  |
-|  |  Login   |  |     |  |  Token   |  |
-|  |          |  |     |  |          |  |
+|  |          |  |     |  |  Token   |  |
+|  |  Login   |  |     |  |          |  |
+|  |          |  |     |  |  Group   |  |
 |  +----------+  |     |  +----------+  |
 |  +----------+  |     |  +----------+  |
 |  |          |  |     |  |          |  |
@@ -398,11 +415,276 @@ The two steps in the API authentication process can be represented by the follow
 |  +----------+  |     |  +----------+  |
 +----------------+     +----------------+
 ```
+
+### Token based authentication
+
+```python
+# settings.py
+INSTALLED_APPS = [
+    ...
+    'rest_framework.authtoken', # Allows us create a token for each user
+    ...
+]
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # Allows us to use token authentication throughout the project
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
+if DEBUG:
+    REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] += [
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+```
+
+- For allowing token authentication, we need to create a token for each user. 
+There, we would need obtain_auth_token
+- RU: Для разрешения аутентификации токенов нам нужно создать токен для каждого пользователя.
+  Там нам понадобится obtain_auth_token
+
+```python
+# urls.py
+from rest_framework.authtoken.views import obtain_auth_token
+urlpatterns = [
+    ...
+    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
+    ...
+]
+```
+
+- Then, we need to create a view for it.
+- RU: Затем нам нужно создать для этого представления.
+
+```python
+# views.py
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from django.contrib.auth import authenticate
+
+@api_view(['POST'])
+def login(request):
+    username = request.data.get('username')
+    password = request.data.get('password')
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({'token': token.key}, status=200)
+    else:
+        return Response({'error': 'Wrong credentials'}, status=400)
+```
+
 ### Authorization
+Authorization is the process of determining whether a user has access to a resource.
+For example, if the user can delete or update something or not.
+We can do this by adding certain user to a group and then check if the user is in that group or not. So, by doing this we authorize the user to do certain actions.
+- RU: Авторизация - это процесс определения, имеет ли пользователь доступ к ресурсу.
+  Например, может ли пользователь что-то удалить или обновить или нет.
+  Мы можем сделать это, добавив определенного пользователя в группу, а затем проверив, находится ли пользователь в этой группе или нет. Таким образом, мы авторизуем пользователя на выполнение определенных действий.
+
+```python
+# views.py
+@api_view()
+def is_admin(request):
+    if request.user.groups.filter(name='admin').exists():
+        return Response({'message': 'You are admin'}, status=200)
+    else:
+        return Response({'message': 'You are not admin'}, status=400)
+```
+
+### Throttling
+- Throttling means that we can postpone the request for a certain amount of time.
+For example, we can allow only 5 requests per minute.
+We need this to prevent the server from overloading.
+Sometimes, a user can try to break in by trying to guess the password. So, we can prevent this by adding throttling. This way, that user will be able to make only 5 requests per minute.
+- RU: Throttling означает, что мы можем отложить запрос на определенное время.
+  Например, мы можем разрешить только 5 запросов в минуту.
+  Нам нужно это, чтобы предотвратить перегрузку сервера.
+  Иногда пользователь может попытаться взломать, пытаясь угадать пароль. Таким образом, мы можем предотвратить это, добавив ограничение. Таким образом, этот пользователь сможет делать только 5 запросов в минуту.
+
+```python
+# settings.py
+
+REST_FRAMEWORK = {
+    ...
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle', # for anonymous users
+        'rest_framework.throttling.UserRateThrottle', # for authenticated users
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '3/minute', # 3 requests per minute
+        'user': '5/minute', # 5 requests per minute
+    }
+}
+```
+Then we need to add it to the view.
+```python
+# views.py
+from rest_framework.throttling import UserRateThrottle
+
+class MyView(APIView):
+    throttle_classes = [UserRateThrottle]
+    ...
+```
+
+If we want to create manual throttling for a specific view, we can do it like this:
+```python
+# views.py
+from rest_framework.throttling import UserRateThrottle
+
+class TenCallsPerMinute(UserRateThrottle):
+    scope = 'ten'
+
+class MyView(APIView):
+    throttle_classes = [TenCallsPerMinute]
+    ...
+
+# settings.py
+...
+DEFAULT_THROTTLE_RATES = {
+    ...
+    'ten': '10/minute',
+    ...
+}
+```
 
 
+### Djoser
+- Djoser is a REST implementation of Django authentication system. It provides a set of endpoints for authentication, registration, password reset, etc.
+- RU: Djoser - это реализация REST системы аутентификации Django. Он предоставляет набор конечных точек для аутентификации, регистрации, сброса пароля и т. Д.
+
+`pipenv || pip   install djoser`
+
+```python
+INSTALLED_APPS = [
+    ...
+    'rest_framework',
+    'djoser', # It is vital to add it after rest_framework
+    # RU: Важно добавить его после rest_framework
+    ...
+]
+
+DJOSER = {
+    "USER_ID_FIELD": "username", # We use username for login
+    # "LOGIN_FIELD": "email", # We can use email or username for login
+    # "USER_CREATE_PASSWORD_RETYPE": True, # We can use this to make user retype the password
+}
+
+# urls.py
+urlpatterns = [
+    ...
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.authtoken')),
+    ...
+    # handy endpoints list
+    # --------------------------------
+    # /auth/users/ - list of all users
+    # /auth/users/me/ - current user
+    # /auth/users/confirm/ - confirm email
+    # /auth/users/resend_activation/ - resend activation email
+    # /auth/users/set_password/ - set new password
+    # /auth/users/reset_password/ - reset password
+    # /auth/users/reset_password_confirm/ - confirm reset password
+    # /auth/token/login/ - login
+    # /auth/token/logout/ - logout
+]
+
+```
 
 
+### JWT Authentication
+- JSON Web Token (JWT) is  a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. (Digitally signed means that it is signed using a secret key that only the server knows.)
+- RU: JSON Web Token (JWT) - это компактный и автономный способ безопасной передачи информации между сторонами в виде объекта JSON. Эту информацию можно проверить и доверять, потому что она цифровая подпись. (Цифровая подпись означает, что она подписана с использованием секретного ключа, который знает только сервер.)
+
+`pipenv || pip   install djangorestframework_simplejwt`
+
+```python
+INSTALLED_APPS = [
+    ...
+    'rest_framework',
+    'rest_framework_simplejwt',
+    ...
+]
+
+REST_FRAMEWORK = {
+    ...
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        ...
+    ],
+    ...
+}
+
+# urls.py
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
+urlpatterns = [
+    ...
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    ...
+]
+
+# settings.py
+# JWT settings
+from datetime import timedelta
+REFRESH_TOKEN_LIFETIME_SIX_WEEKS = 42 # days
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=REFRESH_TOKEN_LIFETIME_SIX_WEEKS),
+    'ROTATE_REFRESH_TOKENS': True, # If True, refresh tokens will be rotated
+    # That means that after each request we will get a new refresh token
+    # RU: Если True, токены обновления будут поворачиваться
+    # Это означает, что после каждого запроса мы получим новый токен обновления
+}
+```
+
+If we want to some extra validation in the token, we can do it like this:
+```python
+# views.py
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+
+class MyTokenRefreshView(TokenRefreshView):
+    serializer_class = MyTokenRefreshSerializer
+
+# serializers.py
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        # Add custom claims
+        token['username'] = user.username
+        return token
+
+class MyTokenRefreshSerializer(TokenRefreshSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        # Add custom claims
+        token['username'] = user.username
+        return token
+
+# urls.py
+urlpatterns = [
+    ...
+    path('api/token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', MyTokenRefreshView.as_view(), name='token_refresh'),
+    ...
+]
+```
+
+
+###
+###
+###
 
 # Relationships and Hyperlinks
 
