@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     # add DRF
     'rest_framework',
     'rest_framework.authtoken',
+    'djoser',
 ]
 SITE_ID = 1
 

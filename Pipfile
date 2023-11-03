@@ -15,6 +15,7 @@ django-debug-toolbar = "*"
 psycopg2-binary = "*"
 selenium = "*"
 djangorestframework = "*"
+djoser = "*"
 
 [dev-packages]
 
