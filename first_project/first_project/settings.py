@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
+    'rest_framework_simplejwt',
 ]
 SITE_ID = 1
 
@@ -217,6 +218,7 @@ LOCALE_PATHS = (
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         # Allows us to use token authentication throughout the project
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_THROTTLE_CLASSES': [
