@@ -2,15 +2,19 @@ from django.forms import model_to_dict
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
+from rest_framework.authtoken.models import Token
+from django.contrib.auth import authenticate
 
 from .usecases import *
 from .models import Books, Genre
 from .serializers import BooksSerializer, GenreSerializer
 from django.shortcuts import get_object_or_404
+from first_project.throttles import TenMinuteThrottle
 
 
 class BooksViewSet(AuthApiView):
+    throttle_classes = [TenMinuteThrottle]
+
     def get(self, request):
         all_books = Books.objects.all()
         books = BooksSerializer(all_books, many=True, context={'request': request})
@@ -46,3 +50,15 @@ class GenreDetails(AuthApiView):
 #   "price": 20
 # }
 """
+
+
+@api_view(['POST'])
+def login(request):
+    username = request.data.get('username')
+    password = request.data.get('password')
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({'token': token.key}, status=200)
+    else:
+        return Response({'error': 'Wrong credentials'}, status=400)

@@ -218,6 +218,15 @@ REST_FRAMEWORK = {
         # Allows us to use token authentication throughout the project
         'rest_framework.authentication.TokenAuthentication',
     ],
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle', # for anonymous users
+        'rest_framework.throttling.UserRateThrottle', # for authenticated users
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '3/minute', # 3 requests per minute
+        'user': '5/minute', # 5 requests per minute
+        'ten': '10/hour',   # 10 requests per hour
+    }
 }
 if DEBUG:
     REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] += [
