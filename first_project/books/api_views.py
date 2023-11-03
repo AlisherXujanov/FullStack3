@@ -10,7 +10,7 @@ from .serializers import BooksSerializer, GenreSerializer
 from django.shortcuts import get_object_or_404
 
 
-class BooksViewSet(NoAuthApiView):
+class BooksViewSet(AuthApiView):
     def get(self, request):
         all_books = Books.objects.all()
         books = BooksSerializer(all_books, many=True, context={'request': request})
@@ -22,7 +22,7 @@ class BooksViewSet(NoAuthApiView):
             data.save()
             return Response(data.data, status=status.HTTP_201_CREATED)
 
-class GenreDetails(NoAuthApiView):
+class GenreDetails(AuthApiView):
     def get(self, request, slug):
         genre = get_object_or_404(Genre, slug=slug)
         serializer = GenreSerializer(genre)

@@ -56,6 +56,7 @@ INSTALLED_APPS = [
 
     # add DRF
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 SITE_ID = 1
 
@@ -209,3 +210,16 @@ LANGUAGES = (
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
+
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # Allows us to use token authentication throughout the project
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
+if DEBUG:
+    REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] += [
+        'rest_framework.authentication.SessionAuthentication',
+    ]

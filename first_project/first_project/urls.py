@@ -25,6 +25,7 @@ from rest_framework import routers
 from books.api_views import *
 
 router = routers.DefaultRouter()
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,6 +34,7 @@ urlpatterns = [
     
     # APIs
     path('api/books/', include('books.api_urls')),
+    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
 ]
 urlpatterns += i18n_patterns(
     # Patterns that need to be translated

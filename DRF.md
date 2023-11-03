@@ -686,9 +686,9 @@ urlpatterns = [
 ###
 ###
 
-# Relationships and Hyperlinks
+
+# Throttling  &  Filtering  &  Pagination
 
 # Requests and Responses
 
-# Throttling  &  Filtering  &  Pagination
 
