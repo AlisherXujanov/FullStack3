@@ -2,6 +2,12 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from .serializers import (
+    BFTokenObtainPairSerializer,
+    BFTokenRefreshSerializer
+)
+
 
 @api_view(['POST'])
 def login(request):
@@ -13,3 +19,11 @@ def login(request):
         return Response({'token': token.key}, status=200)
     else:
         return Response({'error': 'Wrong credentials'}, status=400)
+
+
+
+class BFTokenObtainPairView(TokenObtainPairView):
+    serializer_class = BFTokenObtainPairSerializer
+
+class BFTokenRefreshView(TokenRefreshView):
+    serializer_class = BFTokenRefreshSerializer

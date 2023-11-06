@@ -4,7 +4,7 @@
 2. [API views](#api-views)
 3. [Serialization and Deserialization](#serialization-and-deserialization)
 4. [Authentication and Authorization](#authentication-and-authorization)
-5. [JWT  &&  Filtering  &  Pagination](#jwt--filtering--pagination)
+5. [JWT  &&  Filtering  &  Pagination  &  Caching](#jwt--filtering--pagination--caching)
 
 # Introduction to APIs 
 
@@ -609,6 +609,8 @@ urlpatterns = [
 
 `pipenv || pip   install djangorestframework_simplejwt`
 
+[JWT-documentation](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html?highlight=settings)
+
 ```python
 INSTALLED_APPS = [
     ...
@@ -630,12 +632,14 @@ REST_FRAMEWORK = {
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
+    TokenVerifyView
 )
 
 urlpatterns = [
     ...
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/create/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     ...
 ]
 
@@ -643,6 +647,7 @@ urlpatterns = [
 # JWT settings
 from datetime import timedelta
 REFRESH_TOKEN_LIFETIME_SIX_WEEKS = 42 # days
+
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=REFRESH_TOKEN_LIFETIME_SIX_WEEKS),

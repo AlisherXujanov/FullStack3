@@ -25,8 +25,11 @@ from users import api_views as user_api_views
 from rest_framework import routers
 from books.api_views import *
 
+from rest_framework_simplejwt.views import TokenVerifyView
+from users.api_views import BFTokenObtainPairView, BFTokenRefreshView
+
 router = routers.DefaultRouter()
-from rest_framework.authtoken.views import obtain_auth_token
+# from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,10 +37,15 @@ urlpatterns = [
     path('api-rest/', include('rest_framework.urls', namespace='rest_framework')),
     
     # APIs
+    # path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
     path('api/books/', include('books.api_urls')),
-    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),
+
+    # JWT
+    path('api/token/create/', BFTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', BFTokenRefreshView.as_view(), name='token_refresh'),
+    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 ]
 urlpatterns += i18n_patterns(
     # Patterns that need to be translated

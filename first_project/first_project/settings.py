@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from datetime import timedelta
 import os
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
@@ -95,7 +96,7 @@ SOCIALACCOUNT_PROVIDERS = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware', 
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -192,7 +193,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -201,9 +201,7 @@ EMAIL_HOST_USER = os.environ.get('GMAIL')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 
-
-
-LANGUAGE_CODE = 'en' # This is the default language
+LANGUAGE_CODE = 'en'  # This is the default language
 LANGUAGES = (
     ('en', _("English")),
     ('ru', _("Russian")),
@@ -214,20 +212,19 @@ LOCALE_PATHS = (
 )
 
 
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         # Allows us to use token authentication throughout the project
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_THROTTLE_CLASSES': [
-        'rest_framework.throttling.AnonRateThrottle', # for anonymous users
-        'rest_framework.throttling.UserRateThrottle', # for authenticated users
+        'rest_framework.throttling.AnonRateThrottle',  # for anonymous users
+        'rest_framework.throttling.UserRateThrottle',  # for authenticated users
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '3/minute', # 3 requests per minute
-        'user': '5/minute', # 5 requests per minute
+        'anon': '3/minute',  # 3 requests per minute
+        'user': '5/minute',  # 5 requests per minute
         'ten': '10/hour',   # 10 requests per hour
     }
 }
@@ -238,5 +235,18 @@ if DEBUG:
 
 
 DJOSER = {
-    "USER_ID_FIELD": "username", # We use username for login
+    "USER_ID_FIELD": "username",  # We use username for login
+}
+
+DAY = 1  # days
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=DAY),
+    'ROTATE_REFRESH_TOKENS': True,  # If True, refresh tokens will be rotated
+    # That means that after each request we will get a new refresh token
+    # RU: Если True, токены обновления будут поворачиваться
+    # Это означает, что после каждого запроса мы получим новый токен обновления
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    # In the client we need to send the token in the header like this:
+    # Authorization: bearer <token>
 }
