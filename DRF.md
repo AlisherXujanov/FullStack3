@@ -1,3 +1,11 @@
+
+# Table of contents
+1. [Introduction to APIs](#introduction-to-apis)
+2. [API views](#api-views)
+3. [Serialization and Deserialization](#serialization-and-deserialization)
+4. [Authentication and Authorization](#authentication-and-authorization)
+5. [JWT  &&  Filtering  &  Pagination](#jwt--filtering--pagination)
+
 # Introduction to APIs 
 
 ### What is an API?
@@ -592,6 +600,9 @@ urlpatterns = [
 ```
 
 
+
+# JWT  &&  Filtering  &  Pagination  &  Caching
+
 ### JWT Authentication
 - JSON Web Token (JWT) is  a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. (Digitally signed means that it is signed using a secret key that only the server knows.)
 - RU: JSON Web Token (JWT) - это компактный и автономный способ безопасной передачи информации между сторонами в виде объекта JSON. Эту информацию можно проверить и доверять, потому что она цифровая подпись. (Цифровая подпись означает, что она подписана с использованием секретного ключа, который знает только сервер.)
@@ -609,8 +620,8 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     ...
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        # TokenAuthentication is replaced with JWTAuthentication
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        ...
     ],
     ...
 }
@@ -639,8 +650,19 @@ SIMPLE_JWT = {
     # That means that after each request we will get a new refresh token
     # RU: Если True, токены обновления будут поворачиваться
     # Это означает, что после каждого запроса мы получим новый токен обновления
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    # In the client we need to send the token in the header like this:
+    # Authorization: bearer <token>
 }
 ```
+`NOTE`
+- access token expires and is not valid after settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME']
+But, this does NOT mean that client has to login again. Client can use refresh token to get a new access token. 
+- RU: токен доступа истекает и не действителен после settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME']
+  Но это НЕ означает, что клиенту нужно снова войти в систему. Клиент может использовать токен обновления, чтобы получить новый токен доступа.  
+
+---
+---
 
 If we want to some extra validation in the token, we can do it like this:
 ```python
@@ -682,12 +704,103 @@ urlpatterns = [
 ```
 
 
-###
-###
-###
 
 
-# Throttling  &  Filtering  &  Pagination
+
+
+
+
+### Filtering
+[This is the link that we can visit filtering](https://www.django-rest-framework.org/api-guide/filtering/)
+
+By filtering we can filter the data that we want to get. 
+For example, we can filter the books by author or by title.
+
+
+So, if the user asks books by author, we can do it like this:
+ex: `http://domain-name.com/api/books/?author=John`
+
+```python
+# views.py
+from rest_framework import generics
+from .models import Book
+from .serializers import BookSerializer
+
+class BookList(generics.ListAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        author = self.request.query_params.get('author')
+        if author:
+            queryset = queryset.filter(author=author)
+        return queryset
+
+# ===========================================
+# -- OR -- in our case
+# ===========================================
+class BookList(APIView): 
+    def get(self, request):
+        author = request.query_params.get('author')
+        if author:
+            books = Book.objects.filter(author=author)
+        else:
+            books = Book.objects.all()
+        serializer = BookSerializer(books, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+# urls.py
+urlpatterns = [
+    ...
+    path('api/books/', BookList.as_view(), name='book-list'),
+    ...
+]
+```
+
+
+### Pagination
+[This is the link that we can visit for pagination](https://www.django-rest-framework.org/api-guide/pagination/)
+By pagination we can limit the number of objects that we want to get.
+For example, we can limit the number of books that we want to get.
+
+```python
+# settings.py
+REST_FRAMEWORK = {
+    ...
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 1,
+    ...
+}
+
+
+# views.py
+from rest_framework import generics
+class BookList(generics.ListAPIView):
+    queryset = Books.objects.all()
+    serializer_class = BookSerializer
+
+# ===========================================
+# -- OR -- in our case
+# ===========================================
+from rest_framework.pagination import PageNumberPagination
+class BookList(APIView): 
+    def get(self, request):
+        books = Book.objects.all()
+        paginator = PageNumberPagination()
+        result_page = paginator.paginate_queryset(books, request)
+        serializer = BookSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+```
+
+
+### Caching 
+By caching we can improve the performance of our API.
+When we visit first time the api it loads normally but
+when we visit it again it loads faster because it is cached.
+
+[This is the link that we can visit for filtering](https://www.django-rest-framework.org/api-guide/caching/)
+
 
 # Requests and Responses
 

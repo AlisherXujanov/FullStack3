@@ -4,5 +4,4 @@ from .api_views import *
 urlpatterns = [
     path('', BooksViewSet.as_view()),
     path('genre-detail/<slug:slug>/', GenreDetails.as_view(), name='genre-detail'),
-    path('login/', login, name='login'),
 ]

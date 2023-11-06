@@ -51,14 +51,3 @@ class GenreDetails(AuthApiView):
 # }
 """
 
-
-@api_view(['POST'])
-def login(request):
-    username = request.data.get('username')
-    password = request.data.get('password')
-    user = authenticate(username=username, password=password)
-    if user is not None:
-        token, created = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key}, status=200)
-    else:
-        return Response({'error': 'Wrong credentials'}, status=400)

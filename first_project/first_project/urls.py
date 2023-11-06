@@ -20,6 +20,7 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf.urls.i18n import i18n_patterns
 from .views import *
+from users import api_views as user_api_views
 
 from rest_framework import routers
 from books.api_views import *
@@ -49,6 +50,7 @@ urlpatterns += i18n_patterns(
          delete_from_wl, name="delete_from_wl"),
     path('accounts/', include('allauth.urls')),
     path('translate/<str:language>/', translate, name="translate"),
+    path('api/login/', user_api_views.login, name='login'),
 )
 
 if settings.DEBUG:

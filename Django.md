@@ -1,4 +1,21 @@
-# Introduction - (first lesson)
+1. [Introduction](#introduction)
+2. [Modals](#modals)
+3. [Templates](#templates)
+4. [Bootstrap](#bootstrap)
+5. [Querysets](#querysets)
+6. [Forms](#forms)
+7. [Sign In/Out](#sign-inout)
+8. [CVB](#cvb)
+9. [Middleware](#middleware)
+10. [Django-allauth](#📚django-allauth)
+11. [Permissions](#permissions)
+12. [Signals](#signals)
+13. [Internationalisation](#internationalisation)
+14. [PostgreSQL](#postgresql)
+
+
+# Introduction
+# (first lesson)
     > pipenv  init  	      &&   pipenv  shell
     > python -m venv my_env	  &&   my_env/Scripts/activate.bat
 #### Django installation   
@@ -27,7 +44,8 @@
 ---
 ---
 
-# Modals  &&  Admin-page  &&  Forms-(basics) 
+# Modals
+# Admin-page  &&  Forms-(basics) 
 - models.CharField      - a string of characters
 - models.URLField       - a string that has to be a valid URL format
 - models.IntegerField   - a whole number
@@ -196,7 +214,8 @@ form.as_div     => means that the form will be rendered as a div
 
 ---
 
-# Templates (advanced)  &&  STATIC FILES
+# Templates
+# (advanced) STATIC FILES
 
 ### Syntax of jinja2
 ```html
@@ -367,7 +386,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 ---
 
-# Bootstrap  &&  Routing (intermediate)  &&  Details  &&  CRUD operations
+# Bootstrap
+# Routing (intermediate)  &&  Details  &&  CRUD operations
 ### Bootstrap
 1. Install bootstrap
 ```pip install django-bootstrap5```
@@ -403,7 +423,8 @@ INSTALLED_APPS = [
 ```
 ---
 
-# Querysets  &&  Models (advanced) 
+# Querysets
+# Models (advanced) 
 ---
 
 ```CRUD - operations```
@@ -654,8 +675,8 @@ class Migration(migrations.Migration):
     ]
 ```
 
-
-# Forms (advanced)  &&  File upload  &&  Data validation &&  TinyMCE
+# Forms 
+# (advanced)  File upload  &&  Data validation &&  TinyMCE
 
 #### Simple forms
 ```python
@@ -965,8 +986,8 @@ class PostForm(forms.ModelForm):
 ```
 
 
-
-# Sign - In/Out   &&   Profile🧑🏻‍🏫  &&   User-related-updates 
+# Sign In/Out
+# Profile🧑🏻‍🏫  &&   User-related-updates 
 
 #### UserCreationForm
 ```python
@@ -1144,7 +1165,7 @@ def profile(request):
 
 
 
-
+# CVB
 # Class Based Views (intermediate)
 Class-based views are an alternative to function-based views. They provide a lot of functionality out of the box, and they are easier to extend and customize.
 
@@ -1365,8 +1386,8 @@ class PostListView(ListView):
 
 
 
-
-# Middleware and Sessions (advanced)
+# Middleware
+# Sessions (advanced)
 
 #### Middleware
 - Middleware in django is a framework of hooks into Django’s request/response processing. It’s a light, low-level “plugin” system for globally altering Django’s input or output. **In other words, it is a better way to modify the request and response objects in Django.**
@@ -1566,7 +1587,8 @@ python manage.py runserver
 
 #### 
 
-# Permissions &&  Security 🔐 (intermediate)   &&  📚 BeautifulSoup  
+# Permissions
+# Security 🔐 (intermediate)   &&  📚 BeautifulSoup  
 #### Permissions
 ```python
 class Product(models.Model): 
@@ -1684,8 +1706,8 @@ print(html_doc.p)           # This will print the first p tag
 
 
 
-
-# Signals  &&   Sending Emails 📧 (advanced)
+# Signals
+# Sending Emails 📧 (advanced)
 #### Signals
 Signals are used to execute code when certain events occur in Django. For example, we can use signals to execute code when a user is created, or when a user is logged in. We can also use signals to execute code when a model is saved, or when a model is deleted. Signals are useful for executing code that is not directly related to a view, such as sending an email when a user is created, or updating a model when a user is logged in.
 ```python
@@ -1780,7 +1802,8 @@ send_mail(
 ```
 
 
-# 🌐 Internationalisation  &&  localisation  (advanced)
+# Internationalisation
+# 🌐 localisation  (advanced)
 
 First of all we need to install gettext on windows
 `https://mlocati.github.io/articles/gettext-iconv-windows.html`
@@ -1886,8 +1909,8 @@ Then we can use this code in our templates
 ```
 
 
-
-# PostgreSQL && Unit Tests &&  Debugging
+# PostgreSQL
+# Unit Tests &&  Debugging
 
 First of all, we need to install PostgreSQL on our computer.
 And then we need to install psycopg2-binary to let django
