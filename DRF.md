@@ -601,7 +601,7 @@ urlpatterns = [
 
 
 
-# JWT  &&  Filtering  &  Pagination  &  Caching
+# JWT
 
 ### JWT Authentication
 - JSON Web Token (JWT) is  a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. (Digitally signed means that it is signed using a secret key that only the server knows.)
@@ -715,6 +715,8 @@ urlpatterns = [
 
 
 
+# Filtering  &  Pagination  &  Caching
+
 ### Filtering
 [This is the link that we can visit filtering](https://www.django-rest-framework.org/api-guide/filtering/)
 
@@ -805,6 +807,7 @@ When we visit first time the api it loads normally but
 when we visit it again it loads faster because it is cached.
 
 [This is the link that we can visit for filtering](https://www.django-rest-framework.org/api-guide/caching/)
+
 
 
 # Requests and Responses
