@@ -4,7 +4,8 @@
 2. [API views](#api-views)
 3. [Serialization and Deserialization](#serialization-and-deserialization)
 4. [Authentication and Authorization](#authentication-and-authorization)
-5. [JWT  &&  Filtering  &  Pagination  &  Caching](#jwt--filtering--pagination--caching)
+5. [JWT](#jwt)
+6. [Filtering & Ordering & Pagination & Caching](#filtering--ordering--pagination--caching)
 
 # Introduction to APIs 
 
@@ -602,7 +603,6 @@ urlpatterns = [
 
 
 # JWT
-
 ### JWT Authentication
 - JSON Web Token (JWT) is  a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. (Digitally signed means that it is signed using a secret key that only the server knows.)
 - RU: JSON Web Token (JWT) - это компактный и автономный способ безопасной передачи информации между сторонами в виде объекта JSON. Эту информацию можно проверить и доверять, потому что она цифровая подпись. (Цифровая подпись означает, что она подписана с использованием секретного ключа, который знает только сервер.)
@@ -715,7 +715,7 @@ urlpatterns = [
 
 
 
-# Filtering  &  Pagination  &  Caching
+# Filtering  &  Ordering  &  Pagination  &  Caching
 
 ### Filtering
 [This is the link that we can visit filtering](https://www.django-rest-framework.org/api-guide/filtering/)
@@ -765,6 +765,42 @@ urlpatterns = [
 ]
 ```
 
+### Ordering
+[This is the link that we can visit for ordering](https://www.django-rest-framework.org/api-guide/filtering/#orderingfilter)
+
+By ordering we can order the data that we want to get.
+For example, we can order the books by title or by author.
+
+```python
+# views.py
+from rest_framework import generics
+from .models import Book
+from .serializers import BookSerializer
+
+class BookList(generics.ListAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        ordering = self.request.query_params.get('ordering')
+        if ordering:
+            queryset = queryset.order_by(ordering)
+        return queryset
+
+# ===========================================
+# -- OR -- in our case
+# ===========================================
+class BookList(APIView): 
+    def get(self, request):
+        ordering = request.query_params.get('ordering')
+        if ordering:
+            books = Book.objects.order_by(ordering)
+        else:
+            books = Book.objects.all()
+        serializer = BookSerializer(books, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+```
 
 ### Pagination
 [This is the link that we can visit for pagination](https://www.django-rest-framework.org/api-guide/pagination/)
@@ -802,9 +838,36 @@ class BookList(APIView):
 
 
 ### Caching 
+
+```python
+SECOND = 1
+MINUTE = SECOND * 60
+HOUR = MINUTE * 60
+
+SHORT_WAIT = SECOND * 3
+LONG_WAIT = MINUTE * 10
+
+SHORT_CACHING_TIME = MINUTE * 30
+LONG_CACHING_TIME = HOUR * 2
+```
+
 By caching we can improve the performance of our API.
 When we visit first time the api it loads normally but
 when we visit it again it loads faster because it is cached.
+
+```python
+@method_decorator(cache_page(LONG_CACHING_TIME)) 
+# cache_page => This means that we cache the page for a certain amount of time
+# By default, it caches the page for 15 minutes
+# RU: Это означает, что мы кэшируем страницу на определенное время
+# По умолчанию он кэширует страницу на 15 минут
+
+@method_decorator(vary_on_headers("Authorization",))
+# vary_on_headers => We need this because we want to cache the page for each user separately
+# By default, it caches the page for all users together
+# RU: Нам это нужно, потому что мы хотим кэшировать страницу для каждого пользователя отдельно
+# По умолчанию он кэширует страницу для всех пользователей вместе
+```
 
 [This is the link that we can visit for filtering](https://www.django-rest-framework.org/api-guide/caching/)
 
