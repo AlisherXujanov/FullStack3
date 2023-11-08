@@ -10,6 +10,7 @@ from .models import Books, Genre
 from .serializers import BooksSerializer, GenreSerializer
 from django.shortcuts import get_object_or_404
 from first_project.throttles import TenMinuteThrottle
+from rest_framework.pagination import PageNumberPagination
 
 
 class BooksViewSet(AuthApiView):
@@ -17,13 +18,14 @@ class BooksViewSet(AuthApiView):
 
     def get(self, request):
         all_books = Books.objects.all()
+        paginator = PageNumberPagination()
 
         genre = request.query_params.get('genre')
         author = request.query_params.get('author')
         order = request.query_params.get('order')
         order_desc = request.query_params.get('order-desc')
 
-        "/books/?order-desc=price"
+        # ex:  "/books/?order-desc=price&genre=...&author=..."
 
         if genre:
             all_books = all_books.filter(genre__slug=genre.strip())
@@ -35,9 +37,10 @@ class BooksViewSet(AuthApiView):
         elif order_desc:
             all_books = all_books.order_by(f'-{order_desc}')
 
-
-        books = BooksSerializer(all_books, many=True, context={'request': request})
-        return Response(books.data, status=status.HTTP_200_OK)
+        result_page = paginator.paginate_queryset(all_books, request)
+        books = BooksSerializer(result_page, many=True, 
+                                context={'request': request})
+        return paginator.get_paginated_response(books.data)
 
     def post(self, request):
         data = BooksSerializer(data=request.data)
