@@ -92,6 +92,7 @@ class Books(models.Model):
             models.Index(fields=['is_available', 'price']),
         ]
         permissions = [('can_change_book', 'Can change book')]
+        verbose_name_plural = "Books"
 
 
 @receiver(post_save, sender=Books)

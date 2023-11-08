@@ -17,6 +17,15 @@ class BooksViewSet(AuthApiView):
 
     def get(self, request):
         all_books = Books.objects.all()
+
+        genre = request.query_params.get('genre')
+        author = request.query_params.get('author')
+
+        if genre:
+            all_books = all_books.filter(genre__slug=genre.strip())
+        if author:
+            all_books = all_books.filter(author=author)
+
         books = BooksSerializer(all_books, many=True, context={'request': request})
         return Response(books.data, status=status.HTTP_200_OK)
 
