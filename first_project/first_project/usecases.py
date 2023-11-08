@@ -5,6 +5,17 @@ VIEWED_BOOKS = 'viewed-books'
 BOOK_IDS = "book_ids"
 
 
+SECOND = 1
+MINUTE = SECOND * 60
+HOUR = MINUTE * 60
+
+SHORT_WAIT = SECOND * 3
+VERY_LONG_WAIT = MINUTE * 10
+
+SHORT_CACHING_TIME = MINUTE * 30
+LONG_CACHING_TIME = HOUR * 2
+
+
 class Session:
     valid_keys = [WISH_LIST, VIEWED_BOOKS]
 

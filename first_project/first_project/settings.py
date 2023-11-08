@@ -223,9 +223,9 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.UserRateThrottle',  # for authenticated users
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '3/minute',  # 3 requests per minute
-        'user': '5/minute',  # 5 requests per minute
-        'ten': '10/hour',   # 10 requests per hour
+        'anon': '100000/minute',  # 3 requests per minute
+        'user': '100000/minute',  # 5 requests per minute
+        'ten': '100000/hour',   # 10 requests per hour
     },
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 2,
