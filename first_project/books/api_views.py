@@ -20,11 +20,21 @@ class BooksViewSet(AuthApiView):
 
         genre = request.query_params.get('genre')
         author = request.query_params.get('author')
+        order = request.query_params.get('order')
+        order_desc = request.query_params.get('order-desc')
+
+        "/books/?order-desc=price"
 
         if genre:
             all_books = all_books.filter(genre__slug=genre.strip())
         if author:
-            all_books = all_books.filter(author=author)
+            all_books = all_books.filter(author__username=author)
+        
+        if order:
+            all_books = all_books.order_by(order)
+        elif order_desc:
+            all_books = all_books.order_by(f'-{order_desc}')
+
 
         books = BooksSerializer(all_books, many=True, context={'request': request})
         return Response(books.data, status=status.HTTP_200_OK)
